@@ -5,7 +5,7 @@ public class Interviewer implements UserAcess {
     public ArrayList interviewees = new ArrayList();
 
     void Interview(ArrayList interviewees){
-        this.interviewees = interviewees
+        this.interviewees = interviewees;
 
     }
 
