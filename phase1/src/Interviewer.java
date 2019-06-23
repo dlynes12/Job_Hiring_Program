@@ -10,7 +10,7 @@ public class Interviewer implements UserAcess {
     }
 
     public ArrayList getInterviewees() {
-        return interviewees;
+        return this.interviewees;
     }
 
 
