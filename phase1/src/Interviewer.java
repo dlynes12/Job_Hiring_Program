@@ -2,9 +2,9 @@ import java.util.ArrayList;
 
 public class Interviewer extends UserAccess {
 
-    public ArrayList<Applicant> interviewees = new ArrayList();
+    protected ArrayList<Applicant> interviewees = new ArrayList();
 
-    void Interview(ArrayList interviewees){
+    void Interview(ArrayList<Applicant> interviewees){
         this.interviewees = interviewees;
 
     }
