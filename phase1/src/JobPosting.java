@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Date;
 
 public class JobPosting{
@@ -5,6 +6,9 @@ public class JobPosting{
     private Date datePosted;
     private Date dateClosed;
     private String position;
+    protected ArrayList<Applicant> applicants = new ArrayList<>();
+
+    //TODO: add a way to assign all the applicants to the JobPosting object - so HR can also access this.
 
     public Date getDatePosted() { return this.datePosted; }
 
