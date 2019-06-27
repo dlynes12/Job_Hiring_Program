@@ -1,4 +1,4 @@
-public class Applicant implements UserAcess {
+public class Applicant implements UserAccess {
 
 
 
