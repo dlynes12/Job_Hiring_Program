@@ -1,4 +1,4 @@
-public class HR_Coordinator implements UserAccess {
+public class HR_Coordinator extends UserAccess {
 
 
 
