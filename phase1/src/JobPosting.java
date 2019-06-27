@@ -1,29 +1,27 @@
 import java.util.Date;
 
-public class JobPosting implements UserAcess{
+public class JobPosting implements UserAcess {
 
     private Date datePosted;
-    private Date dateClsoed;
+    private Date dateClosed;
     private String position;
 
-    public Date getDatePosted() {
-        return datePosted;
-    }
+    public Date getDatePosted() { return this.datePosted; }
 
     public void setDatePosted(Date datePosted) {
         this.datePosted = datePosted;
     }
 
-    public Date getDateClsoed() {
-        return dateClsoed;
+    public Date getDateClosed() {
+        return this.dateClosed;
     }
 
-    public void setDateClsoed(Date dateClsoed) {
-        this.dateClsoed = dateClsoed;
+    public void setDateClosed(Date dateClosed) {
+        this.dateClosed = dateClosed;
     }
 
     public String getPosition() {
-        return position;
+        return this.position;
     }
 
     public void setPosition(String position) {
@@ -31,9 +29,9 @@ public class JobPosting implements UserAcess{
     }
 
 
-    public JobPosting(Date datePosted, Date dateClsoed, String position) {
+    public JobPosting(Date datePosted, Date dateClosed, String position) {
         this.datePosted = datePosted;
-        this.dateClsoed = dateClsoed;
+        this.dateClosed = dateClosed;
         this.position = position;
     }
 }
