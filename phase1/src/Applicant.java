@@ -2,11 +2,20 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Applicant extends UserAccess {
+public class Applicant {
+
+    private String username = null;
+    private String password = null;
 
     String directory = System.getProperty("user.home");
-    String fileName = userName + ".txt";
+    String fileName = username + ".txt";
     String absolutePath = directory + File.separator + fileName;
+
+    public Applicant(String username, String password){
+        this.username = username;
+        this.password = password;
+
+    }
 
 
     FileWriter fileWriter;
@@ -33,7 +42,8 @@ public class Applicant extends UserAccess {
 
     }
 
-    public void applyToJob(){
+    public void applyToJob(JobPosting jobPosting){
+        //jobPosting.addApplicant();
 
 
     }
