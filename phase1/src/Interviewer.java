@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Interviewer implements UserAcess {
+public class Interviewer implements UserAccess {
 
     public ArrayList<Applicant> interviewees = new ArrayList();
 

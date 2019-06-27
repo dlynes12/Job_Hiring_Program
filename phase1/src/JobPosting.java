@@ -1,6 +1,6 @@
 import java.util.Date;
 
-public class JobPosting implements UserAcess {
+public class JobPosting implements UserAccess {
 
     private Date datePosted;
     private Date dateClosed;

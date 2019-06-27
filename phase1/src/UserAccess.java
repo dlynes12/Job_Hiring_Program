@@ -1,4 +1,4 @@
-public interface UserAcess {
+public interface UserAccess {
 
     String userName = null;
     String passWord = null;
