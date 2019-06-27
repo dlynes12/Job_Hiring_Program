@@ -4,7 +4,7 @@ public class Interviewer implements UserAccess {
 
     protected ArrayList<Applicant> interviewees = new ArrayList();
 
-    void Interview(ArrayList interviewees){
+    void Interview(ArrayList<Applicant> interviewees){
         this.interviewees = interviewees;
 
     }
