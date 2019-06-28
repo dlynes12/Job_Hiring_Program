@@ -16,6 +16,12 @@ public class Interviewer {
         return this.interviewees;
     }
 
+    public void Approve(){}
+
+    public void Decline(){}
+
+
+
 
 
 
