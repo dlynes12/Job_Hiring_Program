@@ -4,15 +4,15 @@ public class UserAccess {
 
     String userName = null;
     String passWord = null;
-    ArrayList Users = new ArrayList();
+    ArrayList users = new ArrayList();
 
 
     UserAccess(ArrayList users){
-        this.Users = users;
+        this.users = users;
     }
 
     void addUser(Object user){
-        this.Users.add(user);
+        this.users.add(user);
     }
 
 }
