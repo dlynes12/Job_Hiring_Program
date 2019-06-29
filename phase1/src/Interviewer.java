@@ -1,31 +1,38 @@
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class Interviewer {
 
-    protected ArrayList<Applicant> interviewees = new ArrayList<>();
+    private Map<Applicant, Integer> shortlist = new HashMap();  // <Applicant, Status(1,2,3)>
     private String username = null;
     private String password = null;
 
-
-    void Interview(ArrayList<Applicant> interviewees){
-        this.interviewees = interviewees;
-
+    public Interviewer(String username, String password){
+        this.username = username;
+        this.password = password;
     }
 
-    public ArrayList getInterviewees() {
-        return this.interviewees;
+    public String getUsername() {
+        return this.username;
     }
 
-    public void Approve(){}
+    public String getPassword() {
+        return this.password;
+    }
 
-    public void Decline(){}
+    public Set getInterviewees(){
+        return shortlist.keySet();
+    }
 
+    public void addApplicant(Applicant username){
+        shortlist.put(username, 1);
+    }
 
+    public void Approve(Applicant username){
+        shortlist.replace(username , shortlist.get(username) + 1);
+    }
 
-
-
-
-
-
+    public void Decline(Applicant username){}
 
 }
