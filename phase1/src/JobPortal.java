@@ -26,6 +26,7 @@ public class JobPortal extends Application {
         GridPane gridPane = new GridPane();
         TextField username = new TextField();
         TextField password = new TextField();
+
         gridPane.add(labelUsername, 2 ,0);
         gridPane.add(labelPassword, 2 ,2);
         gridPane.add(username,4,0);
