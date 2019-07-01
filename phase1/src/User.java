@@ -11,4 +11,5 @@ public abstract class User {
     public String getPassword() {return this.password;}
 
 
+    public abstract boolean login(UserAccess user);
 }

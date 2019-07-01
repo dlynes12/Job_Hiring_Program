@@ -16,6 +16,11 @@ public class Applicant extends User{
 
     }
 
+    @Override
+    public boolean login(UserAccess user) {
+        return false;
+    }
+
     FileWriter fileWriter;
 
     {

@@ -10,6 +10,11 @@ public class HR_Coordinator extends User {
         super(username, password);
     }
 
+    @Override
+    public boolean login(UserAccess user) {
+        return false;
+    }
+
     public void matchItoA(Interviewer interviewer, Applicant applicant){
         //interviewer.interviewees.add(applicant);
     }
