@@ -18,6 +18,7 @@ public class Applicant {
     }
 
 
+
     FileWriter fileWriter;
 
     {
@@ -57,4 +58,8 @@ public class Applicant {
 
     }
 
+    public boolean login(UserAccess user) {
+
+        return false;
+    }
 }
