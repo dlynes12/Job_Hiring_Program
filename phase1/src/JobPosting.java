@@ -10,6 +10,12 @@ public class JobPosting{
 
     //TODO: add a way to assign all the applicants to the JobPosting object - so HR can also access this.
 
+    public JobPosting(Date datePosted, Date dateClosed, String position) {
+        this.datePosted = datePosted;
+        this.dateClosed = dateClosed;
+        this.position = position;
+    }
+
     public Date getDatePosted() { return this.datePosted; }
 
     public void setDatePosted(Date datePosted) {
@@ -32,10 +38,10 @@ public class JobPosting{
         this.position = position;
     }
 
-
-    public JobPosting(Date datePosted, Date dateClosed, String position) {
-        this.datePosted = datePosted;
-        this.dateClosed = dateClosed;
-        this.position = position;
+    //HR needs to have access to this information as well.
+    public void addApplicant (Applicant applicant){
+        this.applicants.add(applicant);
     }
+
+
 }
