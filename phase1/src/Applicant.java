@@ -1,11 +1,15 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Applicant extends User{
 
+
     private String username;
     private String password;
+
+    ArrayList<JobPosting> jobsApplied = new ArrayList<>();
 
     String directory = System.getProperty("user.home");
     String fileName = username + ".txt";
@@ -17,8 +21,7 @@ public class Applicant extends User{
     }
 
     @Override
-    public boolean login(User user) {
-        return false;
+    public boolean login(User user) { return false;
     }
 
 
@@ -48,7 +51,7 @@ public class Applicant extends User{
     }
 
     public void applyToJob(JobPosting jobPosting){
-        //jobPosting.addApplicant();
+        jobPosting.addApplicant(this);
 
 
     }
