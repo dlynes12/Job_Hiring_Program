@@ -11,9 +11,11 @@ public class HR_Coordinator extends User {
     }
 
     @Override
-    public boolean login(UserAccess user) {
+    public boolean login(User user) {
         return false;
     }
+
+
 
     public void matchItoA(Interviewer interviewer, Applicant applicant){
         //interviewer.interviewees.add(applicant);

@@ -10,17 +10,19 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.Random;
+
 public class JobPortal extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
         ApplicationModel applicationModel = new ApplicationModel();
 
-        Group root =  new Group();
+        Group loginScene =  new Group();
         stage.setTitle("Job Application Portal");
-        stage.setScene(new Scene(root, 600, 600));
+        stage.setScene(new Scene(loginScene, 600, 600));
         stage.show();
-        Button button= new Button("Login in");
+        Button button= new Button("Log in");
         Label labelUsername = new Label("Username");
         Label labelPassword = new Label("Password");
         GridPane gridPane = new GridPane();
@@ -42,10 +44,26 @@ public class JobPortal extends Application {
         button.setLayoutX(280);
         StackPane box = new StackPane();
         box.getChildren().addAll(gridPane);
-        button.setOnAction((ActionEvent e) -> {
-            System.out.println("clicked");
-        });
-        root.getChildren().addAll(box);
+        loginScene.getChildren().addAll(box);
+        User user = new User(username.getText(), password.getText()) {
+            @Override
+            public boolean login(User user) {
+                return  true;
+            }
+
+        };
+        button.setOnAction((ActionEvent e) -> { if(user.login(user)) {
+            Group JobPortalScene = new Group();
+            stage.setScene(new Scene(JobPortalScene, 600, 600));
+            Button getResume = new Button("Submit your resume");
+            Button getFile = new Button("Open your resume from file");
+            StackPane resumeUpload = new StackPane();
+            resumeUpload.getChildren().addAll(getFile, getResume);
+
+            JobPortalScene.getChildren().addAll(resumeUpload);
+
+        }});
+
 
         // View + Controller
     }

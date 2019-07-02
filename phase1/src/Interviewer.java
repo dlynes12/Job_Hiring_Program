@@ -13,9 +13,11 @@ public class Interviewer extends User {
     }
 
     @Override
-    public boolean login(UserAccess user) {
+    public boolean login(User user) {
         return false;
     }
+
+
 
     public Set getInterviewees(){
         return shortlist.keySet();

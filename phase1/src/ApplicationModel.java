@@ -6,7 +6,7 @@ class ApplicationModel  {
         }
 
 
-        void logIn(UserAccess user){
+        void logIn(User user){
                 Applicant applicant = new Applicant("", "");
                 if (applicant.login(user)){
 
