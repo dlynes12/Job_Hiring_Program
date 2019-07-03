@@ -27,6 +27,9 @@ Responsibility:
 - Work on UserAccess
 
 Comments:
+-Changed constructors for HR Coordinator, Interviewer and Applicant
+-Changed addUser in UserAccess class
+-created login method [LogInUser()] for UserAccess class
 
 
 

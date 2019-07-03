@@ -1,20 +1,27 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class Applicant {
+public class Applicant extends User{
 
-    private String username = null;
-    private String password = null;
+
+    private String username;
+    private String password;
+
+    ArrayList<JobPosting> jobsApplied = new ArrayList<>();
 
     String directory = System.getProperty("user.home");
     String fileName = username + ".txt";
     String absolutePath = directory + File.separator + fileName;
 
     public Applicant(String username, String password){
-        this.username = username;
-        this.password = password;
+        super(username, password);
 
+    }
+
+    @Override
+    public boolean login(User user) { return false;
     }
 
 
@@ -44,7 +51,7 @@ public class Applicant {
     }
 
     public void applyToJob(JobPosting jobPosting){
-        //jobPosting.addApplicant();
+        jobPosting.addApplicant(this);
 
 
     }
@@ -58,8 +65,4 @@ public class Applicant {
 
     }
 
-    public boolean login(UserAccess user) {
-
-        return false;
-    }
 }
