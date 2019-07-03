@@ -47,7 +47,7 @@ public class Applicant extends User {
     @Override
     public boolean login(String username, String password) {
 
-        User temp = new Applicant(username, password);
+        Applicant temp = new Applicant(username, password);
         for (Applicant a : applicants) {
             // if there is an existing applicant user and if their user names and passwords match
             if (temp.getUsername().equals(a.getUsername()) && temp.getPassword().equals(a.getPassword())) {
