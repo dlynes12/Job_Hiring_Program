@@ -13,10 +13,9 @@ public class Interviewer extends User {
     }
 
     @Override
-    public boolean login(User user) {
+    public boolean login(String username, String password) {
         return false;
     }
-
 
 
     public Set getInterviewees(){
