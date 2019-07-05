@@ -22,40 +22,36 @@ public class JobPortal extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         ApplicationModel applicationModel = new ApplicationModel();
-
-        Group loginScene =  new Group();
+        Applicant applicant = new Applicant("", "");
+        //JobPosting jobPosting = new JobPosting();
+        Group loginScene = new Group();
         stage.setTitle("Job Application Portal");
         stage.setScene(new Scene(loginScene, 600, 600));
         stage.show();
-        Button button= new Button("Log in");
+        Button button = new Button("Log in");
+        Button applicantButton = new Button("Applicant");
+        Button hRButton = new Button("HR");
+        Button InterviewerButton = new Button("Interviewer");
         Label labelUsername = new Label("Username");
         Label labelPassword = new Label("Password");
         GridPane gridPane = new GridPane();
         TextField username = new TextField();
         TextField password = new TextField();
-
-        gridPane.add(labelUsername, 2 ,0);
-        gridPane.add(labelPassword, 2 ,2);
-        gridPane.add(username,4,0);
-        gridPane.add(password,4,2);
-        gridPane.add(button,4,4);
+        gridPane.add(labelUsername, 2, 0);
+        gridPane.add(labelPassword, 2, 2);
+        gridPane.add(username, 4, 0);
+        gridPane.add(password, 4, 2);
+        gridPane.add(button, 4, 4);
         gridPane.setHgap(40);
-
 
         StackPane box = new StackPane();
         box.getChildren().addAll(gridPane);
         loginScene.getChildren().addAll(box);
-        User user = new User(username.getText(), password.getText()) {
-            @Override
-            public boolean login(String username, String password) {
-
-                return true;
-            }
 
 
 
-        };
-        button.setOnAction((ActionEvent e) -> { if(user.login(user.getUsername(),user.getPassword())) {
+        UserAccess user = new UserAccess(username.getText(), password.getText());
+        button.setOnAction((ActionEvent e) -> { if(user.LogInUser(user.getUsername(),user.getPassword())) {
             Group applicantPortalScene = new Group();
             stage.setScene(new Scene(applicantPortalScene, 600, 600));
             GridPane applicantSelectionPane = new GridPane();
@@ -76,8 +72,16 @@ public class JobPortal extends Application {
                 Group jobPortalScene = new Group();
                 stage.setScene(new Scene(jobPortalScene,800,800));
 
+                //for (JobPosting jP: jobPosting.jobpostings){
+                //      Text txt+i.toString = new Text(jb.toString);
+                //      Button btn+i.toString();
+                //
+                //      i++;
+                // }
 
             });
+
+
             Label labelFileUpload = new Label("Submit Your resume");
             Label labelEnterResume = new Label("Enter your resume");
             applicantSelectionPane.add(getFile,2,2);

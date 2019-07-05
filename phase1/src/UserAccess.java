@@ -1,11 +1,30 @@
 import java.util.ArrayList;
 
 public class UserAccess {
+    private  String password;
+    private  String username;
     ArrayList<User> users = new ArrayList();
 
 
-    UserAccess(ArrayList users){
-        this.users = users;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    UserAccess(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     boolean addUser(User user){
@@ -19,7 +38,7 @@ public class UserAccess {
         return add;
     }
 
-    public User LogInUser(String username, String password){
+    public Boolean LogInUser(String username, String password){
         /*null result means a user is not logged in
         * the return of a user object means logged in*/
         User result = null;
@@ -30,7 +49,7 @@ public class UserAccess {
                 }
             }
         }
-        return result;
+        return true;
     }
 
 }

@@ -5,9 +5,28 @@ import java.util.ArrayList;
 
 public class Applicant extends User {
 
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     //do i still need these ??
     private String username;
     private String password;
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     private static ArrayList<Applicant> applicants = new ArrayList<>();
 
 
@@ -44,7 +63,6 @@ public class Applicant extends User {
     // exception handling
 
 
-    @Override
     public boolean login(String username, String password) {
 
         Applicant temp = new Applicant(username, password);

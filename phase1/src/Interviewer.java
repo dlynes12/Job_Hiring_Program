@@ -12,7 +12,6 @@ public class Interviewer extends User {
         super(username,password);
     }
 
-    @Override
     public boolean login(String username, String password) {
         return false;
     }
