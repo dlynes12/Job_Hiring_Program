@@ -1,9 +1,11 @@
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Applicant extends User {
+public class Applicant extends UserAccess {
 
     @Override
     public String getUsername() {
@@ -86,7 +88,7 @@ public class Applicant extends User {
 
     }
 
-    public void applyToJob(JobPosting jobPosting) {
+    public void applyToJob(@NotNull JobPosting jobPosting) {
         jobPosting.addApplicant(this);
     }
 

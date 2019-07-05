@@ -6,7 +6,7 @@ class ApplicationModel  {
         }
 
 
-        void logIn(User user){
+        void logIn(UserAccess user){
                 Applicant applicant = new Applicant("", "");
 
                 }

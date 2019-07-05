@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class Interviewer extends User {
+public class Interviewer extends UserAccess {
 
     private Map<Applicant, Integer> shortlist = new HashMap();  // <Applicant, Status(1,2,3)>
     private String username;
@@ -12,9 +12,9 @@ public class Interviewer extends User {
         super(username,password);
     }
 
-    public boolean login(String username, String password) {
-        return false;
-    }
+//    public boolean login(String username, String password) {
+//        return false;
+//    }
 
 
     public Set getInterviewees(){

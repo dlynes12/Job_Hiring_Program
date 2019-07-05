@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class UserAccess {
     private  String password;
     private  String username;
-    ArrayList<User> users = new ArrayList();
+    static ArrayList<UserAccess> users = new ArrayList();
 
 
     public String getPassword() {
@@ -27,7 +27,7 @@ public class UserAccess {
         this.password = password;
     }
 
-    boolean addUser(User user){
+    boolean addUser(UserAccess user){
         boolean add = true;
         for (int i=0; i < users.size();i++){
             if (user.getUsername() == users.get(i).getUsername()){
@@ -41,7 +41,7 @@ public class UserAccess {
     public Boolean LogInUser(String username, String password){
         /*null result means a user is not logged in
         * the return of a user object means logged in*/
-        User result = null;
+        UserAccess result = null;
         for (int i=0; i < users.size();i++){
             if (users.get(i).getUsername() == username){
                 if (users.get(i).getPassword()== password){
