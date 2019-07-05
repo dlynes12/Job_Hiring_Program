@@ -47,16 +47,20 @@ public class JobPortal extends Application {
         loginScene.getChildren().addAll(box);
         User user = new User(username.getText(), password.getText()) {
             @Override
-            public boolean login(User user) {
-                return  true;
+            public boolean login(String username, String password) {
+
+                return true;
             }
 
+
+
         };
-        button.setOnAction((ActionEvent e) -> { if(user.login(user)) {
-            Group JobPortalScene = new Group();
-            stage.setScene(new Scene(JobPortalScene, 600, 600));
-            GridPane applicatnResumeUploadButtons = new GridPane();
+        button.setOnAction((ActionEvent e) -> { if(user.login(user.getUsername(),user.getPassword())) {
+            Group applicantPortalScene = new Group();
+            stage.setScene(new Scene(applicantPortalScene, 600, 600));
+            GridPane applicantSelectionPane = new GridPane();
             Button getResume = new Button("Submit your resume");
+            Button applyJob = new Button("Apply to jobs");
             Button getFile = new Button("Open your resume from file");
             TextField resume = new TextField();
             getFile.setOnAction((ActionEvent openFile) -> {
@@ -66,23 +70,29 @@ public class JobPortal extends Application {
                 fileChooser.setInitialFileName(user.getUsername());
                 File file = fileChooser.showOpenDialog(stage);
                 System.out.println(file);
-                File filename = fileChooser.showSaveDialog(stage);
+
+            });
+            applyJob.setOnAction((ActionEvent apply) -> {
+                Group jobPortalScene = new Group();
+                stage.setScene(new Scene(jobPortalScene,800,800));
+
 
             });
             Label labelFileUpload = new Label("Submit Your resume");
             Label labelEnterResume = new Label("Enter your resume");
-            applicatnResumeUploadButtons.add(getFile,2,2);
-            applicatnResumeUploadButtons.add(getResume,2,4);
-            applicatnResumeUploadButtons.add(labelFileUpload,0,2);
-            applicatnResumeUploadButtons.add(resume,2,3);
-            applicatnResumeUploadButtons.add(labelEnterResume,0,4);
+            applicantSelectionPane.add(getFile,2,2);
+            applicantSelectionPane.add(getResume,2,4);
+            applicantSelectionPane.add(labelFileUpload,0,2);
+            applicantSelectionPane.add(resume,2,3);
+            applicantSelectionPane.add(labelEnterResume,0,4);
+            applicantSelectionPane.add(applyJob,2,6);
             StackPane resumeUpload = new StackPane();
-            applicatnResumeUploadButtons.setHgap(20);
-            applicatnResumeUploadButtons.setVgap(20);
-            resumeUpload.getChildren().addAll(applicatnResumeUploadButtons);
+            applicantSelectionPane.setHgap(20);
+            applicantSelectionPane.setVgap(20);
+            resumeUpload.getChildren().addAll(applicantSelectionPane);
 
 
-            JobPortalScene.getChildren().addAll(resumeUpload);
+            applicantPortalScene.getChildren().addAll(resumeUpload);
 
         }});
 
