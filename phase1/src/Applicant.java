@@ -1,4 +1,3 @@
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -88,7 +87,7 @@ public class Applicant extends UserAccess {
 
     }
 
-    public void applyToJob(@NotNull JobPosting jobPosting) {
+    public void applyToJob(JobPosting jobPosting) {
         jobPosting.addApplicant(this);
     }
 

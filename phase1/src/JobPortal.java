@@ -28,10 +28,10 @@ public class JobPortal extends Application {
         stage.setTitle("Job Application Portal");
         stage.setScene(new Scene(loginScene, 600, 600));
         stage.show();
-        Button button = new Button("Log in");
+        Button log_in = new Button("Log in");
         Button applicantButton = new Button("Applicant");
         Button hRButton = new Button("HR");
-        Button InterviewerButton = new Button("Interviewer");
+        Button interviewerButton = new Button("Interviewer");
         Label labelUsername = new Label("Username");
         Label labelPassword = new Label("Password");
         GridPane gridPane = new GridPane();
@@ -41,8 +41,11 @@ public class JobPortal extends Application {
         gridPane.add(labelPassword, 2, 2);
         gridPane.add(username, 4, 0);
         gridPane.add(password, 4, 2);
-        gridPane.add(button, 4, 4);
-        gridPane.setHgap(40);
+        gridPane.add(applicantButton, 2, 7);
+        gridPane.add(hRButton, 3, 7);
+        gridPane.add(interviewerButton, 4, 7);
+        gridPane.add(log_in, 7, 4);
+        gridPane.setHgap(10);
 
         StackPane box = new StackPane();
         box.getChildren().addAll(gridPane);
@@ -51,7 +54,7 @@ public class JobPortal extends Application {
 
 
         UserAccess user = new UserAccess(username.getText(), password.getText());
-        button.setOnAction((ActionEvent e) -> { if(user.LogInUser(user.getUsername(),user.getPassword())) {
+        log_in.setOnAction((ActionEvent e) -> { if(user.LogInUser(user.getUsername(),user.getPassword())) {
             Group applicantPortalScene = new Group();
             stage.setScene(new Scene(applicantPortalScene, 600, 600));
             GridPane applicantSelectionPane = new GridPane();
