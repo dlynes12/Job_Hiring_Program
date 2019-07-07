@@ -38,7 +38,7 @@ public class UserAccess {
         return add;
     }
 
-    public Boolean LogInUser(String username, String password){
+    public UserAccess LogInUser(String username, String password){
         /*null result means a user is not logged in
         * the return of a user object means logged in*/
         UserAccess result = null;
@@ -49,7 +49,7 @@ public class UserAccess {
                 }
             }
         }
-        return true;
+        return result;
     }
 
 }

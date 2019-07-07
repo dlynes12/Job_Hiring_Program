@@ -10,7 +10,16 @@ public class HR_Coordinator extends UserAccess {
         super(username, password);
     }
 
-//    public boolean login(String username, String password) {
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+    //    public boolean login(String username, String password) {
 //        return false;
 //    }
 
