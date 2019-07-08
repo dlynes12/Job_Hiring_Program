@@ -2,13 +2,11 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
 
 public class Applicant {
 
     private String username;
     private String password;
-    private HashMap<String, String> jobsApplied;
 
     String directory = System.getProperty("user.home");
     String fileName = username + ".txt";
@@ -18,6 +16,7 @@ public class Applicant {
         this.username = username;
         this.password = password;
     }
+
 
     public String getUsername() {
         return username;
@@ -34,6 +33,8 @@ public class Applicant {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 
     //FileWriter
 
@@ -58,6 +59,7 @@ public class Applicant {
 
 
     public void getDocs() {
+
     }
 
     public void applyToJob(JobPosting jobPosting) {
@@ -65,12 +67,7 @@ public class Applicant {
     }
 
 
-    public String getJobStatus(JobPosting job) {
-        return this.jobsApplied.get(job.getPosition());
-    }
-
-    //TODO: Every time an applicant does an action for a job posting - make sure to call this method and update the job status
-    public void updateStatus(String status){
+    public void getJobStatus() {
 
     }
 
