@@ -3,8 +3,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Applicant {
+public class Applicant extends User {
 
+
+    //Do i need this still???????? @Santi for the file writer
     private String username;
     private String password;
 
@@ -13,8 +15,7 @@ public class Applicant {
     String absolutePath = directory + File.separator + fileName;
 
     public Applicant(String username, String password) {
-        this.username = username;
-        this.password = password;
+        super(username, password);
     }
 
 

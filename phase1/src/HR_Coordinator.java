@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class HR_Coordinator extends UserAccess {
+public class HR_Coordinator extends User {
 
     private String username;
     private String password;
