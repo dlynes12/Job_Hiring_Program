@@ -74,6 +74,10 @@ public class Applicant extends User {
         return this.jobsApplied.get(job.getPosition());
     }
 
+    public void updateStatus(JobPosting job, String status){
+        this.jobsApplied.put(job.getPosition(), status);
+    }
+
     public void getHistory() {
 
     }
