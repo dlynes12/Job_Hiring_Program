@@ -2,6 +2,7 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class Applicant extends User {
 
@@ -9,6 +10,7 @@ public class Applicant extends User {
     //Do i need this still???????? @Santi for the file writer
     private String username;
     private String password;
+    private HashMap<String, String> jobsApplied;
 
     String directory = System.getProperty("user.home");
     String fileName = username + ".txt";
@@ -68,8 +70,8 @@ public class Applicant extends User {
     }
 
 
-    public void getJobStatus() {
-
+    public String getJobStatus(JobPosting job) {
+        return this.jobsApplied.get(job.getPosition());
     }
 
     public void getHistory() {
