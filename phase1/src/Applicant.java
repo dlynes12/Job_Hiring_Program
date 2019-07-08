@@ -2,13 +2,12 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Applicant {
 
-    //do i still need these ??
     private String username;
     private String password;
+
     String directory = System.getProperty("user.home");
     String fileName = username + ".txt";
     String absolutePath = directory + File.separator + fileName;
@@ -16,7 +15,6 @@ public class Applicant {
     public Applicant(String username, String password) {
         this.username = username;
         this.password = password;
-
     }
 
 
@@ -35,8 +33,6 @@ public class Applicant {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    private static ArrayList<Applicant> applicants = new ArrayList<>();
 
 
 
@@ -59,26 +55,6 @@ public class Applicant {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-    }
-    // exception handling
-
-
-    public boolean login(String username, String password) {
-
-        Applicant temp = new Applicant(username, password);
-        for (Applicant a : applicants) {
-            // if there is an existing applicant user and if their user names and passwords match
-            if (temp.getUsername().equals(a.getUsername()) && temp.getPassword().equals(a.getPassword())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void signUp(String username, String password) {
-        Applicant newApplicant = new Applicant(username, password);
-        applicants.add(newApplicant);
-
     }
 
 
