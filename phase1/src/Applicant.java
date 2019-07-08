@@ -4,22 +4,30 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Applicant extends UserAccess {
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
+public class Applicant {
 
     //do i still need these ??
     private String username;
     private String password;
+    String directory = System.getProperty("user.home");
+    String fileName = username + ".txt";
+    String absolutePath = directory + File.separator + fileName;
 
-    @Override
+    public Applicant(String username, String password) {
+        this.username = username;
+        this.password = password;
+
+    }
+
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String newUsername) {
+        this.username = newUsername;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -30,15 +38,6 @@ public class Applicant extends UserAccess {
 
     private static ArrayList<Applicant> applicants = new ArrayList<>();
 
-
-    String directory = System.getProperty("user.home");
-    String fileName = username + ".txt";
-    String absolutePath = directory + File.separator + fileName;
-
-    public Applicant(String username, String password) {
-        super(username, password);
-
-    }
 
 
     //FileWriter
