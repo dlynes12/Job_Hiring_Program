@@ -1,24 +1,13 @@
 import java.util.ArrayList;
 
-public class HR_Coordinator extends User {
+public class HR_Coordinator extends User{
 
-    private String username;
-    private String password;
     //ArrayList<JobPosting> Jobs = new ArrayList<>();
 
-    public HR_Coordinator(String username,String password){
-        super(username, password);
+    public HR_Coordinator(String Username,String Password){
+        super(Username,Password);
     }
 
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
     //    public boolean login(String username, String password) {
 //        return false;
 //    }

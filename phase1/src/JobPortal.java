@@ -17,7 +17,7 @@ import javax.swing.*;
 import java.io.File;
 
 public class JobPortal extends Application {
-
+    UserAccess userManager = new UserAccess();
     @Override
     public void start(Stage stage) throws Exception {
         ApplicationModel applicationModel = new ApplicationModel();
@@ -100,28 +100,28 @@ public class JobPortal extends Application {
             create.setOnAction((ActionEvent ProcessUser) ->{
                 if ((RadioButton) RadioSet.getSelectedToggle() == RadioApp){
                     Applicant tempApp = new Applicant(NewUserField.getText(), NewPassField.getText());
-                    if (tempApp.addUser(tempApp)){
+                    if (userManager.addUser(tempApp)){
                         stage.setScene(LoginPage);
                     }
-                }else if ((RadioButton) RadioSet.getSelectedToggle() == RadioHR){
+                }else if (RadioSet.getSelectedToggle() == RadioHR){
                     HR_Coordinator tempHR = new HR_Coordinator(NewUserField.getText(), NewPassField.getText());
-                    if (tempHR.addUser(tempHR)){
+                    if (userManager.addUser(tempHR)){
                         stage.setScene(LoginPage);
                     }
                 }else if ((RadioButton) RadioSet.getSelectedToggle() == RadioInt){
                     Interviewer tempInt = new Interviewer(NewUserField.getText(), NewPassField.getText());
-                        if (tempInt.addUser(tempInt)){
-                            stage.setScene(LoginPage);
-                        }
+                    if (userManager.addUser(tempInt)){
+                        stage.setScene(LoginPage);
+                    }
 
                 }
             } );
 
         });
 
-        UserAccess user = new UserAccess(null, null);
+
         log_in.setOnAction((ActionEvent e) -> {
-            UserAccess LoggedUser = user.LogInUser(user.getUsername(),user.getPassword());
+            User LoggedUser = userManager.LogInUser(username.getText(),password.getText()); // the user that is actually logged in
             if(LoggedUser != null) {
                 if (LoginRadio.getSelectedToggle() == applicantButton){
                     Group applicantPortalScene = new Group();
@@ -136,7 +136,7 @@ public class JobPortal extends Application {
                             FileChooser fileChooser = new FileChooser();
                             //fileChooser.setInitialDirectory();
                             fileChooser.setTitle("Open Resume File");
-                            fileChooser.setInitialFileName(user.getUsername());
+                            fileChooser.setInitialFileName(LoggedUser.getUsername());
                             File file = fileChooser.showOpenDialog(stage);
                             System.out.println(file);
 
@@ -172,17 +172,18 @@ public class JobPortal extends Application {
                         applicantPortalScene.getChildren().addAll(resumeUpload);
                     }// what happens if they are not an applicant but have a login;
                     //send message wrong user type?
-                    stage.setScene(LoginPage);
+                    else{stage.setScene(LoginPage);}
                 }else if (LoginRadio.getSelectedToggle() == hRButton){
                     Group HRPortalScene = new Group();
                     stage.setScene(new Scene(HRPortalScene, 600, 600));
                     if (HR_Coordinator.class == LoggedUser.getClass()){
-                        Label TestLab0 = new Label("HR Page");
+                        String WelcomeMessage = "Welcome to the Human Resource Page: " + ((HR_Coordinator) LoggedUser).getUsername();
+                        Label TestLab0 = new Label(WelcomeMessage);
 
                         HRPortalScene.getChildren().addAll(TestLab0);
                     }// what happens if they are not an HR Coordinator but have a login;
                     //send message wrong user type?
-                    stage.setScene(LoginPage);
+                    else {stage.setScene(LoginPage);}
                 }else if (LoginRadio.getSelectedToggle() == interviewerButton){
                     Group intPortalScene = new Group();
                     stage.setScene(new Scene(intPortalScene, 600, 600));
@@ -192,53 +193,10 @@ public class JobPortal extends Application {
                         intPortalScene.getChildren().addAll(TestLab1);
                     }// what happens if they are not an interviewer but have a login;
                     //send message wrong user type?
-                    stage.setScene(LoginPage);
+                    else{stage.setScene(LoginPage);}
                 }
 
-            /*GridPane applicantSelectionPane = new GridPane();
-            Button getResume = new Button("Submit your resume");
-            Button applyJob = new Button("Apply to jobs");
-            Button getFile = new Button("Open your resume from file");
-            TextField resume = new TextField();
-            getFile.setOnAction((ActionEvent openFile) -> {
-                FileChooser fileChooser = new FileChooser();
-                //fileChooser.setInitialDirectory();
-                fileChooser.setTitle("Open Resume File");
-                fileChooser.setInitialFileName(user.getUsername());
-                File file = fileChooser.showOpenDialog(stage);
-                System.out.println(file);
 
-            });
-            applyJob.setOnAction((ActionEvent apply) -> {
-                Group jobPortalScene = new Group();
-                stage.setScene(new Scene(jobPortalScene,800,800));
-
-                //for (JobPosting jP: jobPosting.jobpostings){
-                //      Text txt+i.toString = new Text(jb.toString);
-                //      Button btn+i.toString();
-                //
-                //      i++;
-                // }
-
-            });
-
-
-            Label labelFileUpload = new Label("Submit Your resume");
-            Label labelEnterResume = new Label("Enter your resume");
-            applicantSelectionPane.add(getFile,2,2);
-            applicantSelectionPane.add(getResume,2,4);
-            applicantSelectionPane.add(labelFileUpload,0,2);
-            applicantSelectionPane.add(resume,2,3);
-            applicantSelectionPane.add(labelEnterResume,0,4);
-            applicantSelectionPane.add(applyJob,2,6);
-            StackPane resumeUpload = new StackPane();
-            applicantSelectionPane.setHgap(20);
-            applicantSelectionPane.setVgap(20);
-            resumeUpload.getChildren().addAll(applicantSelectionPane);
-
-
-            applicantPortalScene.getChildren().addAll(resumeUpload);
-*/
         }});
 
 
