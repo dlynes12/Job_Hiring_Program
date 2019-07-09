@@ -5,8 +5,6 @@ import java.util.Set;
 public class Interviewer extends User {
 
     private Map<Applicant, Integer> shortlist = new HashMap();  // <Applicant, Status(1,2,3)>
-    private String username;
-    private String password;
 
     public Interviewer(String username, String password){
         super(username,password);
@@ -15,17 +13,6 @@ public class Interviewer extends User {
 //    public boolean login(String username, String password) {
 //        return false;
 //    }
-
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
 
     public Set getInterviewees(){
         return shortlist.keySet();

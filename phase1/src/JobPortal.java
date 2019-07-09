@@ -17,9 +17,10 @@ import javax.swing.*;
 import java.io.File;
 
 public class JobPortal extends Application {
-    UserAccess userManager = new UserAccess();
+
     @Override
     public void start(Stage stage) throws Exception {
+        UserAccess userManager = new UserAccess();
         ApplicationModel applicationModel = new ApplicationModel();
         //JobPosting jobPosting = new JobPosting();
         Group loginScene = new Group();
@@ -120,12 +121,15 @@ public class JobPortal extends Application {
 
 
         log_in.setOnAction((ActionEvent e) -> {
-            User LoggedUser = userManager.LogInUser(username.getText(),password.getText()); // the user that is actually logged in
-            if(LoggedUser != null) {
+            String UName = username.getText();
+            String Pass = password.getText();
+            User LoggedUser = userManager.LogInUser(UName,Pass); // the user that is actually logged in
+            if(LoggedUser!= null) {
                 if (LoginRadio.getSelectedToggle() == applicantButton){
                     Group applicantPortalScene = new Group();
+                    //Applicant LoggedUser = userManager.getApplicant(UName,Pass);
                     stage.setScene(new Scene(applicantPortalScene, 600, 600));
-                    if (Applicant.class == LoggedUser.getClass()){
+                    if (LoggedUser.getClass() == Applicant.class){
                         GridPane applicantSelectionPane = new GridPane();
                         Button getResume = new Button("Submit your resume");
                         Button applyJob = new Button("Apply to jobs");
@@ -175,8 +179,8 @@ public class JobPortal extends Application {
                 }else if (LoginRadio.getSelectedToggle() == hRButton){
                     Group HRPortalScene = new Group();
                     stage.setScene(new Scene(HRPortalScene, 600, 600));
-                    if (HR_Coordinator.class == LoggedUser.getClass()){
-                        String WelcomeMessage = "Welcome to the Human Resource Page: " + ((HR_Coordinator) LoggedUser).getUsername();
+                    if (LoggedUser.getClass() == HR_Coordinator.class){
+                        String WelcomeMessage = "Welcome to the Human Resource Page: " + LoggedUser.getUsername();
                         Label TestLab0 = new Label(WelcomeMessage);
 
                         HRPortalScene.getChildren().addAll(TestLab0);
@@ -186,7 +190,7 @@ public class JobPortal extends Application {
                 }else if (LoginRadio.getSelectedToggle() == interviewerButton){
                     Group intPortalScene = new Group();
                     stage.setScene(new Scene(intPortalScene, 600, 600));
-                    if (Interviewer.class == LoggedUser.getClass()){
+                    if (LoggedUser.getClass() == Interviewer.class){
                         Label TestLab1 = new Label("Interviwer Page");
 
                         intPortalScene.getChildren().addAll(TestLab1);
