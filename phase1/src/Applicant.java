@@ -4,39 +4,23 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class Applicant extends User {
-
-
-    //Do i need this still???????? @Santi for the file writer
-    private String username;
-    private String password;
+public class Applicant extends User{
     private HashMap<String, String> jobsApplied;
+
+    @Override
+    public String getUsername() {
+        return super.getUsername();
+    }
+
+    String username = this.getUsername();
 
     String directory = System.getProperty("user.home");
     String fileName = username + ".txt";
     String absolutePath = directory + File.separator + fileName;
 
     public Applicant(String username, String password) {
-        super(username, password);
+        super(username,password);
     }
-
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String newUsername) {
-        this.username = newUsername;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
 
 
     //FileWriter
@@ -62,7 +46,6 @@ public class Applicant extends User {
 
 
     public void getDocs() {
-
     }
 
     public void applyToJob(JobPosting jobPosting) {
@@ -72,10 +55,6 @@ public class Applicant extends User {
 
     public String getJobStatus(JobPosting job) {
         return this.jobsApplied.get(job.getPosition());
-    }
-
-    public void updateStatus(JobPosting job, String status){
-        this.jobsApplied.put(job.getPosition(), status);
     }
 
     public void getHistory() {

@@ -21,7 +21,6 @@ public class JobPortal extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         ApplicationModel applicationModel = new ApplicationModel();
-        Applicant applicant = new Applicant("", "");
         //JobPosting jobPosting = new JobPosting();
         Group loginScene = new Group();
         stage.setTitle("Job Application Portal");
