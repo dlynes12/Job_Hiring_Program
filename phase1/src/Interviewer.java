@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class Interviewer extends UserAccess {
+public class Interviewer extends User {
 
     private Map<Applicant, Integer> shortlist = new HashMap();  // <Applicant, Status(1,2,3)>
     private String username;
