@@ -16,19 +16,6 @@ public class UserAccess {
     }
 
 
-    public boolean isLogIn(String username, String password){
-        boolean result = false;
-        for (int i=0; i < users.size();i++){
-            String listUsername = users.get(i).getUsername();
-            if (listUsername.equals(username)){
-                if (users.get(i).getPassword().equals(password)){
-                    result = true;
-                }
-            }
-        }
-        return result;
-    }
-
 
     public User LogInUser(String username, String password){
         User result = null;

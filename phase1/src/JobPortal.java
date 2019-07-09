@@ -178,12 +178,32 @@ public class JobPortal extends Application {
                     else{stage.setScene(LoginPage);}
                 }else if (LoginRadio.getSelectedToggle() == hRButton){
                     Group HRPortalScene = new Group();
-                    stage.setScene(new Scene(HRPortalScene, 600, 600));
+                    stage.setScene(new Scene(HRPortalScene, 450, 250));
                     if (LoggedUser.getClass() == HR_Coordinator.class){
                         String WelcomeMessage = "Welcome to the Human Resource Page: " + LoggedUser.getUsername();
-                        Label TestLab0 = new Label(WelcomeMessage);
+                        Label welcomeLabel = new Label(WelcomeMessage);
+                        Label Actions = new Label("What do you want to do? Please select an option below:");
+                        Button AddJObs = new Button("ADD A JOB");
+                        Button ViewOpenJobs = new Button("VIEW ALL OPEN JOBS");
+                        Button Exit = new Button("EXIT");
+                        GridPane MessageGrid = new GridPane();
+                        GridPane ButtonGrid = new GridPane();
+                        MessageGrid.add(welcomeLabel,1,0);
+                        MessageGrid.add(Actions,1,2);
+                        ButtonGrid.add(AddJObs,1,0);
+                        ButtonGrid.add(ViewOpenJobs, 2,0);
+                        ButtonGrid.add(Exit, 4,2);
 
-                        HRPortalScene.getChildren().addAll(TestLab0);
+                        BorderPane HRPlacement = new BorderPane();
+                        MessageGrid.setHgap(20);
+                        MessageGrid.setVgap(5);
+                        ButtonGrid.setHgap(20);
+                        ButtonGrid.setVgap(5);
+                        HRPlacement.setTop(MessageGrid);
+                        HRPlacement.setBottom(ButtonGrid);
+
+
+                        HRPortalScene.getChildren().addAll(HRPlacement);
                     }// what happens if they are not an HR Coordinator but have a login;
                     //send message wrong user type?
                     else {stage.setScene(LoginPage);}
@@ -191,7 +211,7 @@ public class JobPortal extends Application {
                     Group intPortalScene = new Group();
                     stage.setScene(new Scene(intPortalScene, 600, 600));
                     if (LoggedUser.getClass() == Interviewer.class){
-                        Label TestLab1 = new Label("Interviwer Page");
+                        Label TestLab1 = new Label("Interviewer Page");
 
                         intPortalScene.getChildren().addAll(TestLab1);
                     }// what happens if they are not an interviewer but have a login;
