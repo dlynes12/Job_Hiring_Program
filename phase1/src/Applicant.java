@@ -1,23 +1,25 @@
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 
-public class Applicant extends User {
+public class Applicant extends User{
+    private HashMap<String, String> jobsApplied;
 
-    //do i still need these ??
-    private String username;
-    private String password;
-    private static ArrayList<Applicant> applicants = new ArrayList<>();
+    @Override
+    public String getUsername() {
+        return super.getUsername();
+    }
 
+    String username = this.getUsername();
 
     String directory = System.getProperty("user.home");
     String fileName = username + ".txt";
     String absolutePath = directory + File.separator + fileName;
 
     public Applicant(String username, String password) {
-        super(username, password);
-
+        super(username,password);
     }
 
 
@@ -41,31 +43,9 @@ public class Applicant extends User {
             ex.printStackTrace();
         }
     }
-    // exception handling
-
-
-    @Override
-    public boolean login(String username, String password) {
-
-        Applicant temp = new Applicant(username, password);
-        for (Applicant a : applicants) {
-            // if there is an existing applicant user and if their user names and passwords match
-            if (temp.getUsername().equals(a.getUsername()) && temp.getPassword().equals(a.getPassword())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void signUp(String username, String password) {
-        Applicant newApplicant = new Applicant(username, password);
-        applicants.add(newApplicant);
-
-    }
 
 
     public void getDocs() {
-
     }
 
     public void applyToJob(JobPosting jobPosting) {
@@ -73,8 +53,8 @@ public class Applicant extends User {
     }
 
 
-    public void getJobStatus() {
-
+    public String getJobStatus(JobPosting job) {
+        return this.jobsApplied.get(job.getPosition());
     }
 
     public void getHistory() {

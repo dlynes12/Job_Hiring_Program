@@ -44,6 +44,26 @@ Comments:
 
 
 
+Responsibility:
+- Created a class to hold Job Postings
+
+Comments:
+- class can do operations across multiple jobpostings, including allowing you to view a specific
+ job posting
+
+
+
+ Responsibility:
+ -created a User signup page
+
+ Comments:
+ - changed the UserAccess instance used to sign in; now have pointer and user being signed in
+ - created new signup page and changed buttons on logon page to Radios (to remove bug)
+ - overwrote getusername() and getpassword functions in Interviewer and HR (to remove bug)
+ - individual scenes for each user type linked to login page
+
+
+
 ------------------------------------------------------------------------------------------------------------------------
  DANIEL
 ------------------------------------------------------------------------------------------------------------------------
