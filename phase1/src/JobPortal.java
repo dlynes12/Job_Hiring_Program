@@ -29,18 +29,18 @@ public class JobPortal extends Application {
         //JobPosting jobPosting = new JobPosting();
         Group loginScene = new Group();
         stage.setTitle("Job Application Portal");
-        Scene LoginPage = new Scene(loginScene, 600, 600);
-        stage.setScene(LoginPage);
+        Scene loginPage = new Scene(loginScene, 600, 600);
+        stage.setScene(loginPage);
         stage.show();
         Button log_in = new Button("Log in");
         Button new_user = new Button("New User");
         RadioButton applicantButton = new RadioButton("Applicant");
         RadioButton hRButton = new RadioButton("HR");
         RadioButton interviewerButton = new RadioButton("Interviewer");
-        ToggleGroup LoginRadio = new ToggleGroup();
-        applicantButton.setToggleGroup(LoginRadio);
-        hRButton.setToggleGroup(LoginRadio);
-        interviewerButton.setToggleGroup(LoginRadio);
+        ToggleGroup loginRadio = new ToggleGroup();
+        applicantButton.setToggleGroup(loginRadio);
+        hRButton.setToggleGroup(loginRadio);
+        interviewerButton.setToggleGroup(loginRadio);
         Label labelUsername = new Label("Username");
         Label labelPassword = new Label("Password");
         GridPane gridPane = new GridPane();
@@ -63,59 +63,59 @@ public class JobPortal extends Application {
 
         //CREATE A USER PAGE
         new_user.setOnAction((ActionEvent AddUser) -> {
-            Group CreateNewUser = new Group();
-            stage.setScene(new Scene(CreateNewUser, 600, 600));
+            Group createNewUser = new Group();
+            stage.setScene(new Scene(createNewUser, 600, 600));
             Button create = new Button("Create");
             Label createUserLab = new Label("Choose a Username");
             Label createPassLab = new Label("Enter a Password");
             Label choice = new Label("Please choose the type of account you want:");
-            TextField NewUserField = new TextField();
-            TextField NewPassField = new TextField();
-            RadioButton RadioApp = new RadioButton("Applicant");
-            RadioButton RadioHR = new RadioButton("HR Coordinator");
-            RadioButton RadioInt = new RadioButton("Interviewer");
-            ToggleGroup RadioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
-            RadioApp.setToggleGroup(RadioSet);
-            RadioHR.setToggleGroup(RadioSet);
-            RadioInt.setToggleGroup(RadioSet);
-            GridPane UserInfo = new GridPane();
+            TextField newUserField = new TextField();
+            TextField newPassField = new TextField();
+            RadioButton radioApp = new RadioButton("Applicant");
+            RadioButton radioHR = new RadioButton("HR Coordinator");
+            RadioButton radioInt = new RadioButton("Interviewer");
+            ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
+            radioApp.setToggleGroup(radioSet);
+            radioHR.setToggleGroup(radioSet);
+            radioInt.setToggleGroup(radioSet);
+            GridPane userInfo = new GridPane();
             GridPane choicePane = new GridPane();
             GridPane grid = new GridPane();
-            UserInfo.add(createUserLab,2,0);
-            UserInfo.add(createPassLab,2,2);
-            UserInfo.add(NewUserField,4,0);
-            UserInfo.add(NewPassField,4,2);
+            userInfo.add(createUserLab,2,0);
+            userInfo.add(createPassLab,2,2);
+            userInfo.add(newUserField,4,0);
+            userInfo.add(newPassField,4,2);
             choicePane.add(choice,2,0);
-            grid.add(RadioApp,2,0);
-            grid.add(RadioHR,4,0);
-            grid.add(RadioInt,6,0);
+            grid.add(radioApp,2,0);
+            grid.add(radioHR,4,0);
+            grid.add(radioInt,6,0);
             grid.add(create,7,2);
 
             BorderPane placement = new BorderPane();
-            UserInfo.setHgap(20);
-            UserInfo.setVgap(5);
+            userInfo.setHgap(20);
+            userInfo.setVgap(5);
             choicePane.setHgap(20);
             grid.setHgap(20);
-            placement.setTop(UserInfo);
+            placement.setTop(userInfo);
             placement.setCenter(choicePane);
             placement.setBottom(grid);
-            CreateNewUser.getChildren().addAll(placement);
+            createNewUser.getChildren().addAll(placement);
 
             create.setOnAction((ActionEvent ProcessUser) ->{
-                if ((RadioButton) RadioSet.getSelectedToggle() == RadioApp){
-                    Applicant tempApp = new Applicant(NewUserField.getText(), NewPassField.getText());
+                if ((RadioButton) radioSet.getSelectedToggle() == radioApp){
+                    Applicant tempApp = new Applicant(newUserField.getText(), newPassField.getText());
                     if (userManager.addUser(tempApp)){
-                        stage.setScene(LoginPage);
+                        stage.setScene(loginPage);
                     }
-                }else if (RadioSet.getSelectedToggle() == RadioHR){
-                    HR_Coordinator tempHR = new HR_Coordinator(NewUserField.getText(), NewPassField.getText());
+                }else if (radioSet.getSelectedToggle() == radioHR){
+                    HR_Coordinator tempHR = new HR_Coordinator(newUserField.getText(), newPassField.getText());
                     if (userManager.addUser(tempHR)){
-                        stage.setScene(LoginPage);
+                        stage.setScene(loginPage);
                     }
-                }else if ((RadioButton) RadioSet.getSelectedToggle() == RadioInt){
-                    Interviewer tempInt = new Interviewer(NewUserField.getText(), NewPassField.getText());
+                }else if ((RadioButton) radioSet.getSelectedToggle() == radioInt){
+                    Interviewer tempInt = new Interviewer(newUserField.getText(), newPassField.getText());
                     if (userManager.addUser(tempInt)){
-                        stage.setScene(LoginPage);
+                        stage.setScene(loginPage);
                     }
 
                 }
@@ -123,16 +123,17 @@ public class JobPortal extends Application {
 
         });
 
+        //TODO: Fix all the naming conventions for the variables
 
         log_in.setOnAction((ActionEvent e) -> {
             String UName = username.getText();
             String Pass = password.getText();
-            User LoggedUser = userManager.LogInUser(UName,Pass); // the user that is actually logged in
-            if(LoggedUser!= null) {
-                if (LoginRadio.getSelectedToggle() == applicantButton){
+            User loggedUser = userManager.LogInUser(UName,Pass); // the user that is actually logged in
+            if(loggedUser!= null) {
+                if (loginRadio.getSelectedToggle() == applicantButton){
                     Group applicantPortalScene = new Group();
                     stage.setScene(new Scene(applicantPortalScene, 600, 600));
-                    if (LoggedUser.getClass() == Applicant.class){
+                    if (loggedUser.getClass() == Applicant.class){
                         GridPane applicantSelectionPane = new GridPane();
                         Button getResume = new Button("Submit your resume");
                         Button applyJob = new Button("Apply to jobs");
@@ -144,13 +145,15 @@ public class JobPortal extends Application {
                             FileChooser fileChooser = new FileChooser();
                             //fileChooser.setInitialDirectory();
                             fileChooser.setTitle("Open Resume File");
-                            fileChooser.setInitialFileName(LoggedUser.getUsername());
+                            fileChooser.setInitialFileName(loggedUser.getUsername());
                             File file = fileChooser.showOpenDialog(stage);
                             System.out.println(file);
 
+
+
                         });
 
-                        exit.setOnAction((ActionEvent ex) -> stage.setScene(LoginPage));
+                        exit.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
 
                         applyJob.setOnAction((ActionEvent apply) -> {
                             Group jobPortalScene = new Group();
@@ -183,25 +186,25 @@ public class JobPortal extends Application {
                         applicantPortalScene.getChildren().addAll(resumeUpload);
                     }// what happens if they are not an applicant but have a login;
                     //send message wrong user type?
-                    else{stage.setScene(LoginPage);}
-                }else if (LoginRadio.getSelectedToggle() == hRButton){
+                    else{stage.setScene(loginPage);}
+                }else if (loginRadio.getSelectedToggle() == hRButton){
                     Group HRPortalScene = new Group();
                     Scene HRBasePage = new Scene(HRPortalScene, 450, 250);
                     stage.setScene(HRBasePage);
-                    if (LoggedUser.getClass() == HR_Coordinator.class){
-                        String WelcomeMessage = "Welcome to the Human Resource Page: " + LoggedUser.getUsername();
+                    if (loggedUser.getClass() == HR_Coordinator.class){
+                        String WelcomeMessage = "Welcome to the Human Resource Page: " + loggedUser.getUsername();
                         Label welcomeLabel = new Label(WelcomeMessage);
                         Label Actions = new Label("What do you want to do? Please select an option below:");
                         Button AddJObs = new Button("ADD A JOB");
                         Button ViewOpenJobs = new Button("VIEW ALL OPEN JOBS");
-                        Button Exit = new Button("EXIT");
+                        Button exit = new Button("EXIT");
                         GridPane MessageGrid = new GridPane();
                         GridPane ButtonGrid = new GridPane();
                         MessageGrid.add(welcomeLabel,1,0);
                         MessageGrid.add(Actions,1,2);
                         ButtonGrid.add(AddJObs,1,0);
                         ButtonGrid.add(ViewOpenJobs, 2,0);
-                        ButtonGrid.add(Exit, 4,2);
+                        ButtonGrid.add(exit, 4,2);
 
                         BorderPane HRPlacement = new BorderPane();
                         MessageGrid.setHgap(20);
@@ -214,8 +217,8 @@ public class JobPortal extends Application {
 
                         HRPortalScene.getChildren().addAll(HRPlacement);
 
-                        Exit.setOnAction((ActionEvent exit) -> {
-                            stage.setScene(LoginPage);
+                        exit.setOnAction((ActionEvent ex) -> {
+                            stage.setScene(loginPage);
                         });
 
                         AddJObs.setOnAction((ActionEvent addjob) -> {
@@ -275,7 +278,7 @@ public class JobPortal extends Application {
                                 int day = Integer.parseInt(DayField.getText());
                                 Date CloseDate = new Date(year,month,day);
                                 String position = PositionField.getText();
-                                ((HR_Coordinator) LoggedUser).addJob(today,CloseDate,position);
+                                ((HR_Coordinator) loggedUser).addJob(today,CloseDate,position);
                                 stage.setScene(HRBasePage);
                             });
 
@@ -287,11 +290,11 @@ public class JobPortal extends Application {
                         } );
                     }// what happens if they are not an HR Coordinator but have a login;
                     //send message wrong user type?
-                    else {stage.setScene(LoginPage);}
-                }else if (LoginRadio.getSelectedToggle() == interviewerButton){ ///////////////////////////////////////
+                    else {stage.setScene(loginPage);}
+                }else if (loginRadio.getSelectedToggle() == interviewerButton){ ///////////////////////////////////////
                     Group intPortalScene = new Group();
                     stage.setScene(new Scene(intPortalScene, 600, 600));
-                    if (LoggedUser.getClass() == Interviewer.class){
+                    if (loggedUser.getClass() == Interviewer.class){
                         GridPane interviewerSelectionPane = new GridPane();
                         //Label TestLab1 = new Label("Interviewer Page");
                         Button addApplicant = new Button("Add Applicant");
@@ -308,13 +311,12 @@ public class JobPortal extends Application {
                         interviewerSelectionPane.setHgap(20);
                         interviewerSelectionPane.setVgap(20);
 
-                        exit.setOnAction((ActionEvent ex) -> stage.setScene(LoginPage));
-
+                        exit.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
                         intPortalScene.getChildren().addAll(interviewerSelectionPane);
 
                     }// what happens if they are not an interviewer but have a login;
                     //send message wrong user type?
-                    else{stage.setScene(LoginPage);}
+                    else{stage.setScene(loginPage);}
                 }
 
 
