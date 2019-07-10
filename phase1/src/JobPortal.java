@@ -131,7 +131,6 @@ public class JobPortal extends Application {
             if(LoggedUser!= null) {
                 if (LoginRadio.getSelectedToggle() == applicantButton){
                     Group applicantPortalScene = new Group();
-                    //Applicant LoggedUser = userManager.getApplicant(UName,Pass);
                     stage.setScene(new Scene(applicantPortalScene, 600, 600));
                     if (LoggedUser.getClass() == Applicant.class){
                         GridPane applicantSelectionPane = new GridPane();
