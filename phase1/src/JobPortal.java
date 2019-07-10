@@ -15,9 +15,13 @@ import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.File;
+import java.time.Instant;
+import java.util.Date;
 
 public class JobPortal extends Application {
 
+
+    // SIGNIN PAGE
     @Override
     public void start(Stage stage) throws Exception {
         UserAccess userManager = new UserAccess();
@@ -57,7 +61,7 @@ public class JobPortal extends Application {
         box.getChildren().addAll(gridPane);
         loginScene.getChildren().addAll(box);
 
-
+        //CREATE A USER PAGE
         new_user.setOnAction((ActionEvent AddUser) -> {
             Group CreateNewUser = new Group();
             stage.setScene(new Scene(CreateNewUser, 600, 600));
@@ -204,6 +208,57 @@ public class JobPortal extends Application {
 
 
                         HRPortalScene.getChildren().addAll(HRPlacement);
+
+                        Exit.setOnAction((ActionEvent exit) -> {
+                            stage.setScene(LoginPage);
+                        });
+
+                        AddJObs.setOnAction((ActionEvent addjob) -> {
+                            Group CreateJobs = new Group();
+                            Scene CreateJobsPage = new Scene(CreateJobs, 600, 600);
+                            stage.setScene(CreateJobsPage);
+                            // get today's date
+                            Date today = new Date();
+                            Instant now = Instant.now();
+                            today.from(now);
+                            //-------------
+                            //Date closingDate = new Date(int year,int month,int day);
+                            Label ClosingMessage = new Label("Please enter a date you would like this Posting to close:");
+                            Label YearLabel = new Label("Year");
+                            Label MonthLabel = new Label("Month");
+                            Label DayLabel = new Label("Day");
+                            Label PositionLabel = new Label("What position are we creating?");
+                            TextField YearField = new TextField("Please enter a number in format: YYYY");
+                            TextField MonthField = new TextField("Please enter a number between 1 and 12");
+                            TextField DayField = new TextField("Please enter a number in format: dd");
+                            TextField PositionField = new TextField();
+                            Button CreateNewPost = new Button("CREATE JOB");
+                            GridPane CMessageGrid = new GridPane();
+                            GridPane DateGrid = new GridPane();
+                            GridPane PositionGrid = new GridPane();
+                            CMessageGrid.add(ClosingMessage,1,0);
+                            CMessageGrid.setHgap(20);
+                            CMessageGrid.setVgap(5);
+                            DateGrid.add(YearLabel,1,0);
+                            DateGrid.add(YearField,2,0);
+                            DateGrid.add(MonthLabel,1,2);
+                            DateGrid.add(MonthField,2,2);
+                            DateGrid.add(DayLabel,1,4);
+                            DateGrid.add(DayField,2,4);
+                            DateGrid.setHgap(20);
+                            DateGrid.setVgap(5);
+                            PositionGrid.add(PositionLabel,1,0);
+                            PositionGrid.add(PositionField,2,0);
+                            PositionGrid.add(CreateNewPost,4,2);
+                            PositionGrid.setHgap(20);
+                            PositionGrid.setVgap(5);
+
+
+
+
+
+                            // where we create job postings
+                        } );
                     }// what happens if they are not an HR Coordinator but have a login;
                     //send message wrong user type?
                     else {stage.setScene(LoginPage);}
