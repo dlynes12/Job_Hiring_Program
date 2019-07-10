@@ -137,6 +137,8 @@ public class JobPortal extends Application {
                         Button getResume = new Button("Submit your resume");
                         Button applyJob = new Button("Apply to jobs");
                         Button getFile = new Button("Open your resume from file");
+                        Button exit = new Button("EXIT");
+                        applicantSelectionPane.add(exit,8,4);
                         TextField resume = new TextField();
                         getFile.setOnAction((ActionEvent openFile) -> {
                             FileChooser fileChooser = new FileChooser();
@@ -147,6 +149,9 @@ public class JobPortal extends Application {
                             System.out.println(file);
 
                         });
+
+                        exit.setOnAction((ActionEvent ex) -> stage.setScene(LoginPage));
+
                         applyJob.setOnAction((ActionEvent apply) -> {
                             Group jobPortalScene = new Group();
                             stage.setScene(new Scene(jobPortalScene,800,800));
@@ -293,12 +298,18 @@ public class JobPortal extends Application {
                         Button getInterviewies = new Button("Get Interviewies");
                         Button approve = new Button("Approve");
                         Button decline = new Button("Decline");
+                        Button exit = new Button("EXIT");
+                        interviewerSelectionPane.add(exit,8,4);
                         interviewerSelectionPane.add(addApplicant, 1,2);
                         interviewerSelectionPane.add(getInterviewies,1,1);
                         interviewerSelectionPane.add(approve,5,1);
                         interviewerSelectionPane.add(decline,5,2);
+
                         interviewerSelectionPane.setHgap(20);
                         interviewerSelectionPane.setVgap(20);
+
+                        exit.setOnAction((ActionEvent ex) -> stage.setScene(LoginPage));
+
                         intPortalScene.getChildren().addAll(interviewerSelectionPane);
 
                     }// what happens if they are not an interviewer but have a login;
