@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-
+/*
 public class JPostings {
 
     private ArrayList<JobPosting>JobPostings = new ArrayList<>();
@@ -35,7 +35,7 @@ public class JPostings {
         }
         return remove;
     } //assuming a job cannot have two postings (i.e. if you need two people you simply hire from one posting)
-    /*or should this delete a josting once it has expired*/
+    //or should this delete a josting once it has expired
 
 
     public JobPosting seeJob (String position) {
@@ -59,4 +59,5 @@ public class JPostings {
         String result = positions.substring(0,positions.length()-1); // take off the last comma(,) off the resulting string
         return result;
     } // see all the job postings available
-}
+} */
+

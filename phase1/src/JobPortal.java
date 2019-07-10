@@ -28,7 +28,6 @@ public class JobPortal extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         UserAccess userManager = new UserAccess();
-        JPostings jPostings = new JPostings();
         ApplicationModel applicationModel = new ApplicationModel();
         //JobPosting jobPosting = new JobPosting();
         Group loginScene = new Group();
@@ -231,6 +230,7 @@ public class JobPortal extends Application {
                             stage.setScene(loginPage);
                         });
 
+                        //Job Creation page -- where we create job postings
                         addJobs.setOnAction((ActionEvent addJob) -> {
                             Group createJobs = new Group();
                             Scene createJobsPage = new Scene(createJobs, 600, 600);
@@ -242,7 +242,7 @@ public class JobPortal extends Application {
                             //-------------
                             //Date closingDate = new Date(int year,int month,int day);
                             DatePicker datePicker = new DatePicker();
-                            Label closingMessage = new Label("Please enter a date you would like this Posting to close:");
+                            Label closingMessage = new Label("Closing Date:");
                             Label positionLabel = new Label("What position are we creating?");
                             TextField positionField = new TextField();
                             Button createNewPost = new Button("CREATE JOB");
@@ -252,7 +252,8 @@ public class JobPortal extends Application {
                             cMessageGrid.add(closingMessage,1,0);
                             cMessageGrid.setHgap(20);
                             cMessageGrid.setVgap(5);
-                            dateGrid.add(datePicker,1,0);
+                            dateGrid.add(closingMessage,1,0);
+                            dateGrid.add(datePicker,2,0);
                             dateGrid.setHgap(20);
                             dateGrid.setVgap(5);
                             positionGrid.add(positionLabel,1,0);
@@ -262,7 +263,7 @@ public class JobPortal extends Application {
                             positionGrid.setVgap(5);
 
                             BorderPane CreateJobPlacement =new BorderPane();
-                            CreateJobPlacement.setTop(cMessageGrid);
+
                             CreateJobPlacement.setCenter(dateGrid);
                             CreateJobPlacement.setBottom(positionGrid);
 
@@ -277,16 +278,40 @@ public class JobPortal extends Application {
                                     ex.printStackTrace();
                                 }
                                 String position = positionField.getText();
-                                ((HR_Coordinator) loggedUser).addJob(today,closeDate,position);
+                                userManager.addJob(today,closeDate,position);
+                                stage.setScene(HRBasePage);
+
+                            });
+
+                            // where we create job postings
+                        } );
+
+
+
+                        viewOpenJobs.setOnAction((ActionEvent viewJob) ->{
+                            Group HRViewJobs = new Group();
+                            Scene createJobsPage = new Scene(HRViewJobs, 600, 600);
+                            stage.setScene(createJobsPage);
+                            ComboBox Dropdown = new ComboBox();
+                            for (JobPosting jobPosting: userManager.ViewJobs()){
+                                Dropdown.getItems().add(jobPosting.getPosition());
+                            }
+                            Button ApplicantButton = new Button("SEE APPLICANTS");
+                            Button Exit = new Button("EXIT");
+                            GridPane ViewJobsGrid = new GridPane();
+                            ViewJobsGrid.add(Dropdown,1,0);
+                            ViewJobsGrid.add(ApplicantButton,2,0);
+                            ViewJobsGrid.add(Exit,3,0);
+                            ViewJobsGrid.setHgap(20);
+                            ViewJobsGrid.setVgap(5);
+                            HRViewJobs.getChildren().add(ViewJobsGrid);
+
+                            Exit.setOnAction((ActionEvent exitPage) -> {
                                 stage.setScene(HRBasePage);
                             });
 
 
-
-
-
-                            // where we create job postings
-                        } );
+                        });
                     }// what happens if they are not an HR Coordinator but have a login;
                     //send message wrong user type?
                     else {stage.setScene(loginPage);}
