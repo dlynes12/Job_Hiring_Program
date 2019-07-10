@@ -10,10 +10,6 @@ public class Interviewer extends User {
         super(username,password);
     }
 
-//    public boolean login(String username, String password) {
-//        return false;
-//    }
-
     public Set getInterviewees(){
         return shortlist.keySet();
     }

@@ -207,13 +207,24 @@ public class JobPortal extends Application {
                     }// what happens if they are not an HR Coordinator but have a login;
                     //send message wrong user type?
                     else {stage.setScene(LoginPage);}
-                }else if (LoginRadio.getSelectedToggle() == interviewerButton){
+                }else if (LoginRadio.getSelectedToggle() == interviewerButton){ ///////////////////////////////////////
                     Group intPortalScene = new Group();
                     stage.setScene(new Scene(intPortalScene, 600, 600));
                     if (LoggedUser.getClass() == Interviewer.class){
-                        Label TestLab1 = new Label("Interviewer Page");
+                        GridPane interviewerSelectionPane = new GridPane();
+                        //Label TestLab1 = new Label("Interviewer Page");
+                        Button addApplicant = new Button("Add Applicant");
+                        Button getInterviewies = new Button("Get Interviewies");
+                        Button approve = new Button("Approve");
+                        Button decline = new Button("Decline");
+                        interviewerSelectionPane.add(addApplicant, 1,2);
+                        interviewerSelectionPane.add(getInterviewies,1,1);
+                        interviewerSelectionPane.add(approve,5,1);
+                        interviewerSelectionPane.add(decline,5,2);
+                        interviewerSelectionPane.setHgap(20);
+                        interviewerSelectionPane.setVgap(20);
+                        intPortalScene.getChildren().addAll(interviewerSelectionPane);
 
-                        intPortalScene.getChildren().addAll(TestLab1);
                     }// what happens if they are not an interviewer but have a login;
                     //send message wrong user type?
                     else{stage.setScene(LoginPage);}
