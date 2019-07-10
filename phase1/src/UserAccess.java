@@ -7,7 +7,7 @@ public class UserAccess {
     boolean addUser(User user){
         boolean add = true;
         for (int i=0; i < users.size();i++){
-            if (user.getUsername() == users.get(i).getUsername()){
+            if (user.getUsername().equals(users.get(i).getUsername())){
                 add = false;
             }
         }
