@@ -182,7 +182,8 @@ public class JobPortal extends Application {
                     else{stage.setScene(LoginPage);}
                 }else if (LoginRadio.getSelectedToggle() == hRButton){
                     Group HRPortalScene = new Group();
-                    stage.setScene(new Scene(HRPortalScene, 450, 250));
+                    Scene HRBasePage = new Scene(HRPortalScene, 450, 250);
+                    stage.setScene(HRBasePage);
                     if (LoggedUser.getClass() == HR_Coordinator.class){
                         String WelcomeMessage = "Welcome to the Human Resource Page: " + LoggedUser.getUsername();
                         Label welcomeLabel = new Label(WelcomeMessage);
@@ -228,10 +229,13 @@ public class JobPortal extends Application {
                             Label MonthLabel = new Label("Month");
                             Label DayLabel = new Label("Day");
                             Label PositionLabel = new Label("What position are we creating?");
-                            TextField YearField = new TextField("Please enter a number in format: YYYY");
+                            TextField YearField = new TextField();
+                            YearField.setPromptText("Please enter a number in format: YYYY");
                             YearField.setPrefWidth(300);
-                            TextField MonthField = new TextField("Please enter a number between 1 and 12");
-                            TextField DayField = new TextField("Please enter a number in format: dd");
+                            TextField MonthField = new TextField();
+                            MonthField.setPromptText("Please enter a number between 1 and 12");
+                            TextField DayField = new TextField();
+                            DayField.setPromptText("Please enter a number in format: dd");
                             TextField PositionField = new TextField();
                             Button CreateNewPost = new Button("CREATE JOB");
                             GridPane CMessageGrid = new GridPane();
@@ -262,8 +266,13 @@ public class JobPortal extends Application {
                             CreateJobs.getChildren().addAll(CreateJobPlacement);
 
                             CreateNewPost.setOnAction((ActionEvent CreateJob) ->{
-                                //Date CloseDate = new Date(YearField.getText(),)
-                                //((HR_Coordinator) LoggedUser).addJob(today,);
+                                int year = Integer.parseInt(YearField.getText());
+                                int month = Integer.parseInt(MonthField.getText());
+                                int day = Integer.parseInt(DayField.getText());
+                                Date CloseDate = new Date(year,month,day);
+                                String position = PositionField.getText();
+                                ((HR_Coordinator) LoggedUser).addJob(today,CloseDate,position);
+                                stage.setScene(HRBasePage);
                             });
 
 

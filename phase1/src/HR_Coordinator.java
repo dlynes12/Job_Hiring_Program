@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
+/*One HR Person hires for their own section of the company*/
 public class HR_Coordinator extends User{
 
     JPostings ListJobs = new JPostings();
