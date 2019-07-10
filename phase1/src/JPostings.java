@@ -4,17 +4,35 @@ public class JPostings {
     private ArrayList<JobPosting>JobPostings = new ArrayList<>();
 
 
-    public void addJob(JobPosting job){ this.JobPostings.add(job);}
+    public boolean addJob(JobPosting job){
+        boolean add = false;
+        boolean inList = false;
+        for (int i=0; i < JobPostings.size();i++){
+            if (JobPostings.get(i).getPosition() == job.getPosition()){
+                inList = true;
+            }
+        }
+        if (inList == false){
+            this.JobPostings.add(job);
+            add = true;
+        }
+        return add;
+    }
 
 
-    public void removeJob (String position) {
+    public boolean removeJob (String position) {
         //check if the position is in our job postings
+        boolean remove = false;
         int index = -1;
         for (int i = 0; i < JobPostings.size(); i++){
             if (JobPostings.get(i).getPosition() == position){index = i;}
         }
         //if so remove the position from the available list of jobs
-        if (index != -1){JobPostings.remove(JobPostings.get(index));}
+        if (index != -1){
+            JobPostings.remove(JobPostings.get(index));
+            remove = true;
+        }
+        return remove;
     } //assuming a job cannot have two postings (i.e. if you need two people you simply hire from one posting)
     /*or should this delete a josting once it has expired*/
 

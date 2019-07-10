@@ -1,16 +1,23 @@
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class HR_Coordinator extends User{
 
-    //ArrayList<JobPosting> Jobs = new ArrayList<>();
+    JPostings ListJobs = new JPostings();
 
     public HR_Coordinator(String Username,String Password){
         super(Username,Password);
     }
 
-    //    public boolean login(String username, String password) {
-//        return false;
-//    }
+    public boolean addJob(Date datePosted, Date dateClosed, String position){
+        JobPosting job = new JobPosting(datePosted,dateClosed,position);
+        return ListJobs.addJob(job);
+    }
+
+    public boolean removeJob(String position){return ListJobs.removeJob(position);}
+
+    public String[] ViewOpenJobs(){return ListJobs.ViewJobs().split(",");}
 
 
 
