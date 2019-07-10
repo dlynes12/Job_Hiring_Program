@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -6,8 +5,6 @@ import java.util.HashMap;
 
 public class Applicant extends User{
     private HashMap<String, String> jobsApplied = new HashMap<>();
-
-
 
     String username = this.getUsername();
     String directory = System.getProperty("user.home");
@@ -17,9 +14,6 @@ public class Applicant extends User{
     public Applicant(String username, String password) {
         super(username,password);
     }
-
-
-    //FileWriter
 
     FileWriter fileWriter;
 

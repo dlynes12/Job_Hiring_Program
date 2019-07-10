@@ -74,6 +74,7 @@ public class JobPortal extends Application {
             RadioButton radioApp = new RadioButton("Applicant");
             RadioButton radioHR = new RadioButton("HR Coordinator");
             RadioButton radioInt = new RadioButton("Interviewer");
+            Button exit = new Button("EXIT");
             ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
             radioApp.setToggleGroup(radioSet);
             radioHR.setToggleGroup(radioSet);
@@ -81,6 +82,7 @@ public class JobPortal extends Application {
             GridPane userInfo = new GridPane();
             GridPane choicePane = new GridPane();
             GridPane grid = new GridPane();
+            userInfo.add(exit,8,4);
             userInfo.add(createUserLab,2,0);
             userInfo.add(createPassLab,2,2);
             userInfo.add(newUserField,4,0);
@@ -90,6 +92,8 @@ public class JobPortal extends Application {
             grid.add(radioHR,4,0);
             grid.add(radioInt,6,0);
             grid.add(create,7,2);
+
+            exit.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
 
             BorderPane placement = new BorderPane();
             userInfo.setHgap(20);
@@ -313,6 +317,9 @@ public class JobPortal extends Application {
 
                         exit.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
                         intPortalScene.getChildren().addAll(interviewerSelectionPane);
+                        getInterviewees.setOnAction((ActionEvent click) -> {
+                            ((Interviewer)loggedUser).getInterviewees();
+                        });
 
                     }// what happens if they are not an interviewer but have a login;
                     //send message wrong user type?

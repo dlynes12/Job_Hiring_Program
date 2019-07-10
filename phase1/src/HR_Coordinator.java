@@ -1,7 +1,4 @@
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
 
 /*One HR Person hires for their own section of the company*/
 public class HR_Coordinator extends User{
@@ -26,7 +23,7 @@ public class HR_Coordinator extends User{
     }
 
     public void matchItoA(Interviewer interviewer, Applicant applicant){
-        //interviewer.interviewees.add(applicant);
+        interviewer.addApplicant(applicant);
     }
 
 }
