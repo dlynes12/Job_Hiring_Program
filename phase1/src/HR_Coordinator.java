@@ -22,7 +22,7 @@ public class HR_Coordinator extends User{
         return ListJobs;
     }
 
-    public void matchItoA(Interviewer interviewer, Applicant applicant){
+    public void matchItoA(Interviewer interviewer, Applicant applicant, JobPosting jobPosting){
         interviewer.addApplicant(applicant);
     }
 

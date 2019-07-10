@@ -6,6 +6,7 @@ public class JobPosting{
     private Date datePosted;
     private Date dateClosed;
     private String position;
+    private HiringPool candidates;
     protected ArrayList<Applicant> applicants = new ArrayList<>();
 
     public JobPosting(Date datePosted, Date dateClosed, String position) {
