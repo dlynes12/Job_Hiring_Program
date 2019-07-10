@@ -194,25 +194,25 @@ public class JobPortal extends Application {
                     if (loggedUser.getClass() == HR_Coordinator.class){
                         String WelcomeMessage = "Welcome to the Human Resource Page: " + loggedUser.getUsername();
                         Label welcomeLabel = new Label(WelcomeMessage);
-                        Label Actions = new Label("What do you want to do? Please select an option below:");
-                        Button AddJObs = new Button("ADD A JOB");
-                        Button ViewOpenJobs = new Button("VIEW ALL OPEN JOBS");
+                        Label actions = new Label("What do you want to do? Please select an option below:");
+                        Button addJobs = new Button("ADD A JOB");
+                        Button viewOpenJobs = new Button("VIEW ALL OPEN JOBS");
                         Button exit = new Button("EXIT");
-                        GridPane MessageGrid = new GridPane();
-                        GridPane ButtonGrid = new GridPane();
-                        MessageGrid.add(welcomeLabel,1,0);
-                        MessageGrid.add(Actions,1,2);
-                        ButtonGrid.add(AddJObs,1,0);
-                        ButtonGrid.add(ViewOpenJobs, 2,0);
-                        ButtonGrid.add(exit, 4,2);
+                        GridPane messageGrid = new GridPane();
+                        GridPane buttonGrid = new GridPane();
+                        messageGrid.add(welcomeLabel,1,0);
+                        messageGrid.add(actions,1,2);
+                        buttonGrid.add(addJobs,1,0);
+                        buttonGrid.add(viewOpenJobs, 2,0);
+                        buttonGrid.add(exit, 4,2);
 
                         BorderPane HRPlacement = new BorderPane();
-                        MessageGrid.setHgap(20);
-                        MessageGrid.setVgap(5);
-                        ButtonGrid.setHgap(20);
-                        ButtonGrid.setVgap(5);
-                        HRPlacement.setTop(MessageGrid);
-                        HRPlacement.setBottom(ButtonGrid);
+                        messageGrid.setHgap(20);
+                        messageGrid.setVgap(5);
+                        buttonGrid.setHgap(20);
+                        buttonGrid.setVgap(5);
+                        HRPlacement.setTop(messageGrid);
+                        HRPlacement.setBottom(buttonGrid);
 
 
                         HRPortalScene.getChildren().addAll(HRPlacement);
@@ -221,64 +221,64 @@ public class JobPortal extends Application {
                             stage.setScene(loginPage);
                         });
 
-                        AddJObs.setOnAction((ActionEvent addjob) -> {
-                            Group CreateJobs = new Group();
-                            Scene CreateJobsPage = new Scene(CreateJobs, 600, 600);
-                            stage.setScene(CreateJobsPage);
+                        addJobs.setOnAction((ActionEvent addJob) -> {
+                            Group createJobs = new Group();
+                            Scene createJobsPage = new Scene(createJobs, 600, 600);
+                            stage.setScene(createJobsPage);
                             // get today's date
                             Date today = new Date();
                             Instant now = Instant.now();
                             today.from(now);
                             //-------------
                             //Date closingDate = new Date(int year,int month,int day);
-                            Label ClosingMessage = new Label("Please enter a date you would like this Posting to close:");
-                            Label YearLabel = new Label("Year");
-                            Label MonthLabel = new Label("Month");
-                            Label DayLabel = new Label("Day");
-                            Label PositionLabel = new Label("What position are we creating?");
-                            TextField YearField = new TextField();
-                            YearField.setPromptText("Please enter a number in format: YYYY");
-                            YearField.setPrefWidth(300);
-                            TextField MonthField = new TextField();
-                            MonthField.setPromptText("Please enter a number between 1 and 12");
-                            TextField DayField = new TextField();
-                            DayField.setPromptText("Please enter a number in format: dd");
-                            TextField PositionField = new TextField();
-                            Button CreateNewPost = new Button("CREATE JOB");
-                            GridPane CMessageGrid = new GridPane();
-                            GridPane DateGrid = new GridPane();
-                            GridPane PositionGrid = new GridPane();
-                            CMessageGrid.add(ClosingMessage,1,0);
-                            CMessageGrid.setHgap(20);
-                            CMessageGrid.setVgap(5);
-                            DateGrid.add(YearLabel,1,0);
-                            DateGrid.add(YearField,2,0);
-                            DateGrid.add(MonthLabel,1,2);
-                            DateGrid.add(MonthField,2,2);
-                            DateGrid.add(DayLabel,1,4);
-                            DateGrid.add(DayField,2,4);
-                            DateGrid.setHgap(20);
-                            DateGrid.setVgap(5);
-                            PositionGrid.add(PositionLabel,1,0);
-                            PositionGrid.add(PositionField,2,0);
-                            PositionGrid.add(CreateNewPost,4,2);
-                            PositionGrid.setHgap(20);
-                            PositionGrid.setVgap(5);
+                            Label closingMessage = new Label("Please enter a date you would like this Posting to close:");
+                            Label yearLabel = new Label("Year");
+                            Label monthLabel = new Label("Month");
+                            Label dayLabel = new Label("Day");
+                            Label positionLabel = new Label("What position are we creating?");
+                            TextField yearField = new TextField();
+                            yearField.setPromptText("Please enter a number in format: YYYY");
+                            yearField.setPrefWidth(300);
+                            TextField monthField = new TextField();
+                            monthField.setPromptText("Please enter a number between 1 and 12");
+                            TextField dayField = new TextField();
+                            dayField.setPromptText("Please enter a number in format: dd");
+                            TextField positionField = new TextField();
+                            Button createNewPost = new Button("CREATE JOB");
+                            GridPane cMessageGrid = new GridPane();
+                            GridPane dateGrid = new GridPane();
+                            GridPane positionGrid = new GridPane();
+                            cMessageGrid.add(closingMessage,1,0);
+                            cMessageGrid.setHgap(20);
+                            cMessageGrid.setVgap(5);
+                            dateGrid.add(yearLabel,1,0);
+                            dateGrid.add(yearField,2,0);
+                            dateGrid.add(monthLabel,1,2);
+                            dateGrid.add(monthField,2,2);
+                            dateGrid.add(dayLabel,1,4);
+                            dateGrid.add(dayField,2,4);
+                            dateGrid.setHgap(20);
+                            dateGrid.setVgap(5);
+                            positionGrid.add(positionLabel,1,0);
+                            positionGrid.add(positionField,2,0);
+                            positionGrid.add(createNewPost,4,2);
+                            positionGrid.setHgap(20);
+                            positionGrid.setVgap(5);
 
                             BorderPane CreateJobPlacement =new BorderPane();
-                            CreateJobPlacement.setTop(CMessageGrid);
-                            CreateJobPlacement.setCenter(DateGrid);
-                            CreateJobPlacement.setBottom(PositionGrid);
+                            CreateJobPlacement.setTop(cMessageGrid);
+                            CreateJobPlacement.setCenter(dateGrid);
+                            CreateJobPlacement.setBottom(positionGrid);
 
-                            CreateJobs.getChildren().addAll(CreateJobPlacement);
+                            createJobs.getChildren().addAll(CreateJobPlacement);
 
-                            CreateNewPost.setOnAction((ActionEvent CreateJob) ->{
-                                int year = Integer.parseInt(YearField.getText());
-                                int month = Integer.parseInt(MonthField.getText());
-                                int day = Integer.parseInt(DayField.getText());
-                                Date CloseDate = new Date(year,month,day);
-                                String position = PositionField.getText();
-                                ((HR_Coordinator) loggedUser).addJob(today,CloseDate,position);
+                            createNewPost.setOnAction((ActionEvent CreateJob) ->{
+                                int year = Integer.parseInt(yearField.getText());
+                                int month = Integer.parseInt(monthField.getText());
+                                int day = Integer.parseInt(dayField.getText());
+                                Date closeDate = new Date(year,month,day);
+                                String position = positionField.getText();
+                                ((HR_Coordinator) loggedUser).addJob(today,closeDate,position);
                                 stage.setScene(HRBasePage);
                             });
 
@@ -298,13 +298,13 @@ public class JobPortal extends Application {
                         GridPane interviewerSelectionPane = new GridPane();
                         //Label TestLab1 = new Label("Interviewer Page");
                         Button addApplicant = new Button("Add Applicant");
-                        Button getInterviewies = new Button("Get Interviewies");
+                        Button getInterviewees = new Button("Get Interviewees");
                         Button approve = new Button("Approve");
                         Button decline = new Button("Decline");
                         Button exit = new Button("EXIT");
                         interviewerSelectionPane.add(exit,8,4);
                         interviewerSelectionPane.add(addApplicant, 1,2);
-                        interviewerSelectionPane.add(getInterviewies,1,1);
+                        interviewerSelectionPane.add(getInterviewees,1,1);
                         interviewerSelectionPane.add(approve,5,1);
                         interviewerSelectionPane.add(decline,5,2);
 

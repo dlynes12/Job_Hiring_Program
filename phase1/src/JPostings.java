@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class JPostings {
+
     private ArrayList<JobPosting>JobPostings = new ArrayList<>();
 
 

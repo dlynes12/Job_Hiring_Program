@@ -5,15 +5,11 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class Applicant extends User{
-    private HashMap<String, String> jobsApplied;
+    private HashMap<String, String> jobsApplied = new HashMap<>();
 
-    @Override
-    public String getUsername() {
-        return super.getUsername();
-    }
+
 
     String username = this.getUsername();
-
     String directory = System.getProperty("user.home");
     String fileName = username + ".txt";
     String absolutePath = directory + File.separator + fileName;
@@ -44,8 +40,13 @@ public class Applicant extends User{
         }
     }
 
+    @Override
+    public String getUsername() {
+        return super.getUsername();
+    }
 
     public void getDocs() {
+
     }
 
     public void applyToJob(JobPosting jobPosting) {
@@ -58,7 +59,6 @@ public class Applicant extends User{
     }
 
     public void getHistory() {
-
     }
 
 }

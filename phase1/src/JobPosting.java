@@ -8,7 +8,6 @@ public class JobPosting{
     private String position;
     protected ArrayList<Applicant> applicants = new ArrayList<>();
 
-    //TODO: add a way to assign all the applicants to the JobPosting object - so HR can also access this.
     public JobPosting(Date datePosted, Date dateClosed, String position) {
         this.datePosted = datePosted;
         this.dateClosed = dateClosed;
