@@ -15,7 +15,10 @@ import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class JobPortal extends Application {
@@ -25,6 +28,7 @@ public class JobPortal extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         UserAccess userManager = new UserAccess();
+        JPostings jPostings = new JPostings();
         ApplicationModel applicationModel = new ApplicationModel();
         //JobPosting jobPosting = new JobPosting();
         Group loginScene = new Group();
@@ -163,6 +167,8 @@ public class JobPortal extends Application {
                             Group jobPortalScene = new Group();
                             stage.setScene(new Scene(jobPortalScene,800,800));
 
+
+
                             //for (JobPosting jP: jobPosting.jobpostings){
                             //      Text txt+i.toString = new Text(jb.toString);
                             //      Button btn+i.toString();
@@ -235,18 +241,9 @@ public class JobPortal extends Application {
                             today.from(now);
                             //-------------
                             //Date closingDate = new Date(int year,int month,int day);
+                            DatePicker datePicker = new DatePicker();
                             Label closingMessage = new Label("Please enter a date you would like this Posting to close:");
-                            Label yearLabel = new Label("Year");
-                            Label monthLabel = new Label("Month");
-                            Label dayLabel = new Label("Day");
                             Label positionLabel = new Label("What position are we creating?");
-                            TextField yearField = new TextField();
-                            yearField.setPromptText("Please enter a number in format: YYYY");
-                            yearField.setPrefWidth(300);
-                            TextField monthField = new TextField();
-                            monthField.setPromptText("Please enter a number between 1 and 12");
-                            TextField dayField = new TextField();
-                            dayField.setPromptText("Please enter a number in format: dd");
                             TextField positionField = new TextField();
                             Button createNewPost = new Button("CREATE JOB");
                             GridPane cMessageGrid = new GridPane();
@@ -255,12 +252,7 @@ public class JobPortal extends Application {
                             cMessageGrid.add(closingMessage,1,0);
                             cMessageGrid.setHgap(20);
                             cMessageGrid.setVgap(5);
-                            dateGrid.add(yearLabel,1,0);
-                            dateGrid.add(yearField,2,0);
-                            dateGrid.add(monthLabel,1,2);
-                            dateGrid.add(monthField,2,2);
-                            dateGrid.add(dayLabel,1,4);
-                            dateGrid.add(dayField,2,4);
+                            dateGrid.add(datePicker,1,0);
                             dateGrid.setHgap(20);
                             dateGrid.setVgap(5);
                             positionGrid.add(positionLabel,1,0);
@@ -277,10 +269,13 @@ public class JobPortal extends Application {
                             createJobs.getChildren().addAll(CreateJobPlacement);
 
                             createNewPost.setOnAction((ActionEvent CreateJob) ->{
-                                int year = Integer.parseInt(yearField.getText());
-                                int month = Integer.parseInt(monthField.getText());
-                                int day = Integer.parseInt(dayField.getText());
-                                Date closeDate = new Date(year,month,day);
+                                LocalDate year = datePicker.getValue();
+                                Date closeDate = null;
+                                try {
+                                    closeDate = new SimpleDateFormat("yyyy-MM-dd").parse(datePicker.toString());
+                                } catch (ParseException ex) {
+                                    ex.printStackTrace();
+                                }
                                 String position = positionField.getText();
                                 ((HR_Coordinator) loggedUser).addJob(today,closeDate,position);
                                 stage.setScene(HRBasePage);
