@@ -163,7 +163,7 @@ public class JobPortal extends Application {
                         Label labelFileUpload = new Label("Submit your resume");
                         Label labelEnterResume = new Label("Enter your resume");
 
-                        applicantSelectionPane.add(exit,8,4);
+                        applicantSelectionPane.add(exit,2,8);
                         applicantSelectionPane.add(getFile,2,2);
                         applicantSelectionPane.add(getResume,2,4);
                         applicantSelectionPane.add(labelFileUpload,0,2);
@@ -238,7 +238,7 @@ public class JobPortal extends Application {
                         buttonGrid.add(addJobs,1,0);
                         buttonGrid.add(viewOpenJobs, 2,0);
                         buttonGrid.add(viewAllApps, 1,2);
-                        buttonGrid.add(exit, 4,2);
+                        buttonGrid.add(exit, 2,2);
 
                         BorderPane HRPlacement = new BorderPane();
                         messageGrid.setHgap(20);
@@ -270,6 +270,7 @@ public class JobPortal extends Application {
                             Label positionLabel = new Label("What position are we creating?");
                             TextField positionField = new TextField();
                             Button createNewPost = new Button("Create job");
+                            Button Exit = new Button("EXIT");
                             GridPane cMessageGrid = new GridPane();
                             GridPane dateGrid = new GridPane();
                             GridPane positionGrid = new GridPane();
@@ -279,7 +280,8 @@ public class JobPortal extends Application {
                             dateGrid.add(datePicker,2,0);
                             positionGrid.add(positionLabel,1,0);
                             positionGrid.add(positionField,2,0);
-                            positionGrid.add(createNewPost,4,2);
+                            positionGrid.add(createNewPost,1,2);
+                            positionGrid.add(Exit,1,4);
 
                             cMessageGrid.setHgap(20);
                             cMessageGrid.setVgap(5);
@@ -306,6 +308,10 @@ public class JobPortal extends Application {
                             });
 
                             // where we create job postings
+
+                            Exit.setOnAction((ActionEvent exitPage) ->{
+                                stage.setScene(HRBasePage);
+                            });
                         } );
 
                         viewOpenJobs.setOnAction((ActionEvent viewJob) ->{
@@ -367,7 +373,7 @@ public class JobPortal extends Application {
                     if (loggedUser.getClass() == Interviewer.class){
                         GridPane interviewerSelectionPane = new GridPane();
 
-                        String welcomeMessage = "Welcome to the Interviewer Page: " + loggedUser.getUsername();
+                        String welcomeMessage = "Welcome to the Interviewer Page, " + loggedUser.getUsername();
                         Label welcomeLabel = new Label(welcomeMessage);
 
                         Button addApplicant = new Button("Add Applicant");
@@ -376,7 +382,7 @@ public class JobPortal extends Application {
                         Button decline = new Button("Decline");
                         Button exit = new Button("EXIT");
 
-                        interviewerSelectionPane.add(exit,8,4);
+                        interviewerSelectionPane.add(exit,1,3);
                         interviewerSelectionPane.add(addApplicant, 1,2);
                         interviewerSelectionPane.add(getInterviewees,1,1);
                         interviewerSelectionPane.add(approve,5,1);
