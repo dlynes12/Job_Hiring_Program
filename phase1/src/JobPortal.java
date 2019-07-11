@@ -188,13 +188,13 @@ public class JobPortal extends Application {
                             GridPane jobViewer = new GridPane();
                             ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
                             for (JobPosting jP: userManager.ViewJobs()){
-                                  RadioButton radioButton = new RadioButton(jP.getPosition());
-                                  radioButton.setToggleGroup(radioSet);
-                                  jobViewer.add(radioButton, 0, i+1);
-                                  i++;
-                             }
+                                RadioButton radioButton = new RadioButton(jP.getPosition());
+                                radioButton.setToggleGroup(radioSet);
+                                jobViewer.add(radioButton, 0, i+1);
+                                i++;
+                            }
 
-                             Button applyButton = new Button("Apply");
+                            Button applyButton = new Button("Apply");
 
                             jobViewer.add(applyButton,4,4);
                             jobViewer.add(exit2,4,6);
@@ -203,10 +203,11 @@ public class JobPortal extends Application {
                             jobPortalScene.getChildren().add(jobViewer);
                             stage.show();
                             applyButton.setOnAction((ActionEvent event)->{
-
-                                System.out.println(radioSet.getSelectedToggle());
+                                //System.out.println(radioSet.getSelectedToggle());
                                 Applicant a = (Applicant)loggedUser;
-                                //a.applyToJob(userManager.getJob(loginRadio.getSelectedToggle().toString()));
+                                String selecetedRadio = (((RadioButton) radioSet.getSelectedToggle()).getText());
+                                userManager.getJob(selecetedRadio).addApplicant(a);
+                                stage.setScene(loginPage);
                             });
 
 
@@ -357,7 +358,9 @@ public class JobPortal extends Application {
                                         i++;
                                     }
                                     Button viewButton = new Button("VIEW");
-                                    appViewer.add(viewButton,3,i);
+                                    appViewer.add(viewButton,3,i+1);
+                                    appViewer.setHgap(20);
+                                    appViewer.setVgap(5);
                                     ViewJobsPlacement.setBottom(appViewer);
                                 }
 
