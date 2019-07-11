@@ -4,9 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Applicant extends User{
+public class Applicant extends User {
     private HashMap<String, String> jobsApplied = new HashMap<>();
-    protected static ArrayList<Applicant> allApplicants = new ArrayList<>();
 
     String username = this.getUsername();
     String directory = System.getProperty("user.home");
@@ -14,7 +13,7 @@ public class Applicant extends User{
     String absolutePath = directory + File.separator + fileName;
 
     public Applicant(String username, String password) {
-        super(username,password);
+        super(username, password);
     }
 
     FileWriter fileWriter;
@@ -41,6 +40,21 @@ public class Applicant extends User{
         return super.getUsername();
     }
 
+    public String getJobs() {
+
+        StringBuilder sb = new StringBuilder();
+
+        for (String key : this.jobsApplied.keySet()) {
+            sb.append(key);
+            sb.append(", ");
+        }
+
+        String list = sb.toString();
+        String result = list.substring(0, list.length() - 1);
+
+        return result;
+    }
+
     //TODO: File writer and reader stuff needs to be implemented to access applicant Documents.
     public void getDocs() {
 
@@ -56,7 +70,7 @@ public class Applicant extends User{
         return this.jobsApplied.get(job.getPosition());
     }
 
-    public void updateStatus(JobPosting job, String status){
+    public void updateStatus(JobPosting job, String status) {
 
         this.jobsApplied.put(job.getPosition(), status);
     }
