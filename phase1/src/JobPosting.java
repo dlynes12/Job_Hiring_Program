@@ -6,7 +6,7 @@ public class JobPosting{
     private Date datePosted;
     private Date dateClosed;
     private String position;
-    private HiringPool candidates;
+    private HiringPool candidatePool;
     protected ArrayList<Applicant> applicants = new ArrayList<>();
 
     public JobPosting(Date datePosted, Date dateClosed, String position) {
@@ -35,6 +35,10 @@ public class JobPosting{
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public HiringPool getCandidatePool(){
+        return this.candidatePool;
     }
 
     //HR needs to have access to this information as well.
