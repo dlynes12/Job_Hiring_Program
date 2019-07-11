@@ -43,8 +43,8 @@ public class UserAccess {
     }
 
  //Manage Jobs Function-------------------------------------------------------------------
-    public boolean addJob(Date datePosted, Date dateClosed, String position){
-        JobPosting job = new JobPosting(datePosted,dateClosed,position);
+    public boolean addJob(Date datePosted, Date dateClosed, String position, int rounds){
+        JobPosting job = new JobPosting(datePosted,dateClosed,position,rounds);
         boolean add = false;
         boolean inList = false;
         for (int i=0; i < JobPostings.size();i++){

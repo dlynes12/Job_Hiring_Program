@@ -303,7 +303,7 @@ public class JobPortal extends Application {
                                 Date closeDate = null;
                                 closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                                 String position = positionField.getText();
-                                userManager.addJob(today,closeDate,position);
+                                userManager.addJob(today,closeDate,position,0);
                                 stage.setScene(HRBasePage);
 
                             });
@@ -397,14 +397,12 @@ public class JobPortal extends Application {
                         String welcomeMessage = "Welcome to the Interviewer Page, " + loggedUser.getUsername();
                         Label welcomeLabel = new Label(welcomeMessage);
 
-                        Button addApplicant = new Button("Add Applicant");
                         Button getInterviewees = new Button("Get Interviewees");
                         Button approve = new Button("Approve");
                         Button decline = new Button("Decline");
                         Button exit = new Button("EXIT");
 
                         interviewerSelectionPane.add(exit,1,3);
-                        interviewerSelectionPane.add(addApplicant, 1,2);
                         interviewerSelectionPane.add(getInterviewees,1,1);
                         interviewerSelectionPane.add(approve,5,1);
                         interviewerSelectionPane.add(decline,5,2);
@@ -421,14 +419,18 @@ public class JobPortal extends Application {
                                 i++;
                             }
 
-
                         });
 
                         exit.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
+
+                        //getInterviewees.setOnAction((ActionEvent click) -> ((Interviewer)loggedUser).getInterviewees());
+
+                        //approve.setOnAction((ActionEvent click) -> ((Interviewer)loggedUser).recommend());
+
+                        //decline.setOnAction((ActionEvent click) -> ((Interviewer)loggedUser).decline());
+
+
                         intPortalScene.getChildren().addAll(interviewerSelectionPane);
-                        getInterviewees.setOnAction((ActionEvent click) -> {
-                           // ((Interviewer)loggedUser).getInterviewees();
-                        });
 
                     }// what happens if they are not an interviewer but have a login;
                     //send message wrong user type?

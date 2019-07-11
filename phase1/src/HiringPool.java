@@ -1,9 +1,11 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+
 public class HiringPool {
 
     //private ArrayList<Applicant> candidates = new ArrayList<>();
-    private HashMap<Applicant, Integer> candidates = new HashMap<>();
+    private Map<Applicant, Integer> candidates = new HashMap();
     private ArrayList<Applicant> rejectedApplicants = new ArrayList<>();
 
     public HiringPool(){}
