@@ -18,6 +18,17 @@ public class UserAccess {
     }
 
 
+    public JobPosting getJob(String jobTitle){
+        JobPosting result = null;
+        for (int i=0; i < JobPostings.size();i++){
+            if (JobPostings.get(i).getPosition().equals(jobTitle)){
+                result = JobPostings.get(i);
+
+            }
+        }
+        return result;
+    }
+
 
     public User LogInUser(String username, String password){
         User result = null;

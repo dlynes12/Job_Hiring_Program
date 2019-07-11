@@ -8,6 +8,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -152,6 +153,12 @@ public class JobPortal extends Application {
                             File file = fileChooser.showOpenDialog(stage);
                             System.out.println(file);
                         });
+                        getResume.setOnAction((ActionEvent eve)->{
+                            String resumeText= resume.getText();
+                            Storage storage = new Storage(loggedUser.getUsername());
+                            storage.write(resumeText);
+
+                        });
 
                         Label labelFileUpload = new Label("Submit Your resume");
                         Label labelEnterResume = new Label("Enter your resume");
@@ -174,19 +181,29 @@ public class JobPortal extends Application {
                             Integer i = 0;
                             Group jobPortalScene = new Group();
                             stage.setScene(new Scene(jobPortalScene,600,600));
-                            StackPane stackPane = new StackPane();
                             GridPane jobViewer = new GridPane();
+                            ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
                             for (JobPosting jP: userManager.ViewJobs()){
                                   RadioButton radioButton = new RadioButton(jP.getPosition());
+                                  radioButton.setToggleGroup(radioSet);
                                   jobViewer.add(radioButton, 0, i+1);
                                   i++;
                              }
 
                              Button applyButton = new Button("Apply");
-
+                            jobViewer.add(applyButton,4,4);
+                            jobViewer.setHgap(10);
+                            jobViewer.setVgap(5);
                             jobPortalScene.getChildren().add(jobViewer);
                             stage.show();
+                            applyButton.setOnAction((ActionEvent event)->{
+
+                                System.out.println(radioSet.getSelectedToggle());
+                                Applicant a = (Applicant)loggedUser;
+                                //a.applyToJob(userManager.getJob(loginRadio.getSelectedToggle().toString()));
+                            });
                         });
+
 
                         resumeUpload.getChildren().addAll(applicantSelectionPane);
                         applicantPortalScene.getChildren().addAll(resumeUpload);
@@ -355,8 +372,11 @@ public class JobPortal extends Application {
                         interviewerSelectionPane.setVgap(20);
 
                         getInterviewees.setOnAction((ActionEvent ev) -> {
-                            for (User userApplicant : userManager.users) {
-                                String name = userApplicant.getUsername();
+                            Integer i = 0;
+                            for (JobPosting jP: userManager.ViewJobs()){
+                                RadioButton radioButton = new RadioButton(jP.getPosition());
+                                interviewerSelectionPane.add(radioButton, 0, i+1);
+                                i++;
                             }
 
 
