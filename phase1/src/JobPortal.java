@@ -160,7 +160,7 @@ public class JobPortal extends Application {
 
                         });
 
-                        Label labelFileUpload = new Label("Submit Your resume");
+                        Label labelFileUpload = new Label("Submit your resume");
                         Label labelEnterResume = new Label("Enter your resume");
 
                         applicantSelectionPane.add(exit,8,4);
@@ -223,11 +223,12 @@ public class JobPortal extends Application {
                     Scene HRBasePage = new Scene(HRPortalScene, 450, 250);
                     stage.setScene(HRBasePage);
                     if (loggedUser.getClass() == HR_Coordinator.class){
-                        String welcomeMessage = "Welcome to the Human Resource Page: " + loggedUser.getUsername();
+                        String welcomeMessage = "Welcome to the Human Resources Page, " + loggedUser.getUsername();
                         Label welcomeLabel = new Label(welcomeMessage);
                         Label actions = new Label("What do you want to do? Please select an option below:");
-                        Button addJobs = new Button("ADD A JOB");
-                        Button viewOpenJobs = new Button("VIEW ALL OPEN JOBS");
+                        Button addJobs = new Button("Add a job");
+                        Button viewOpenJobs = new Button("View all open jobs");
+                        Button viewAllApps = new Button("View all applicants");
                         Button exit = new Button("EXIT");
                         GridPane messageGrid = new GridPane();
                         GridPane buttonGrid = new GridPane();
@@ -236,6 +237,7 @@ public class JobPortal extends Application {
                         messageGrid.add(actions,1,2);
                         buttonGrid.add(addJobs,1,0);
                         buttonGrid.add(viewOpenJobs, 2,0);
+                        buttonGrid.add(viewAllApps, 1,2);
                         buttonGrid.add(exit, 4,2);
 
                         BorderPane HRPlacement = new BorderPane();
@@ -267,7 +269,7 @@ public class JobPortal extends Application {
                             Label closingMessage = new Label("Closing Date:");
                             Label positionLabel = new Label("What position are we creating?");
                             TextField positionField = new TextField();
-                            Button createNewPost = new Button("CREATE JOB");
+                            Button createNewPost = new Button("Create job");
                             GridPane cMessageGrid = new GridPane();
                             GridPane dateGrid = new GridPane();
                             GridPane positionGrid = new GridPane();
@@ -314,7 +316,7 @@ public class JobPortal extends Application {
                             for (JobPosting jobPosting: userManager.ViewJobs()){
                                 dropdown.getItems().add(jobPosting.getPosition());
                             }
-                            Button ApplicantButton = new Button("SEE APPLICANTS");
+                            Button ApplicantButton = new Button("See applicants");
                             Button Exit = new Button("EXIT");
                             GridPane ViewJobsGrid = new GridPane();
 
@@ -328,7 +330,7 @@ public class JobPortal extends Application {
                             ViewJobsPlacement.setTop(ViewJobsGrid);
                             HRViewJobs.getChildren().add(ViewJobsPlacement);
 
-                            Exit.setOnAction((ActionEvent exitPage) -> {
+                            Exit.setOnAction((ActionEvent exitPage) ->{
                                 stage.setScene(HRBasePage);
                             });
 
@@ -350,6 +352,11 @@ public class JobPortal extends Application {
                             });
 
 
+                        });
+
+                        viewAllApps.setOnAction((ActionEvent viewAllApplicants) ->{
+                            //TODO: Implement way to view all applicants and their data (i.e. files, jobs applied for)
+                            // Perhaps via listview or combobox
                         });
                     }// what happens if they are not an HR Coordinator but have a login;
                     //send message wrong user type?
