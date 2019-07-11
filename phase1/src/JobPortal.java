@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 public class JobPortal extends Application {
@@ -170,15 +171,21 @@ public class JobPortal extends Application {
                         exit.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
 
                         applyJob.setOnAction((ActionEvent apply) -> {
+                            Integer i = 0;
                             Group jobPortalScene = new Group();
-                            stage.setScene(new Scene(jobPortalScene,800,800));
-                            //for (JobPosting jP: jobPosting.jobpostings){
-                            //      Text txt+i.toString = new Text(jb.toString);
-                            //      Button btn+i.toString();
-                            //
-                            //      i++;
-                            // }
+                            stage.setScene(new Scene(jobPortalScene,600,600));
+                            StackPane stackPane = new StackPane();
+                            GridPane jobViewer = new GridPane();
+                            for (JobPosting jP: userManager.ViewJobs()){
+                                  RadioButton radioButton = new RadioButton(jP.getPosition());
+                                  jobViewer.add(radioButton, 0, i+1);
+                                  i++;
+                             }
 
+                             Button applyButton = new Button("Apply");
+
+                            jobPortalScene.getChildren().add(jobViewer);
+                            stage.show();
                         });
 
                         resumeUpload.getChildren().addAll(applicantSelectionPane);
@@ -264,11 +271,7 @@ public class JobPortal extends Application {
                             createNewPost.setOnAction((ActionEvent CreateJob) ->{
                                 LocalDate year = datePicker.getValue();
                                 Date closeDate = null;
-                                try {
-                                    closeDate = new SimpleDateFormat("yyyy-MM-dd").parse(datePicker.toString());
-                                } catch (ParseException ex) {
-                                    ex.printStackTrace();
-                                }
+                                closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                                 String position = positionField.getText();
                                 userManager.addJob(today,closeDate,position);
                                 stage.setScene(HRBasePage);
@@ -350,6 +353,14 @@ public class JobPortal extends Application {
 
                         interviewerSelectionPane.setHgap(20);
                         interviewerSelectionPane.setVgap(20);
+
+                        getInterviewees.setOnAction((ActionEvent ev) -> {
+                            for (User userApplicant : userManager.users) {
+                                String name = userApplicant.getUsername();
+                            }
+
+
+                        });
 
                         exit.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
                         intPortalScene.getChildren().addAll(interviewerSelectionPane);
