@@ -131,7 +131,7 @@ public class JobPortal extends Application {
         log_in.setOnAction((ActionEvent e) -> {
             String UName = username.getText();
             String Pass = password.getText();
-            User loggedUser = userManager.LogInUser(UName,Pass); // the user that is actually logged in
+            User loggedUser = userManager.getUser(UName,Pass); // the user that is actually logged in
             if(loggedUser!= null) {
                 if (loginRadio.getSelectedToggle() == applicantButton){
                     Group applicantPortalScene = new Group();
@@ -343,7 +343,7 @@ public class JobPortal extends Application {
                             ApplicantButton.setOnAction((ActionEvent seeApps) ->{
                                 Integer i = 0;
                                 String choice = (String) dropdown.getValue();
-                                String[] listOfApp = userManager.seeJob(choice).viewApplicants().split(",");
+                                String[] listOfApp = userManager.getJob(choice).viewApplicants().split(",");
                                 if (listOfApp.length != 0 && listOfApp[0] !=""){
                                     GridPane appViewer = new GridPane();
                                     ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
