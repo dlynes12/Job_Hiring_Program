@@ -296,10 +296,29 @@ public class JobPortal extends Application {
 
                             ViewJobsGrid.setHgap(20);
                             ViewJobsGrid.setVgap(5);
-                            HRViewJobs.getChildren().add(ViewJobsGrid);
+                            BorderPane ViewJobsPlacement = new BorderPane();
+                            ViewJobsPlacement.setTop(ViewJobsGrid);
+                            HRViewJobs.getChildren().add(ViewJobsPlacement);
 
                             Exit.setOnAction((ActionEvent exitPage) -> {
                                 stage.setScene(HRBasePage);
+                            });
+
+                            ApplicantButton.setOnAction((ActionEvent seeApps) ->{
+                                //TODO: if dropdown hasn't selected anything do nothing
+                                // please test later
+                                Label ApplicantLab = new Label("Applicant:");
+                                ComboBox AppDropdown = new ComboBox();
+                                String choice = (String) Dropdown.getValue();
+                                JobPosting job = userManager.seeJob(choice);
+                                for (String applicant: job.viewApplicants().split(",")){
+                                    AppDropdown.getItems().add(applicant);
+                                }
+                                GridPane appGrid = new GridPane();
+                                appGrid.add(ApplicantLab,1,0);
+                                appGrid.add(AppDropdown,2,0);
+                                ViewJobsPlacement.setBottom(appGrid);
+                                HRViewJobs.getChildren().add(ViewJobsPlacement);
                             });
 
 
