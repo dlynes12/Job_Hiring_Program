@@ -181,6 +181,10 @@ public class JobPortal extends Application {
                             Integer i = 0;
                             Group jobPortalScene = new Group();
                             stage.setScene(new Scene(jobPortalScene,600,600));
+                            Button exit2 = new Button("EXIT");
+                            exit2.setOnAction((ActionEvent ex) -> {
+                                stage.setScene(loginPage);
+                            });
                             GridPane jobViewer = new GridPane();
                             ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
                             for (JobPosting jP: userManager.ViewJobs()){
@@ -191,7 +195,9 @@ public class JobPortal extends Application {
                              }
 
                              Button applyButton = new Button("Apply");
+
                             jobViewer.add(applyButton,4,4);
+                            jobViewer.add(exit2,4,6);
                             jobViewer.setHgap(10);
                             jobViewer.setVgap(5);
                             jobPortalScene.getChildren().add(jobViewer);
@@ -202,6 +208,8 @@ public class JobPortal extends Application {
                                 Applicant a = (Applicant)loggedUser;
                                 //a.applyToJob(userManager.getJob(loginRadio.getSelectedToggle().toString()));
                             });
+
+
                         });
 
 
