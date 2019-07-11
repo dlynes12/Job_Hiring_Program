@@ -343,7 +343,25 @@ public class JobPortal extends Application {
                             ApplicantButton.setOnAction((ActionEvent seeApps) ->{
                                 //TODO: if dropdown hasn't selected anything do nothing
                                 // please test later
-                                Label ApplicantLab = new Label("Applicant:");
+                                Integer i = 0;
+                                String choice = (String) dropdown.getValue();
+                                String[] listOfApp = userManager.seeJob(choice).viewApplicants().split(",");
+                                if (listOfApp.length != 0 && listOfApp[0] !=""){
+                                    GridPane appViewer = new GridPane();
+                                    ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
+
+                                    for (String app: listOfApp){
+                                        RadioButton radioButton = new RadioButton(app);
+                                        radioButton.setToggleGroup(radioSet);
+                                        appViewer.add(radioButton, 0, i+1);
+                                        i++;
+                                    }
+                                    Button viewButton = new Button("VIEW");
+                                    appViewer.add(viewButton,3,i);
+                                    ViewJobsPlacement.setBottom(appViewer);
+                                }
+
+                                /*Label ApplicantLab = new Label("Applicant:");
                                 ComboBox AppDropdown = new ComboBox();
                                 String choice = (String) dropdown.getValue();
                                 JobPosting job = userManager.seeJob(choice);
@@ -354,7 +372,7 @@ public class JobPortal extends Application {
                                 appGrid.add(ApplicantLab,1,0);
                                 appGrid.add(AppDropdown,2,0);
                                 ViewJobsPlacement.setBottom(appGrid);
-                                HRViewJobs.getChildren().add(ViewJobsPlacement);
+                                HRViewJobs.getChildren().add(ViewJobsPlacement);*/
                             });
 
 
