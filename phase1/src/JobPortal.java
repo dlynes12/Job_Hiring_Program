@@ -23,6 +23,7 @@ public class JobPortal extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         UserAccess userManager = new UserAccess();
+        JobAccess jobManager = new JobAccess();
         ApplicationModel applicationModel = new ApplicationModel();
         //JobPosting jobPosting = new JobPosting();
         Group loginScene = new Group();
@@ -186,7 +187,7 @@ public class JobPortal extends Application {
                             });
                             GridPane jobViewer = new GridPane();
                             ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
-                            for (JobPosting jP: userManager.ViewJobs()){
+                            for (JobPosting jP: jobManager.ViewJobs()){
                                 RadioButton radioButton = new RadioButton(jP.getPosition());
                                 radioButton.setToggleGroup(radioSet);
                                 jobViewer.add(radioButton, 0, i+1);
@@ -205,7 +206,7 @@ public class JobPortal extends Application {
                                 //System.out.println(radioSet.getSelectedToggle());
                                 Applicant a = (Applicant)loggedUser;
                                 String selecetedRadio = (((RadioButton) radioSet.getSelectedToggle()).getText());
-                                userManager.getJob(selecetedRadio).addApplicant(a);
+                                jobManager.getJob(selecetedRadio).addApplicant(a);
                                 stage.setScene(loginPage);
                             });
 
@@ -302,7 +303,7 @@ public class JobPortal extends Application {
                                 Date closeDate = null;
                                 closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                                 String position = positionField.getText();
-                                userManager.addJob(today,closeDate,position,0);
+                                jobManager.addJob(today,closeDate,position,0);
                                 stage.setScene(HRBasePage);
 
                             });
@@ -319,7 +320,7 @@ public class JobPortal extends Application {
                             Scene createJobsPage = new Scene(HRViewJobs, 600, 600);
                             stage.setScene(createJobsPage);
                             ComboBox dropdown = new ComboBox();
-                            for (JobPosting jobPosting: userManager.ViewJobs()){
+                            for (JobPosting jobPosting: jobManager.ViewJobs()){
                                 dropdown.getItems().add(jobPosting.getPosition());
                             }
                             Button ApplicantButton = new Button("See applicants");
@@ -343,7 +344,7 @@ public class JobPortal extends Application {
                             ApplicantButton.setOnAction((ActionEvent seeApps) ->{
                                 Integer i = 0;
                                 String choice = (String) dropdown.getValue();
-                                String[] listOfApp = userManager.getJob(choice).viewApplicants().split(",");
+                                String[] listOfApp = jobManager.getJob(choice).viewApplicants().split(",");
                                 if (listOfApp.length != 0 && listOfApp[0] !=""){
                                     GridPane appViewer = new GridPane();
                                     ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
@@ -399,7 +400,7 @@ public class JobPortal extends Application {
 
                         getInterviewees.setOnAction((ActionEvent ev) -> {
                             Integer i = 0;
-                            for (JobPosting jP: userManager.ViewJobs()){
+                            for (JobPosting jP: jobManager.ViewJobs()){
                                 RadioButton radioButton = new RadioButton(jP.getPosition());
                                 interviewerSelectionPane.add(radioButton, 0, i+1);
                                 i++;
