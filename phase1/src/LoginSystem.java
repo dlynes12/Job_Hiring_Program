@@ -1,5 +1,1 @@
-public class LoginSystem
-
-
-{
-}
+public class LoginSystem {}

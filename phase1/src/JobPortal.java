@@ -1,19 +1,13 @@
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
-import javax.swing.*;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,7 +16,6 @@ import java.time.LocalDate;
 import java.util.Date;
 
 public class JobPortal extends Application {
-
 
     // SIGNIN PAGE
     @Override
@@ -49,6 +42,7 @@ public class JobPortal extends Application {
         GridPane gridPane = new GridPane();
         TextField username = new TextField();
         TextField password = new TextField();
+
         gridPane.add(labelUsername, 2, 0);
         gridPane.add(labelPassword, 2, 2);
         gridPane.add(username, 4, 0);
@@ -85,6 +79,7 @@ public class JobPortal extends Application {
             GridPane userInfo = new GridPane();
             GridPane choicePane = new GridPane();
             GridPane grid = new GridPane();
+
             userInfo.add(exit,8,4);
             userInfo.add(createUserLab,2,0);
             userInfo.add(createPassLab,2,2);
@@ -96,8 +91,6 @@ public class JobPortal extends Application {
             grid.add(radioInt,6,0);
             grid.add(create,7,2);
 
-            exit.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
-
             BorderPane placement = new BorderPane();
             userInfo.setHgap(20);
             userInfo.setVgap(5);
@@ -107,6 +100,8 @@ public class JobPortal extends Application {
             placement.setCenter(choicePane);
             placement.setBottom(grid);
             createNewUser.getChildren().addAll(placement);
+
+            exit.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
 
             create.setOnAction((ActionEvent ProcessUser) ->{
                 if ((RadioButton) radioSet.getSelectedToggle() == radioApp){
@@ -124,7 +119,6 @@ public class JobPortal extends Application {
                     if (userManager.addUser(tempInt)){
                         stage.setScene(loginPage);
                     }
-
                 }
             } );
 
@@ -142,11 +136,12 @@ public class JobPortal extends Application {
                     stage.setScene(new Scene(applicantPortalScene, 600, 600));
                     if (loggedUser.getClass() == Applicant.class){
                         GridPane applicantSelectionPane = new GridPane();
+
                         Button getResume = new Button("Submit your resume");
                         Button applyJob = new Button("Apply to jobs");
                         Button getFile = new Button("Open your resume from file");
                         Button exit = new Button("EXIT");
-                        applicantSelectionPane.add(exit,8,4);
+
                         TextField resume = new TextField();
                         getFile.setOnAction((ActionEvent openFile) -> {
                             FileChooser fileChooser = new FileChooser();
@@ -155,19 +150,28 @@ public class JobPortal extends Application {
                             fileChooser.setInitialFileName(loggedUser.getUsername());
                             File file = fileChooser.showOpenDialog(stage);
                             System.out.println(file);
-
-
-
                         });
+
+                        Label labelFileUpload = new Label("Submit Your resume");
+                        Label labelEnterResume = new Label("Enter your resume");
+
+                        applicantSelectionPane.add(exit,8,4);
+                        applicantSelectionPane.add(getFile,2,2);
+                        applicantSelectionPane.add(getResume,2,4);
+                        applicantSelectionPane.add(labelFileUpload,0,2);
+                        applicantSelectionPane.add(resume,2,3);
+                        applicantSelectionPane.add(labelEnterResume,0,4);
+                        applicantSelectionPane.add(applyJob,2,6);
+
+                        StackPane resumeUpload = new StackPane();
+                        applicantSelectionPane.setHgap(20);
+                        applicantSelectionPane.setVgap(20);
 
                         exit.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
 
                         applyJob.setOnAction((ActionEvent apply) -> {
                             Group jobPortalScene = new Group();
                             stage.setScene(new Scene(jobPortalScene,800,800));
-
-
-
                             //for (JobPosting jP: jobPosting.jobpostings){
                             //      Text txt+i.toString = new Text(jb.toString);
                             //      Button btn+i.toString();
@@ -177,21 +181,7 @@ public class JobPortal extends Application {
 
                         });
 
-
-                        Label labelFileUpload = new Label("Submit Your resume");
-                        Label labelEnterResume = new Label("Enter your resume");
-                        applicantSelectionPane.add(getFile,2,2);
-                        applicantSelectionPane.add(getResume,2,4);
-                        applicantSelectionPane.add(labelFileUpload,0,2);
-                        applicantSelectionPane.add(resume,2,3);
-                        applicantSelectionPane.add(labelEnterResume,0,4);
-                        applicantSelectionPane.add(applyJob,2,6);
-                        StackPane resumeUpload = new StackPane();
-                        applicantSelectionPane.setHgap(20);
-                        applicantSelectionPane.setVgap(20);
                         resumeUpload.getChildren().addAll(applicantSelectionPane);
-
-
                         applicantPortalScene.getChildren().addAll(resumeUpload);
                     }// what happens if they are not an applicant but have a login;
                     //send message wrong user type?
@@ -201,14 +191,15 @@ public class JobPortal extends Application {
                     Scene HRBasePage = new Scene(HRPortalScene, 450, 250);
                     stage.setScene(HRBasePage);
                     if (loggedUser.getClass() == HR_Coordinator.class){
-                        String WelcomeMessage = "Welcome to the Human Resource Page: " + loggedUser.getUsername();
-                        Label welcomeLabel = new Label(WelcomeMessage);
+                        String welcomeMessage = "Welcome to the Human Resource Page: " + loggedUser.getUsername();
+                        Label welcomeLabel = new Label(welcomeMessage);
                         Label actions = new Label("What do you want to do? Please select an option below:");
                         Button addJobs = new Button("ADD A JOB");
                         Button viewOpenJobs = new Button("VIEW ALL OPEN JOBS");
                         Button exit = new Button("EXIT");
                         GridPane messageGrid = new GridPane();
                         GridPane buttonGrid = new GridPane();
+
                         messageGrid.add(welcomeLabel,1,0);
                         messageGrid.add(actions,1,2);
                         buttonGrid.add(addJobs,1,0);
@@ -222,7 +213,6 @@ public class JobPortal extends Application {
                         buttonGrid.setVgap(5);
                         HRPlacement.setTop(messageGrid);
                         HRPlacement.setBottom(buttonGrid);
-
 
                         HRPortalScene.getChildren().addAll(HRPlacement);
 
@@ -249,16 +239,18 @@ public class JobPortal extends Application {
                             GridPane cMessageGrid = new GridPane();
                             GridPane dateGrid = new GridPane();
                             GridPane positionGrid = new GridPane();
+
                             cMessageGrid.add(closingMessage,1,0);
-                            cMessageGrid.setHgap(20);
-                            cMessageGrid.setVgap(5);
                             dateGrid.add(closingMessage,1,0);
                             dateGrid.add(datePicker,2,0);
-                            dateGrid.setHgap(20);
-                            dateGrid.setVgap(5);
                             positionGrid.add(positionLabel,1,0);
                             positionGrid.add(positionField,2,0);
                             positionGrid.add(createNewPost,4,2);
+
+                            cMessageGrid.setHgap(20);
+                            cMessageGrid.setVgap(5);
+                            dateGrid.setHgap(20);
+                            dateGrid.setVgap(5);
                             positionGrid.setHgap(20);
                             positionGrid.setVgap(5);
 
@@ -286,8 +278,6 @@ public class JobPortal extends Application {
                             // where we create job postings
                         } );
 
-
-
                         viewOpenJobs.setOnAction((ActionEvent viewJob) ->{
                             Group HRViewJobs = new Group();
                             Scene createJobsPage = new Scene(HRViewJobs, 600, 600);
@@ -299,9 +289,11 @@ public class JobPortal extends Application {
                             Button ApplicantButton = new Button("SEE APPLICANTS");
                             Button Exit = new Button("EXIT");
                             GridPane ViewJobsGrid = new GridPane();
+
                             ViewJobsGrid.add(Dropdown,1,0);
                             ViewJobsGrid.add(ApplicantButton,2,0);
                             ViewJobsGrid.add(Exit,3,0);
+
                             ViewJobsGrid.setHgap(20);
                             ViewJobsGrid.setVgap(5);
                             HRViewJobs.getChildren().add(ViewJobsGrid);
@@ -320,17 +312,22 @@ public class JobPortal extends Application {
                     stage.setScene(new Scene(intPortalScene, 600, 600));
                     if (loggedUser.getClass() == Interviewer.class){
                         GridPane interviewerSelectionPane = new GridPane();
-                        //Label TestLab1 = new Label("Interviewer Page");
+
+                        String welcomeMessage = "Welcome to the Interviewer Page: " + loggedUser.getUsername();
+                        Label welcomeLabel = new Label(welcomeMessage);
+
                         Button addApplicant = new Button("Add Applicant");
                         Button getInterviewees = new Button("Get Interviewees");
                         Button approve = new Button("Approve");
                         Button decline = new Button("Decline");
                         Button exit = new Button("EXIT");
+
                         interviewerSelectionPane.add(exit,8,4);
                         interviewerSelectionPane.add(addApplicant, 1,2);
                         interviewerSelectionPane.add(getInterviewees,1,1);
                         interviewerSelectionPane.add(approve,5,1);
                         interviewerSelectionPane.add(decline,5,2);
+                        interviewerSelectionPane.add(welcomeLabel ,1,0);
 
                         interviewerSelectionPane.setHgap(20);
                         interviewerSelectionPane.setVgap(20);
@@ -345,14 +342,9 @@ public class JobPortal extends Application {
                     //send message wrong user type?
                     else{stage.setScene(loginPage);}
                 }
-
-
         }});
-
-
         // View + Controller
     }
-
     public static void main(String[] args) {
         launch(args);
     }

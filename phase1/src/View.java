@@ -1,32 +1,15 @@
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import javafx.scene.layout.StackPane;
-
-
 
 public class View implements EventHandler<ActionEvent> {
 
-
-
     public View(ApplicationModel model , Stage stage) {
-
         initUI(stage);
     }
 
-
-    private void initUI(Stage stage) {
-
-
-
-        }
-
-
+    private void initUI(Stage stage) {}
 
     private MenuBar createMenuBar() {
 
@@ -75,19 +58,14 @@ public class View implements EventHandler<ActionEvent> {
         menu.getItems().add(menuItem);
 
         menu.getItems().add(new SeparatorMenuItem());
-
-
         menuBar.getMenus().add(menu);
 
         // Another menu for Fill Style
 
         menu = new Menu("");
-
         menuItem = new MenuItem("");
         menuItem.setOnAction(this);
         menu.getItems().add(menuItem);
-
-
 
         menuBar.getMenus().add(menu);
 
