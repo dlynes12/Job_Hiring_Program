@@ -282,15 +282,15 @@ public class JobPortal extends Application {
                             Group HRViewJobs = new Group();
                             Scene createJobsPage = new Scene(HRViewJobs, 600, 600);
                             stage.setScene(createJobsPage);
-                            ComboBox Dropdown = new ComboBox();
+                            ComboBox dropdown = new ComboBox();
                             for (JobPosting jobPosting: userManager.ViewJobs()){
-                                Dropdown.getItems().add(jobPosting.getPosition());
+                                dropdown.getItems().add(jobPosting.getPosition());
                             }
                             Button ApplicantButton = new Button("SEE APPLICANTS");
                             Button Exit = new Button("EXIT");
                             GridPane ViewJobsGrid = new GridPane();
 
-                            ViewJobsGrid.add(Dropdown,1,0);
+                            ViewJobsGrid.add(dropdown,1,0);
                             ViewJobsGrid.add(ApplicantButton,2,0);
                             ViewJobsGrid.add(Exit,3,0);
 
@@ -309,7 +309,7 @@ public class JobPortal extends Application {
                                 // please test later
                                 Label ApplicantLab = new Label("Applicant:");
                                 ComboBox AppDropdown = new ComboBox();
-                                String choice = (String) Dropdown.getValue();
+                                String choice = (String) dropdown.getValue();
                                 JobPosting job = userManager.seeJob(choice);
                                 for (String applicant: job.viewApplicants().split(",")){
                                     AppDropdown.getItems().add(applicant);
