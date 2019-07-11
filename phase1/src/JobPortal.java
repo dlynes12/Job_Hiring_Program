@@ -427,7 +427,7 @@ public class JobPortal extends Application {
                         exit.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
                         intPortalScene.getChildren().addAll(interviewerSelectionPane);
                         getInterviewees.setOnAction((ActionEvent click) -> {
-                            ((Interviewer)loggedUser).getInterviewees();
+                           // ((Interviewer)loggedUser).getInterviewees();
                         });
 
                     }// what happens if they are not an interviewer but have a login;

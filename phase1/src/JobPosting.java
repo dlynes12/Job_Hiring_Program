@@ -7,12 +7,14 @@ public class JobPosting{
     private Date dateClosed;
     private String position;
     private HiringPool candidatePool;
+    private int interviewRounds;
     protected ArrayList<Applicant> applicants = new ArrayList<>();
 
-    public JobPosting(Date datePosted, Date dateClosed, String position) {
+    public JobPosting(Date datePosted, Date dateClosed, String position, int interviewRounds) {
         this.datePosted = datePosted;
         this.dateClosed = dateClosed;
         this.position = position;
+        this.interviewRounds = interviewRounds;
     }
 
     public Date getDatePosted() { return this.datePosted; }
