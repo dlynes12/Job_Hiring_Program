@@ -18,10 +18,10 @@ public class Interviewer extends User {
         shortlist.put(username, 1);
     }
 
-    public void Approve(Applicant username){
-        shortlist.replace(username , shortlist.get(username) + 1);
+    public void recommend(Applicant applicant, JobPosting job){
+        HiringPool pool = job.getCandidatePool();
     }
 
-    public void Decline(Applicant username){}
+    public void decline(Applicant username){}
 
 }

@@ -1,6 +1,7 @@
 import java.util.ArrayList;
-
+/*
 public class JPostings {
+
     private ArrayList<JobPosting>JobPostings = new ArrayList<>();
 
 
@@ -8,7 +9,7 @@ public class JPostings {
         boolean add = false;
         boolean inList = false;
         for (int i=0; i < JobPostings.size();i++){
-            if (JobPostings.get(i).getPosition() == job.getPosition()){
+            if (JobPostings.get(i).getPosition().equals(job.getPosition())){
                 inList = true;
             }
         }
@@ -25,7 +26,7 @@ public class JPostings {
         boolean remove = false;
         int index = -1;
         for (int i = 0; i < JobPostings.size(); i++){
-            if (JobPostings.get(i).getPosition() == position){index = i;}
+            if (JobPostings.get(i).getPosition().equals(position)){index = i;}
         }
         //if so remove the position from the available list of jobs
         if (index != -1){
@@ -34,7 +35,7 @@ public class JPostings {
         }
         return remove;
     } //assuming a job cannot have two postings (i.e. if you need two people you simply hire from one posting)
-    /*or should this delete a josting once it has expired*/
+    //or should this delete a josting once it has expired
 
 
     public JobPosting seeJob (String position) {
@@ -42,7 +43,7 @@ public class JPostings {
         //check if the position is in our job postings
         int index = -1;
         for (int i = 0; i < JobPostings.size(); i++){
-            if (JobPostings.get(i).getPosition() == position){index = i;}
+            if (JobPostings.get(i).getPosition().equals(position)){index = i;}
         }
         //if so return that job
         if (index != -1){job = JobPostings.get(index);}
@@ -58,4 +59,5 @@ public class JPostings {
         String result = positions.substring(0,positions.length()-1); // take off the last comma(,) off the resulting string
         return result;
     } // see all the job postings available
-}
+} */
+

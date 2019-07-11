@@ -6,9 +6,9 @@ public class JobPosting{
     private Date datePosted;
     private Date dateClosed;
     private String position;
+    private HiringPool candidatePool;
     protected ArrayList<Applicant> applicants = new ArrayList<>();
 
-    //TODO: add a way to assign all the applicants to the JobPosting object - so HR can also access this.
     public JobPosting(Date datePosted, Date dateClosed, String position) {
         this.datePosted = datePosted;
         this.dateClosed = dateClosed;
@@ -37,6 +37,10 @@ public class JobPosting{
         this.position = position;
     }
 
+    public HiringPool getCandidatePool(){
+        return this.candidatePool;
+    }
+
     //HR needs to have access to this information as well.
     public void addApplicant (Applicant applicant){
         this.applicants.add(applicant);
@@ -45,10 +49,12 @@ public class JobPosting{
     //TODO create the display window for HR Coordinator to view this list and able to click on the user
     public String viewApplicants(){
         String listOfApplicants = "";
+        String result;
         for (Applicant applicant: this.applicants){
             listOfApplicants = listOfApplicants + applicant.getUsername() + ",";
         }
-        String result = listOfApplicants.substring(0, listOfApplicants.length()-1); //takes off the last comma
+        if (listOfApplicants.length() ==0){result = listOfApplicants;}
+        else {result = listOfApplicants.substring(0, listOfApplicants.length()-1);} //takes off the last comma
         return result;
     }
 

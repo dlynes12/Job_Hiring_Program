@@ -1,15 +1,14 @@
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
+/*One HR Person hires for their own section of the company*/
 public class HR_Coordinator extends User{
 
-    JPostings ListJobs = new JPostings();
+    //JPostings ListJobs = new JPostings();
 
     public HR_Coordinator(String Username,String Password){
         super(Username,Password);
     }
-
+/*
     public boolean addJob(Date datePosted, Date dateClosed, String position){
         JobPosting job = new JobPosting(datePosted,dateClosed,position);
         return ListJobs.addJob(job);
@@ -19,11 +18,12 @@ public class HR_Coordinator extends User{
 
     public String[] ViewOpenJobs(){return ListJobs.ViewJobs().split(",");}
 
+    public JPostings getListJobs() {
+        return ListJobs;
+    }*/
 
-
-
-    public void matchItoA(Interviewer interviewer, Applicant applicant){
-        //interviewer.interviewees.add(applicant);
+    public void matchItoA(Interviewer interviewer, Applicant applicant, JobPosting jobPosting){
+        interviewer.addApplicant(applicant);
     }
 
 }
