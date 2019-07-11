@@ -1,11 +1,4 @@
-import java.io.File;
-
-import java.io.FileWriter;
-
-import java.io.IOException;
-
-import java.io.OutputStreamWriter;
-
+import java.io.*;
 
 
 public class Storage {
@@ -16,29 +9,19 @@ public class Storage {
 
     String fileName = username + ".txt";
 
+    String text = null;
+
     String absolutePath = directory + File.separator + fileName;
-
-    FileWriter fw;
-
-    File f = null;
-
-
-
-    public Storage(String uName) {
-
-        this.username = uName;
-
-        this.fileName = this.username + ".txt";
-
-    }
-
-
 
     public void main(String[]args) {
 
         try {
+            FileWriter fw = new FileWriter(fileName);
+            PrintWriter pw = new PrintWriter(fw);
 
-            fw = new FileWriter(absolutePath);
+            pw.println(text);
+
+            pw.close();
 
         } catch (IOException e) {
 
@@ -50,28 +33,8 @@ public class Storage {
 
 
 
-    public void write(String s){
-
-        try {
-
-            fw.write(s);
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
-
-        }
-
-
-
-    }
-
-
-
-    public void read (){
-
-
-
+    public void getString (String s){
+        this.text = s;
     }
 
 

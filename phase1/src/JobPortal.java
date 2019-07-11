@@ -155,9 +155,8 @@ public class JobPortal extends Application {
                         });
                         getResume.setOnAction((ActionEvent eve)->{
                             String resumeText= resume.getText();
-                            Storage storage = new Storage(loggedUser.getUsername());
-                            storage.write(resumeText);
-
+                            Storage storage = new Storage();
+                            storage.getString(resumeText);
                         });
 
                         Label labelFileUpload = new Label("Submit your resume");
@@ -228,8 +227,8 @@ public class JobPortal extends Application {
                         Label welcomeLabel = new Label(welcomeMessage);
                         Label actions = new Label("What do you want to do? Please select an option below:");
                         Button addJobs = new Button("Add a job");
-                        Button viewOpenJobs = new Button("View all open jobs");
-                        Button viewAllApps = new Button("View all applicants");
+                        Button viewOpenJobs = new Button("View all open jobs"); // for a specific job, view the applicants
+                        Button viewAllApps = new Button("View all applicants"); // for a specific applicant, view the jobs they applied for
                         Button exit = new Button("EXIT");
                         GridPane messageGrid = new GridPane();
                         GridPane buttonGrid = new GridPane();
@@ -342,8 +341,6 @@ public class JobPortal extends Application {
                             });
 
                             ApplicantButton.setOnAction((ActionEvent seeApps) ->{
-                                //TODO: if dropdown hasn't selected anything do nothing
-                                // please test later
                                 Integer i = 0;
                                 String choice = (String) dropdown.getValue();
                                 String[] listOfApp = userManager.seeJob(choice).viewApplicants().split(",");
@@ -362,23 +359,12 @@ public class JobPortal extends Application {
                                     appViewer.setHgap(20);
                                     appViewer.setVgap(5);
                                     ViewJobsPlacement.setBottom(appViewer);
-                                }
 
-                                /*Label ApplicantLab = new Label("Applicant:");
-                                ComboBox AppDropdown = new ComboBox();
-                                String choice = (String) dropdown.getValue();
-                                JobPosting job = userManager.seeJob(choice);
-                                for (String applicant: job.viewApplicants().split(",")){
-                                    AppDropdown.getItems().add(applicant);
+                                    viewButton.setOnAction((ActionEvent ViewAppDocs) ->{
+                                        // see the specific applicant's documents
+                                    });
                                 }
-                                GridPane appGrid = new GridPane();
-                                appGrid.add(ApplicantLab,1,0);
-                                appGrid.add(AppDropdown,2,0);
-                                ViewJobsPlacement.setBottom(appGrid);
-                                HRViewJobs.getChildren().add(ViewJobsPlacement);*/
                             });
-
-
                         });
 
                         viewAllApps.setOnAction((ActionEvent viewAllApplicants) ->{
