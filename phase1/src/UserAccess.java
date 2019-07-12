@@ -27,6 +27,12 @@ public class UserAccess {
         return result;
     }
 
+    public User login(String username, String password){
+        User temp = this.getUser(username);
+        if (!temp.getPassword().equals(password)){temp = null;}
+        return temp;
+    }
+
 //    public String listUses(ArrayList<User> a){
 //        String list = "";
 //        for(User u: a){

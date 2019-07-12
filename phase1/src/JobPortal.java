@@ -133,7 +133,7 @@ public class JobPortal extends Application {
         log_in.setOnAction((ActionEvent e) -> {
             String UName = username.getText();
             String Pass = password.getText();
-            User loggedUser = userManager.getUser(UName); // the user that is actually logged in
+            User loggedUser = userManager.login(UName,Pass); // the user that is actually logged in
             if(loggedUser!= null) {
                 if (loginRadio.getSelectedToggle() == applicantButton){
                     Group applicantPortalScene = new Group();
