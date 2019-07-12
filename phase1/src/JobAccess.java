@@ -8,7 +8,7 @@ public class JobAccess{
     public boolean addJob(Date datePosted, Date dateClosed, String position, int rounds) {
         JobPosting job = new JobPosting(datePosted, dateClosed, position, rounds);
         boolean add = false;
-        if (this.getJob(position) == null) {
+        if (this.getJob(position) == null && !position.trim().isEmpty()) {
             this.JobPostings.add(job);
             add = true;
             //System.out.println(job.getDatePosted());

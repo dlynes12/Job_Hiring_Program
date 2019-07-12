@@ -27,7 +27,7 @@ public class Applicant extends User {
             for (String key : this.jobsApplied.keySet()) {
                 s = s + key + "\n";
             }
-        } else {s = s + "You have not applied for a job";}
+        } else {s = s + "Applicant has not applied for a job";}
 
         return s;
     }
@@ -59,6 +59,6 @@ public class Applicant extends User {
     @Override
     public String toString() {
         return "Applicant Username: " + username + '\n' +
-                "Jobs Applied To:\n" + this.getJobs();
+                "\nJobs Applied To:\n" + this.getJobs();
     }
 }

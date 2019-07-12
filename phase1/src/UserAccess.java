@@ -8,7 +8,7 @@ public class UserAccess {
     // LOGIN FUNCTIONS----------------------------------------------------------------------
     boolean addUser(User user) {
         boolean add = false;
-        if (this.getUser(user.getUsername()) == null) {
+        if (this.getUser(user.getUsername()) == null && !user.getUsername().trim().isEmpty()) {
             this.users.add(user);
             add = true;
 
