@@ -24,6 +24,7 @@ public class JobPortal extends Application {
     public void start(Stage stage) throws Exception {
         UserAccess userManager = new UserAccess();
         JobAccess jobManager = new JobAccess();
+        Storage storage = new Storage();
         ApplicationModel applicationModel = new ApplicationModel();
         //JobPosting jobPosting = new JobPosting();
         Group loginScene = new Group();
@@ -158,8 +159,7 @@ public class JobPortal extends Application {
                         });
                         getResume.setOnAction((ActionEvent eve)->{
                             String resumeText= resume.getText();
-                            Storage storage = new Storage();
-                            storage.getString(resumeText);
+                            storage.writeFile(loggedUser.getUsername(),resumeText);
                         });
 
                         Label labelFileUpload = new Label("Submit your resume");

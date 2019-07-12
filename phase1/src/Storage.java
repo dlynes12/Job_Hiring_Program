@@ -3,39 +3,43 @@ import java.io.*;
 
 public class Storage {
 
-    String username;
+//    String username;
+//
+//    String directory = System.getProperty("user.home");
+//
+//    String fileName = username + ".txt";
+//
+//    String text = null;
+//
+//    String absolutePath = directory + File.separator + fileName;
 
-    String directory = System.getProperty("user.home");
-
-    String fileName = username + ".txt";
-
-    String text = null;
-
-    String absolutePath = directory + File.separator + fileName;
-
-    public void main(String[]args) {
-
+    public void writeFile(String fName, String data){
         try {
-            FileWriter fw = new FileWriter(fileName);
-            PrintWriter pw = new PrintWriter(fw);
+            FileWriter fw = new FileWriter(fName, true);
+            BufferedWriter bw = new BufferedWriter(fw);
 
-            pw.println(text);
-            pw.println("*");
-
-            pw.close();
+            bw.write(data);
+            bw.write("*");
 
         } catch (IOException e) {
 
             e.printStackTrace();
 
         }
-
     }
 
-    public void getString (String s){
-        this.text = s;
+    public void readFile(String fName){
+        try{
+            FileReader fr = new FileReader(fName);
+            BufferedReader br = new BufferedReader(fr);
+
+            String s;
+            while((s = br.readLine()) != "*" || (s = br.readLine()) != null){
+                System.out.println(s);
+            }
+            br.close();
+        }catch (IOException e){
+            System.out.println("File not found.");
+        }
     }
-
-
-
 }

@@ -8,7 +8,7 @@ public class Applicant extends User {
     private HashMap<String, String> jobsApplied = new HashMap<>();
 
     String username = this.getUsername();
-
+    Storage st = new Storage();
     public Applicant(String username, String password) {
         super(username, password);
 
@@ -34,7 +34,7 @@ public class Applicant extends User {
 
     //TODO: File writer and reader stuff needs to be implemented to access applicant Documents.
     public void getDocs(String username) {
-        Writer wr = new Writer(username + ".txt");
+       st.readFile(username + ".txt");
     }
 
     public void applyToJob(JobPosting jobPosting) {
