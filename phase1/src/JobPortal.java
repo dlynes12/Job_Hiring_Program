@@ -21,6 +21,9 @@ public class JobPortal extends Application {
 
     // SIGNIN PAGE
     @Override
+
+    //TODO: Before handing in please erase any dead code you see and fix all naming conventions <3
+
     public void start(Stage stage) throws Exception {
         UserAccess userManager = new UserAccess();
         JobAccess jobManager = new JobAccess();
@@ -128,8 +131,6 @@ public class JobPortal extends Application {
 
         });
 
-        //TODO: Fix all the naming conventions for the variables
-
         log_in.setOnAction((ActionEvent e) -> {
             String UName = username.getText();
             String Pass = password.getText();
@@ -141,6 +142,8 @@ public class JobPortal extends Application {
                     stage.setScene(applicantPage);
                     if (loggedUser.getClass() == Applicant.class) {
                         GridPane applicantSelectionPane = new GridPane();
+
+                        //TODO: Add a display for resume
 
                         Button getResume = new Button("Submit your resume");
                         Button applyJob = new Button("Apply to jobs");
@@ -477,8 +480,6 @@ public class JobPortal extends Application {
                                 //appInfo.setText(((Applicant)userManager.getUser((String)dropApp.getValue())).getJobs());
 
                             });
-                            //TODO: Implement way to view all applicants and their data (i.e. files, jobs applied for)
-                            // Perhaps via listview or combobox
                         });
                     }// what happens if they are not an HR Coordinator but have a login;
                     //send message wrong user type?
