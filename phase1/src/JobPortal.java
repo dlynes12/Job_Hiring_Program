@@ -238,7 +238,7 @@ q
                             Scene historyPage = new Scene(historyViewerScene, 600, 600);
                             stage.setScene(historyPage);
 
-                            Label accountInfo = new Label((loggedUser).toString());
+                            Label accountInfo = new Label(((Applicant)loggedUser).getInfo());
                             Button exitHistory = new Button("EXIT");
                             Button returnButton = new Button("Back");
                             GridPane historyPane = new GridPane();
@@ -485,7 +485,7 @@ q
                             });
 
                             viewButton.setOnAction((ActionEvent seeApps) -> {
-                                appInfo.setText((userManager.getUser((String) dropApp.getValue())).toString());
+                                appInfo.setText(((Applicant)(userManager.getUser((String) dropApp.getValue()))).getInfo());
                                 //appInfo.setText(((Applicant)userManager.getUser((String)dropApp.getValue())).getJobs());
 
                             });

@@ -17,10 +17,7 @@ public class Storage {
         try {
             FileWriter fw = new FileWriter(fName, true);
             BufferedWriter bw = new BufferedWriter(fw);
-
             bw.write(data);
-            bw.write("*");
-
         } catch (IOException e) {
 
             e.printStackTrace();

@@ -77,10 +77,18 @@ public class Applicant extends User {
     }
 
     //TODO: make them
-    @Override
-    public String toString() {
+    public String getInfo(){
         return "Applicant Username: " + username + '\n' +
                 "\n Date Created: " + this.getDateCreated() + "\n" +
                 "\nJobs Applied To:\n" + this.getJobs();
+    }
+
+    @Override
+    public String toString() {
+        return "Applicant{" +
+                "jobsApplied=" + jobsApplied +
+                ", username='" + username + '\'' +
+                ", st=" + st +
+                '}';
     }
 }
