@@ -25,7 +25,7 @@ public class Applicant extends User {
 
         if (!this.jobsApplied.isEmpty()){
             for (String key : this.jobsApplied.keySet()) {
-                s = s + key + ",";
+                s = s + key + "\n";
             }
         } else {s = s + "You have not applied for a job";}
 
@@ -38,8 +38,9 @@ public class Applicant extends User {
     }
 
     public void applyToJob(JobPosting jobPosting) {
-        jobPosting.addApplicant(this);
         this.jobsApplied.put(jobPosting.getPosition(), "Submitted Resume/CV");
+        jobPosting.addApplicant(this);
+
     }
 
     public String getJobStatus(JobPosting job) {
@@ -54,9 +55,10 @@ public class Applicant extends User {
     public void getHistory() {
     }
 
+    //TODO: make them
     @Override
     public String toString() {
-        return "Applicant Username:" + username + '\n' +
-                "Jobs Applied To:" + this.getJobs();
+        return "Applicant Username: " + username + '\n' +
+                "Jobs Applied To:\n" + this.getJobs();
     }
 }

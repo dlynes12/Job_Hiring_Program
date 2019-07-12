@@ -416,6 +416,7 @@ public class JobPortal extends Application {
 
                             viewButton.setOnAction((ActionEvent seeApps) ->{
                                 appInfo.setText((userManager.getUser((String)dropApp.getValue())).toString());
+                                //appInfo.setText(((Applicant)userManager.getUser((String)dropApp.getValue())).getJobs());
 
                             });
                             //TODO: Implement way to view all applicants and their data (i.e. files, jobs applied for)
