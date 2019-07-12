@@ -143,6 +143,8 @@ public class JobPortal extends Application {
                         Button getResume = new Button("Submit your resume");
                         Button applyJob = new Button("Apply to jobs");
                         Button getFile = new Button("Open your resume from file");
+                        Button viewHistory = new Button("Account History");
+                        Button viewJobStatuses = new Button("Job Statuses");
                         Button exit = new Button("EXIT");
 
                         TextField resume = new TextField();
@@ -163,13 +165,16 @@ public class JobPortal extends Application {
                         Label labelFileUpload = new Label("Submit your resume");
                         Label labelEnterResume = new Label("Enter your resume");
 
-                        applicantSelectionPane.add(exit,2,8);
+                        applicantSelectionPane.add(exit,2,9);
                         applicantSelectionPane.add(getFile,2,2);
                         applicantSelectionPane.add(getResume,2,4);
                         applicantSelectionPane.add(labelFileUpload,0,2);
                         applicantSelectionPane.add(resume,2,3);
                         applicantSelectionPane.add(labelEnterResume,0,4);
                         applicantSelectionPane.add(applyJob,2,6);
+                        applicantSelectionPane.add(viewHistory, 2, 7);
+                        applicantSelectionPane.add(viewJobStatuses, 2, 8);
+
 
                         StackPane resumeUpload = new StackPane();
                         applicantSelectionPane.setHgap(20);
@@ -205,12 +210,19 @@ public class JobPortal extends Application {
                             applyButton.setOnAction((ActionEvent event)->{
                                 //System.out.println(radioSet.getSelectedToggle());
                                 Applicant a = (Applicant)loggedUser;
-                                String selecetedRadio = (((RadioButton) radioSet.getSelectedToggle()).getText());
-                                jobManager.getJob(selecetedRadio).addApplicant(a);
+                                String selectedRadio = (((RadioButton) radioSet.getSelectedToggle()).getText());
+                                //jobManager.getJob(selectedRadio).addApplicant(a);
+                                a.applyToJob(jobManager.getJob(selectedRadio));
                                 stage.setScene(loginPage);
                             });
 
 
+                        });
+
+                        viewHistory.setOnAction((ActionEvent history) -> {
+                            Group historyViewerScene = new Group();
+                            Scene historyPage = new Scene(historyViewerScene, 600,600);
+                            stage.setScene(historyPage);
                         });
 
 
@@ -264,6 +276,7 @@ public class JobPortal extends Application {
                             Date today = new Date();
                             Instant now = Instant.now();
                             Date.from(now);
+
                             //-------------
                             //Date closingDate = new Date(int year,int month,int day);
                             DatePicker datePicker = new DatePicker();

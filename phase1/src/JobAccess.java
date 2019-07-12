@@ -11,6 +11,7 @@ public class JobAccess{
         if (this.getJob(position) == null) {
             this.JobPostings.add(job);
             add = true;
+            //System.out.println(job.getDatePosted());
 
         }
         return add;

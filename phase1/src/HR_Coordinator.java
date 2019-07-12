@@ -19,7 +19,7 @@ public class HR_Coordinator extends User{
     public String[] ViewOpenJobs(){return ListJobs.ViewJobs().split(",");}
 
     public JPostings getListJobs() {
-        return ListJobs;
+        return ListJobs;`
     }*/
 
     public void matchItoA(Interviewer interviewer, Applicant applicant, JobPosting jobPosting){

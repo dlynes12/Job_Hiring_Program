@@ -11,6 +11,7 @@ public class Applicant extends User {
 
     public Applicant(String username, String password) {
         super(username, password);
+
     }
 
     @Override
@@ -34,12 +35,10 @@ public class Applicant extends User {
     }
 
     public void applyToJob(JobPosting jobPosting) {
-
         jobPosting.addApplicant(this);
     }
 
     public String getJobStatus(JobPosting job) {
-
         return this.jobsApplied.get(job.getPosition());
     }
 
