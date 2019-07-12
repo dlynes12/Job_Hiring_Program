@@ -22,6 +22,6 @@ public class Writer {
     }
 
     public void getFile(String name){
-        this.fileName = name;
+        this.fileName = name;//testing commit
     }
 }
