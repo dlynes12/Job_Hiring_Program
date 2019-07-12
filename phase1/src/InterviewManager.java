@@ -1,10 +1,12 @@
 import java.util.ArrayList;
 
 public class InterviewManager {
+    /* Initially, InterviewManager class gets all those who have applied to a job after  the job has closed (in its constructor)
 
-    //TODO: please implement InterviewManager
+    Once the first round is complete, the class gets the approved list of applicants and shoots it to the HR coordinator, who then
+    shoots the list back to InterviewManager
 
-    /* The InterviewManager class gets all those who have applied to a job after  the job has closed
+    and so on, until the a single applicant gets hired
 
     * */
 
@@ -12,6 +14,12 @@ public class InterviewManager {
 
     InterviewManager(ArrayList<Applicant> applicantsList){
         this.ApprovedApplicants = applicantsList;
+    }
+
+    public void sendListToInterview(){
+        for (Applicant applicant: ApprovedApplicants){
+           // while (){}
+        }
     }
 
 
