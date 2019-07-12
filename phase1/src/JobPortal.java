@@ -319,6 +319,7 @@ public class JobPortal extends Application {
                             Group HRViewJobs = new Group();
                             Scene createJobsPage = new Scene(HRViewJobs, 600, 600);
                             stage.setScene(createJobsPage);
+                            Label ChooseJob = new Label("Choose a job:");
                             ComboBox dropdown = new ComboBox();
                             for (JobPosting jobPosting: jobManager.ViewJobs()){
                                 dropdown.getItems().add(jobPosting.getPosition());
@@ -327,9 +328,10 @@ public class JobPortal extends Application {
                             Button Exit = new Button("EXIT");
                             GridPane ViewJobsGrid = new GridPane();
 
-                            ViewJobsGrid.add(dropdown,1,0);
-                            ViewJobsGrid.add(ApplicantButton,2,0);
-                            ViewJobsGrid.add(Exit,3,0);
+                            ViewJobsGrid.add(ChooseJob,1,0);
+                            ViewJobsGrid.add(dropdown,2,0);
+                            ViewJobsGrid.add(ApplicantButton,3,0);
+                            ViewJobsGrid.add(Exit,4,0);
 
                             ViewJobsGrid.setHgap(20);
                             ViewJobsGrid.setVgap(5);
@@ -348,14 +350,15 @@ public class JobPortal extends Application {
                                 if (listOfApp.length != 0 && listOfApp[0] !=""){
                                     GridPane appViewer = new GridPane();
                                     ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
-
+                                    Label chooseApp = new Label("Choose an Applicant:");
+                                    appViewer.add(chooseApp,1,i);
                                     for (String app: listOfApp){
                                         RadioButton radioButton = new RadioButton(app);
                                         radioButton.setToggleGroup(radioSet);
-                                        appViewer.add(radioButton, 0, i+1);
+                                        appViewer.add(radioButton, 1, i+1);
                                         i++;
                                     }
-                                    Button viewButton = new Button("VIEW");
+                                    Button viewButton = new Button("VIEW INFO");
                                     appViewer.add(viewButton,3,i+1);
                                     appViewer.setHgap(20);
                                     appViewer.setVgap(5);
