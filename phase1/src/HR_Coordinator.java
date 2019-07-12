@@ -28,4 +28,9 @@ public class HR_Coordinator extends User{
         //interviewer.addApplicant(applicant);
     }
 
+    public String toString(){
+        return "*********** \n" + this.getUsername() + "\n" + this.getPassword() + "\n" + "***********";
+
+    }
+
 }

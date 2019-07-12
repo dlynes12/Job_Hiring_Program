@@ -13,4 +13,10 @@ public class Interviewer extends User {
 
     }
 
+    public String toString(){
+        return "*********** \n" + this.getUsername() + "\n" + this.getPassword() + "\n" + "***********";
+
+    }
+
 }
+
