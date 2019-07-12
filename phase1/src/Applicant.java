@@ -3,12 +3,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Date;
 
 public class Applicant extends User {
     private HashMap<String, String> jobsApplied = new HashMap<>();
 
     String username = this.getUsername();
     Storage st = new Storage();
+
     public Applicant(String username, String password) {
         super(username, password);
 
@@ -19,22 +21,29 @@ public class Applicant extends User {
         return super.getUsername();
     }
 
+    @Override
+    public Date getDateCreated() {
+        return super.getDateCreated();
+    }
+
     public String getJobs() {
 
         String s = " ";
 
-        if (!this.jobsApplied.isEmpty()){
+        if (!this.jobsApplied.isEmpty()) {
             for (String key : this.jobsApplied.keySet()) {
                 s = s + key + "\n";
             }
-        } else {s = s + "Applicant has not applied for a job";}
+        } else {
+            s = s + "Applicant has not applied for a job";
+        }
 
         return s;
     }
 
     //TODO: File writer and reader stuff needs to be implemented to access applicant Documents.
     public void getDocs(String username) {
-       st.readFile(username + ".txt");
+        st.readFile(username + ".txt");
     }
 
     public void applyToJob(JobPosting jobPosting) {
@@ -43,8 +52,20 @@ public class Applicant extends User {
 
     }
 
-    public String getJobStatus(JobPosting job) {
-        return this.jobsApplied.get(job.getPosition());
+    public String getJobStatus() {
+
+        String s = "";
+
+        if (!this.jobsApplied.isEmpty()) {
+            for (String key : this.jobsApplied.keySet()) {
+                s = s + key + ": " + this.jobsApplied.get(key) + "\n";
+            }
+        } else {
+            s = s + "Applicant has not applied for a job";
+        }
+
+        return s;
+
     }
 
     public void updateStatus(JobPosting job, String status) {
@@ -59,6 +80,7 @@ public class Applicant extends User {
     @Override
     public String toString() {
         return "Applicant Username: " + username + '\n' +
+                "\n Date Created: " + this.getDateCreated() + "\n" +
                 "\nJobs Applied To:\n" + this.getJobs();
     }
 }
