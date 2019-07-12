@@ -23,9 +23,12 @@ public class Applicant extends User {
 
         String s = " ";
 
-        for (String key : this.jobsApplied.keySet()) {
-            s = s + key + ",";
-        }
+        if (!this.jobsApplied.isEmpty()){
+            for (String key : this.jobsApplied.keySet()) {
+                s = s + key + ",";
+            }
+        } else {s = s + "You have not applied for a job";}
+
         return s;
     }
 
