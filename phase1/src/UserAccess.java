@@ -33,6 +33,16 @@ public class UserAccess {
         return temp;
     }
 
+    public ArrayList<Interviewer> getListInterviewers(){
+        ArrayList<Interviewer> ListInt = new ArrayList<>();
+        for (User user: users){
+            if (user.getClass().isInstance(Interviewer.class)){
+                ListInt.add(((Interviewer) user));
+            }
+        }
+        return ListInt;
+    }
+
 //    public String listUses(ArrayList<User> a){
 //        String list = "";
 //        for(User u: a){
