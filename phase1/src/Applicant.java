@@ -20,22 +20,17 @@ public class Applicant extends User {
 
     public String getJobs() {
 
-        StringBuilder sb = new StringBuilder();
+        String s = " ";
 
         for (String key : this.jobsApplied.keySet()) {
-            sb.append(key);
-            sb.append(", ");
+            s = s + key + ",";
         }
-
-        String list = sb.toString();
-        String result = list.substring(0, list.length() - 1);
-
-        return result;
+        return s;
     }
 
     //TODO: File writer and reader stuff needs to be implemented to access applicant Documents.
-    public void getDocs() {
-
+    public void getDocs(String username) {
+        Writer wr = new Writer(username + ".txt");
     }
 
     public void applyToJob(JobPosting jobPosting) {

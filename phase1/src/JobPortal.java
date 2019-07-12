@@ -377,7 +377,9 @@ public class JobPortal extends Application {
                             stage.setScene(createViewAppsPage);
                             ComboBox dropApp = new ComboBox();
                             for (User user: userManager.viewUsers()){
-                                dropApp.getItems().add(user.getUsername());
+                                if (user instanceof Applicant){
+                                    dropApp.getItems().add(user.getUsername());
+                                }
                             }
                             Label appInfo = new Label("");
                             Button Exit = new Button("EXIT");
@@ -398,6 +400,7 @@ public class JobPortal extends Application {
                             Exit.setOnAction((ActionEvent exitPage) ->{
                                 stage.setScene(HRBasePage);
                             });
+
                             viewButton.setOnAction((ActionEvent seeApps) ->{
                                 appInfo.setText((userManager.getUser((String)dropApp.getValue())).toString());
 

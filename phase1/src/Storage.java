@@ -20,6 +20,7 @@ public class Storage {
             PrintWriter pw = new PrintWriter(fw);
 
             pw.println(text);
+            pw.println("*");
 
             pw.close();
 
@@ -30,8 +31,6 @@ public class Storage {
         }
 
     }
-
-
 
     public void getString (String s){
         this.text = s;

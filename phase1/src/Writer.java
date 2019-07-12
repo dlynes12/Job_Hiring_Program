@@ -5,6 +5,11 @@ import java.io.IOException;
 public class Writer {
 
     static String fileName = "";
+
+    public Writer(String fName) {
+        this.fileName = fName;
+    }
+
     public static void main(String[]args){
 
         try{
@@ -12,7 +17,7 @@ public class Writer {
             BufferedReader br = new BufferedReader(fr);
 
             String s;
-            while((s = br.readLine()) != null){
+            while((s = br.readLine()) != "*"){
                 System.out.println(s + "\n");
             }
             br.close();
@@ -21,7 +26,7 @@ public class Writer {
         }
     }
 
-    public void getFile(String name){
-        fileName = name;//testing commit
-    }
+//    public void getFile(String name){
+//        fileName = name;//testing commit
+//    }
 }
