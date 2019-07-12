@@ -107,7 +107,7 @@ public class JobPortal extends Application {
             exit.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
 
             create.setOnAction((ActionEvent ProcessUser) ->{
-                if ((RadioButton) radioSet.getSelectedToggle() == radioApp){
+                if (radioSet.getSelectedToggle() == radioApp){
                     Applicant tempApp = new Applicant(newUserField.getText(), newPassField.getText());
                     if (userManager.addUser(tempApp)){
                         stage.setScene(loginPage);
@@ -117,7 +117,7 @@ public class JobPortal extends Application {
                     if (userManager.addUser(tempHR)){
                         stage.setScene(loginPage);
                     }
-                }else if ((RadioButton) radioSet.getSelectedToggle() == radioInt){
+                }else if (radioSet.getSelectedToggle() == radioInt){
                     Interviewer tempInt = new Interviewer(newUserField.getText(), newPassField.getText());
                     if (userManager.addUser(tempInt)){
                         stage.setScene(loginPage);
@@ -132,7 +132,7 @@ public class JobPortal extends Application {
         log_in.setOnAction((ActionEvent e) -> {
             String UName = username.getText();
             String Pass = password.getText();
-            User loggedUser = userManager.getUser(UName,Pass); // the user that is actually logged in
+            User loggedUser = userManager.getUser(UName); // the user that is actually logged in
             if(loggedUser!= null) {
                 if (loginRadio.getSelectedToggle() == applicantButton){
                     Group applicantPortalScene = new Group();
@@ -263,7 +263,7 @@ public class JobPortal extends Application {
                             // get today's date
                             Date today = new Date();
                             Instant now = Instant.now();
-                            today.from(now);
+                            Date.from(now);
                             //-------------
                             //Date closingDate = new Date(int year,int month,int day);
                             DatePicker datePicker = new DatePicker();
@@ -369,6 +369,36 @@ public class JobPortal extends Application {
                         });
 
                         viewAllApps.setOnAction((ActionEvent viewAllApplicants) ->{
+                            Group viewApps  = new Group();
+                            Scene createViewAppsPage = new Scene(viewApps, 600, 600);
+                            stage.setScene(createViewAppsPage);
+                            ComboBox dropApp = new ComboBox();
+                            for (User user: userManager.viewUsers()){
+                                dropApp.getItems().add(user.getUsername());
+                            }
+                            Label appInfo = new Label("");
+                            Button Exit = new Button("EXIT");
+                            Button viewButton = new Button("View applicants");
+                            GridPane ViewAppsGrid = new GridPane();
+
+                            ViewAppsGrid.add(dropApp,10,0);
+                            ViewAppsGrid.add(viewButton, 10, 1);
+                            ViewAppsGrid.add(appInfo,10,2);
+                            ViewAppsGrid.add(Exit,10,15);
+
+                            ViewAppsGrid.setHgap(20);
+                            ViewAppsGrid.setVgap(5);
+                            BorderPane ViewJobsPlacement = new BorderPane();
+                            ViewJobsPlacement.setTop(ViewAppsGrid);
+                            viewApps.getChildren().add(ViewJobsPlacement);
+
+                            Exit.setOnAction((ActionEvent exitPage) ->{
+                                stage.setScene(HRBasePage);
+                            });
+                            viewButton.setOnAction((ActionEvent seeApps) ->{
+                                appInfo.setText((userManager.getUser((String)dropApp.getValue())).toString());
+
+                            });
                             //TODO: Implement way to view all applicants and their data (i.e. files, jobs applied for)
                             // Perhaps via listview or combobox
                         });

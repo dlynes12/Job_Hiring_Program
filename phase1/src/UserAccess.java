@@ -8,7 +8,7 @@ public class UserAccess {
     // LOGIN FUNCTIONS----------------------------------------------------------------------
     boolean addUser(User user) {
         boolean add = false;
-        if (this.getUser(user.getUsername(), user.getPassword()) == null) {
+        if (this.getUser(user.getUsername()) == null) {
             this.users.add(user);
             add = true;
 
@@ -16,19 +16,19 @@ public class UserAccess {
         return add;
     }
 
-    public User getUser(String username, String password) {
+    public User getUser(String username) {
         User result = null;
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).getUsername().equals(username)) {
-                if (users.get(i).getPassword().equals(password)) {
-                    result = users.get(i);
-                }
+                result = users.get(i);
             }
         }
         return result;
     }
 
-
+    public ArrayList<User> viewUsers() {
+        return users;
+    }
 
 }
 
