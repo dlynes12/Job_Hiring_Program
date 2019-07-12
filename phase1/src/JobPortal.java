@@ -191,10 +191,10 @@ public class JobPortal extends Application {
                             Group jobPortalScene = new Group();
                             stage.setScene(new Scene(jobPortalScene, 600, 600));
                             Button exit2 = new Button("EXIT");
-                            exit2.setOnAction((ActionEvent ex) -> {
-                                stage.setScene(loginPage);
-                            });
+                            Button returnApp = new Button("Back");
+                            Button applyButton = new Button("Apply");
                             GridPane jobViewer = new GridPane();
+
                             ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
                             for (JobPosting jP : jobManager.ViewJobs()) {
                                 RadioButton radioButton = new RadioButton(jP.getPosition());
@@ -203,14 +203,16 @@ public class JobPortal extends Application {
                                 i++;
                             }
 
-                            Button applyButton = new Button("Apply");
+                            jobViewer.add(applyButton, 4, 5);
+                            jobViewer.add(returnApp, 4, 6);
+                            jobViewer.add(exit2, 4, 7);
 
-                            jobViewer.add(applyButton, 4, 4);
-                            jobViewer.add(exit2, 4, 6);
                             jobViewer.setHgap(10);
                             jobViewer.setVgap(5);
                             jobPortalScene.getChildren().add(jobViewer);
                             stage.show();
+
+
                             applyButton.setOnAction((ActionEvent event) -> {
                                 //System.out.println(radioSet.getSelectedToggle());
                                 Applicant a = (Applicant) loggedUser;
@@ -219,7 +221,14 @@ public class JobPortal extends Application {
                                 a.applyToJob(jobManager.getJob(selectedRadio));
                                 stage.setScene(loginPage);
                             });
+q
+                            returnApp.setOnAction((ActionEvent ex) -> {
+                                stage.setScene(applicantPage);
+                            });
 
+                            exit2.setOnAction((ActionEvent ex) -> {
+                                stage.setScene(loginPage);
+                            });
 
                         });
 
