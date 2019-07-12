@@ -23,6 +23,7 @@ public class JobPortal extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         UserAccess userManager = new UserAccess();
+        JobAccess jobManager = new JobAccess();
         ApplicationModel applicationModel = new ApplicationModel();
         //JobPosting jobPosting = new JobPosting();
         Group loginScene = new Group();
@@ -131,7 +132,7 @@ public class JobPortal extends Application {
         log_in.setOnAction((ActionEvent e) -> {
             String UName = username.getText();
             String Pass = password.getText();
-            User loggedUser = userManager.LogInUser(UName,Pass); // the user that is actually logged in
+            User loggedUser = userManager.getUser(UName,Pass); // the user that is actually logged in
             if(loggedUser!= null) {
                 if (loginRadio.getSelectedToggle() == applicantButton){
                     Group applicantPortalScene = new Group();
@@ -155,9 +156,8 @@ public class JobPortal extends Application {
                         });
                         getResume.setOnAction((ActionEvent eve)->{
                             String resumeText= resume.getText();
-                            Storage storage = new Storage(loggedUser.getUsername());
-                            storage.write(resumeText);
-
+                            Storage storage = new Storage();
+                            storage.getString(resumeText);
                         });
 
                         Label labelFileUpload = new Label("Submit your resume");
@@ -187,14 +187,14 @@ public class JobPortal extends Application {
                             });
                             GridPane jobViewer = new GridPane();
                             ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
-                            for (JobPosting jP: userManager.ViewJobs()){
-                                  RadioButton radioButton = new RadioButton(jP.getPosition());
-                                  radioButton.setToggleGroup(radioSet);
-                                  jobViewer.add(radioButton, 0, i+1);
-                                  i++;
-                             }
+                            for (JobPosting jP: jobManager.ViewJobs()){
+                                RadioButton radioButton = new RadioButton(jP.getPosition());
+                                radioButton.setToggleGroup(radioSet);
+                                jobViewer.add(radioButton, 0, i+1);
+                                i++;
+                            }
 
-                             Button applyButton = new Button("Apply");
+                            Button applyButton = new Button("Apply");
 
                             jobViewer.add(applyButton,4,4);
                             jobViewer.add(exit2,4,6);
@@ -203,10 +203,11 @@ public class JobPortal extends Application {
                             jobPortalScene.getChildren().add(jobViewer);
                             stage.show();
                             applyButton.setOnAction((ActionEvent event)->{
-
-                                System.out.println(radioSet.getSelectedToggle());
+                                //System.out.println(radioSet.getSelectedToggle());
                                 Applicant a = (Applicant)loggedUser;
-                                //a.applyToJob(userManager.getJob(loginRadio.getSelectedToggle().toString()));
+                                String selecetedRadio = (((RadioButton) radioSet.getSelectedToggle()).getText());
+                                jobManager.getJob(selecetedRadio).addApplicant(a);
+                                stage.setScene(loginPage);
                             });
 
 
@@ -227,8 +228,8 @@ public class JobPortal extends Application {
                         Label welcomeLabel = new Label(welcomeMessage);
                         Label actions = new Label("What do you want to do? Please select an option below:");
                         Button addJobs = new Button("Add a job");
-                        Button viewOpenJobs = new Button("View all open jobs");
-                        Button viewAllApps = new Button("View all applicants");
+                        Button viewOpenJobs = new Button("View all open jobs"); // for a specific job, view the applicants
+                        Button viewAllApps = new Button("View all applicants"); // for a specific applicant, view the jobs they applied for
                         Button exit = new Button("EXIT");
                         GridPane messageGrid = new GridPane();
                         GridPane buttonGrid = new GridPane();
@@ -302,7 +303,7 @@ public class JobPortal extends Application {
                                 Date closeDate = null;
                                 closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                                 String position = positionField.getText();
-                                userManager.addJob(today,closeDate,position);
+                                jobManager.addJob(today,closeDate,position,0);
                                 stage.setScene(HRBasePage);
 
                             });
@@ -319,7 +320,7 @@ public class JobPortal extends Application {
                             Scene createJobsPage = new Scene(HRViewJobs, 600, 600);
                             stage.setScene(createJobsPage);
                             ComboBox dropdown = new ComboBox();
-                            for (JobPosting jobPosting: userManager.ViewJobs()){
+                            for (JobPosting jobPosting: jobManager.ViewJobs()){
                                 dropdown.getItems().add(jobPosting.getPosition());
                             }
                             Button ApplicantButton = new Button("See applicants");
@@ -341,11 +342,9 @@ public class JobPortal extends Application {
                             });
 
                             ApplicantButton.setOnAction((ActionEvent seeApps) ->{
-                                //TODO: if dropdown hasn't selected anything do nothing
-                                // please test later
                                 Integer i = 0;
                                 String choice = (String) dropdown.getValue();
-                                String[] listOfApp = userManager.seeJob(choice).viewApplicants().split(",");
+                                String[] listOfApp = jobManager.getJob(choice).viewApplicants().split(",");
                                 if (listOfApp.length != 0 && listOfApp[0] !=""){
                                     GridPane appViewer = new GridPane();
                                     ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
@@ -357,25 +356,16 @@ public class JobPortal extends Application {
                                         i++;
                                     }
                                     Button viewButton = new Button("VIEW");
-                                    appViewer.add(viewButton,3,i);
+                                    appViewer.add(viewButton,3,i+1);
+                                    appViewer.setHgap(20);
+                                    appViewer.setVgap(5);
                                     ViewJobsPlacement.setBottom(appViewer);
-                                }
 
-                                /*Label ApplicantLab = new Label("Applicant:");
-                                ComboBox AppDropdown = new ComboBox();
-                                String choice = (String) dropdown.getValue();
-                                JobPosting job = userManager.seeJob(choice);
-                                for (String applicant: job.viewApplicants().split(",")){
-                                    AppDropdown.getItems().add(applicant);
+                                    viewButton.setOnAction((ActionEvent ViewAppDocs) ->{
+                                        // see the specific applicant's documents
+                                    });
                                 }
-                                GridPane appGrid = new GridPane();
-                                appGrid.add(ApplicantLab,1,0);
-                                appGrid.add(AppDropdown,2,0);
-                                ViewJobsPlacement.setBottom(appGrid);
-                                HRViewJobs.getChildren().add(ViewJobsPlacement);*/
                             });
-
-
                         });
 
                         viewAllApps.setOnAction((ActionEvent viewAllApplicants) ->{
@@ -394,14 +384,12 @@ public class JobPortal extends Application {
                         String welcomeMessage = "Welcome to the Interviewer Page, " + loggedUser.getUsername();
                         Label welcomeLabel = new Label(welcomeMessage);
 
-                        Button addApplicant = new Button("Add Applicant");
                         Button getInterviewees = new Button("Get Interviewees");
                         Button approve = new Button("Approve");
                         Button decline = new Button("Decline");
                         Button exit = new Button("EXIT");
 
                         interviewerSelectionPane.add(exit,1,3);
-                        interviewerSelectionPane.add(addApplicant, 1,2);
                         interviewerSelectionPane.add(getInterviewees,1,1);
                         interviewerSelectionPane.add(approve,5,1);
                         interviewerSelectionPane.add(decline,5,2);
@@ -412,20 +400,24 @@ public class JobPortal extends Application {
 
                         getInterviewees.setOnAction((ActionEvent ev) -> {
                             Integer i = 0;
-                            for (JobPosting jP: userManager.ViewJobs()){
+                            for (JobPosting jP: jobManager.ViewJobs()){
                                 RadioButton radioButton = new RadioButton(jP.getPosition());
                                 interviewerSelectionPane.add(radioButton, 0, i+1);
                                 i++;
                             }
 
-
                         });
 
                         exit.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
+
+                        //getInterviewees.setOnAction((ActionEvent click) -> ((Interviewer)loggedUser).getInterviewees());
+
+                        //approve.setOnAction((ActionEvent click) -> ((Interviewer)loggedUser).recommend());
+
+                        //decline.setOnAction((ActionEvent click) -> ((Interviewer)loggedUser).decline());
+
+
                         intPortalScene.getChildren().addAll(interviewerSelectionPane);
-                        getInterviewees.setOnAction((ActionEvent click) -> {
-                            ((Interviewer)loggedUser).getInterviewees();
-                        });
 
                     }// what happens if they are not an interviewer but have a login;
                     //send message wrong user type?

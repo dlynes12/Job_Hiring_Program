@@ -23,7 +23,9 @@ public class HR_Coordinator extends User{
     }*/
 
     public void matchItoA(Interviewer interviewer, Applicant applicant, JobPosting jobPosting){
-        interviewer.addApplicant(applicant);
+        // loop thru list of applicants,
+        //call addPool()
+        //interviewer.addApplicant(applicant);
     }
 
 }

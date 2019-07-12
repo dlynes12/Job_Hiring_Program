@@ -7,12 +7,14 @@ public class JobPosting{
     private Date dateClosed;
     private String position;
     private HiringPool candidatePool;
+    private int interviewRounds;
     protected ArrayList<Applicant> applicants = new ArrayList<>();
 
-    public JobPosting(Date datePosted, Date dateClosed, String position) {
+    public JobPosting(Date datePosted, Date dateClosed, String position, int interviewRounds) {
         this.datePosted = datePosted;
         this.dateClosed = dateClosed;
         this.position = position;
+        this.interviewRounds = interviewRounds;
     }
 
     public Date getDatePosted() { return this.datePosted; }
@@ -43,7 +45,16 @@ public class JobPosting{
 
     //HR needs to have access to this information as well.
     public void addApplicant (Applicant applicant){
-        this.applicants.add(applicant);
+        boolean flag = false;
+        for(Applicant a: this.applicants) {
+            if ((a.getUsername().equals(applicant.getUsername()))) {
+                flag = true;
+            }
+        }
+        if(!flag){
+            this.applicants.add(applicant);
+            this.candidatePool.addToPool(applicant, 0); //initial status
+        }
     }
 
     //TODO create the display window for HR Coordinator to view this list and able to click on the user
