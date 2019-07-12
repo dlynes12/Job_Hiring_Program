@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 
 public class InterviewManager {
+    //TODO:  implement Interviewer manager
+
     /* Initially, InterviewManager class gets all those who have applied to a job after  the job has closed (in its constructor)
 
     Once the first round is complete, the class gets the approved list of applicants and shoots it to the HR coordinator, who then
