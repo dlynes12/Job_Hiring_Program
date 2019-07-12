@@ -36,6 +36,7 @@ public class Applicant extends User {
 
     public void applyToJob(JobPosting jobPosting) {
         jobPosting.addApplicant(this);
+        this.jobsApplied.put(jobPosting.getPosition(), "Submitted Resume/CV");
     }
 
     public String getJobStatus(JobPosting job) {
