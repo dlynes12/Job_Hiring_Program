@@ -11,7 +11,6 @@ public class JobAccess{
         if (this.getJob(position) == null && !position.trim().isEmpty()) {
             this.JobPostings.add(job);
             add = true;
-            //System.out.println(job.getDatePosted());
 
         }
         return add;
@@ -39,8 +38,7 @@ public class JobAccess{
         return remove;
 
 
-    } //assuming a job cannot have two postings (i.e. if you need two people you simply hire from one posting)
-    /*or should this delete a josting once it has expired*/
+    }
 
 
     public ArrayList<JobPosting> ViewJobs() {

@@ -41,7 +41,6 @@ public class Applicant extends User {
         return s;
     }
 
-    //TODO: File writer and reader stuff needs to be implemented to access applicant Documents.
     public void getDocs(String username) {
         st.readFile(username + ".txt");
     }
@@ -76,7 +75,6 @@ public class Applicant extends User {
     public void getHistory() {
     }
 
-    //TODO: make them
     public String getInfo(){
         return "Applicant Username: " + username + '\n' +
                 "\n Date Created: " + this.getDateCreated() + "\n" +

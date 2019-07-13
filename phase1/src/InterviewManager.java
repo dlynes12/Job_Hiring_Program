@@ -3,17 +3,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class InterviewManager {
-    //TODO:  implement Interviewer manager
 
-    /* Initially, InterviewManager class gets all those who have applied to a job after  the job has closed (in its constructor)
+    /* Initially, InterviewManager class gets all those who have applied to a job after the job has closed (in its constructor)
 
     Once the first round is complete, the class gets the approved list of applicants and shoots it to the HR coordinator, who then
     shoots the list back to InterviewManager
 
     and so on, until the a single applicant gets hired
 
-    * */
-    // Todo: update applicant status
+    */
 
     ArrayList<Applicant> ApprovedApplicants = new ArrayList<>();
     private Map<Applicant, Integer> candidates = new HashMap();
@@ -72,16 +70,6 @@ public class InterviewManager {
         if (numApproved+numDeclined == ApprovedApplicants.size()){advance = true;}
         return advance;
     }
-
-    //TODO: below
-    //create a method to return list of candidates to HR
-    // send list of candidates from HR to Interview Manager through mathAtoI method
-    // removing hiring pool and refactor classes that use hiring pool
-
-
-
-
-
 
 
 }

@@ -22,7 +22,6 @@ public class JobPortal extends Application {
     // SIGN-IN PAGE
     @Override
 
-    //TODO: Before handing in please erase any dead code you see and fix all naming conventions <3
 
     public void start(Stage stage) throws Exception {
         UserAccess userManager = new UserAccess();
@@ -141,8 +140,6 @@ public class JobPortal extends Application {
                     stage.setScene(applicantPage);
                     if (loggedUser.getClass() == Applicant.class) {
                         GridPane applicantSelectionPane = new GridPane();
-
-                        //TODO: Add a display for resume
 
                         Button getResume = new Button("Submit your resume");
                         Button applyJob = new Button("Apply to jobs");

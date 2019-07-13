@@ -10,7 +10,7 @@ public class HiringPool {
 
     public HiringPool(){}
 
-    //TODO: FOR HR COORDRINATOR TO POPULATE
+    // FOR HR CO-ORDINATOR TO POPULATE
 
     public void addToPool(Applicant applicant, int round){
         this.candidates.put(applicant, round);

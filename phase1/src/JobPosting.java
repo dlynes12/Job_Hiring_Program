@@ -57,7 +57,6 @@ public class JobPosting{
         }
     }
 
-    //TODO create the display window for HR Coordinator to view this list and able to click on the user
     public String viewApplicants(){
         String listOfApplicants = "";
         String result;
