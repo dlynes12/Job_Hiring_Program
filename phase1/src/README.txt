@@ -1,3 +1,5 @@
+Class to run: JobPortal
+
 Create a new User:
 ----------------------------------------------------------------------
 1) Press the "New User" button
