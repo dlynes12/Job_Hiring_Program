@@ -19,6 +19,8 @@ Assuming an HR Coordinator has been created:
 4) Specify the job position being created in the corresponding field
 5) Press the "Create job" button
 
+*** Assumptions: Name of job positions are unique ***
+
 
 
 View the jobs an Applicant has applied to (through HR interface):
@@ -37,3 +39,15 @@ View all Applicants for a specific job posting (through HR interface):
 2) Press the "View all open jobs" button
 3) Click the drop down menu to select the job you wish to view
 4) Press the "See applicants" button
+
+
+
+Apply for a job (through Applicant interface)
+-----------------------------------------------------------------------
+1) Login into a valid Applicant account
+2) Press the "Apply to jobs" button
+3) Click the desired radiobutton that corresponds to the desired job
+    you wish to apply to
+4) Press the "Apply" button
+
+*** Assumptions: There are already pre-existing jobs created by HR ***

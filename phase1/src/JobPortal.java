@@ -34,7 +34,7 @@ public class JobPortal extends Application {
         Scene loginPage = new Scene(loginScene, 600, 200);
         stage.setScene(loginPage);
         stage.show();
-        Button log_in = new Button("Log in");
+        Button log_in = new Button("Login");
         Button new_user = new Button("New User");
         RadioButton applicantButton = new RadioButton("Applicant");
         RadioButton hRButton = new RadioButton("HR");
@@ -149,7 +149,7 @@ public class JobPortal extends Application {
                         Button getFile = new Button("Open your resume from file");
                         Button viewHistory = new Button("Account History");
                         Button viewJobStatuses = new Button("Job Statuses");
-                        Button exit = new Button("EXIT");
+                        Button logout = new Button("Logout");
 
                         TextField resume = new TextField();
                         getFile.setOnAction((ActionEvent openFile) -> {
@@ -168,7 +168,7 @@ public class JobPortal extends Application {
                         Label labelFileUpload = new Label("Submit your resume");
                         Label labelEnterResume = new Label("Enter your resume");
 
-                        applicantSelectionPane.add(exit, 4, 9);
+                        applicantSelectionPane.add(logout, 4, 9);
                         applicantSelectionPane.add(getFile, 4, 2);
                         applicantSelectionPane.add(getResume, 4, 4);
                         applicantSelectionPane.add(labelFileUpload, 2, 2);
@@ -183,13 +183,12 @@ public class JobPortal extends Application {
                         applicantSelectionPane.setHgap(20);
                         applicantSelectionPane.setVgap(20);
 
-                        exit.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
+                        logout.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
 
                         applyJob.setOnAction((ActionEvent apply) -> {
                             Integer i = 0;
                             Group jobPortalScene = new Group();
                             stage.setScene(new Scene(jobPortalScene, 600, 600));
-                            Button exit2 = new Button("EXIT");
                             Button returnApp = new Button("Back");
                             Button applyButton = new Button("Apply");
                             GridPane jobViewer = new GridPane();
@@ -204,7 +203,6 @@ public class JobPortal extends Application {
 
                             jobViewer.add(applyButton, 4, 5);
                             jobViewer.add(returnApp, 4, 6);
-                            jobViewer.add(exit2, 4, 7);
 
                             jobViewer.setHgap(10);
                             jobViewer.setVgap(5);
@@ -225,10 +223,6 @@ public class JobPortal extends Application {
                                 stage.setScene(applicantPage);
                             });
 
-                            exit2.setOnAction((ActionEvent ex) -> {
-                                stage.setScene(loginPage);
-                            });
-
                         });
 
                         //Account History page
@@ -238,13 +232,11 @@ public class JobPortal extends Application {
                             stage.setScene(historyPage);
 
                             Label accountInfo = new Label(((Applicant)loggedUser).getInfo());
-                            Button exitHistory = new Button("EXIT");
                             Button returnButton = new Button("Back");
                             GridPane historyPane = new GridPane();
 
                             historyPane.add(accountInfo, 10, 0);
                             historyPane.add(returnButton, 10, 14);
-                            historyPane.add(exitHistory, 10, 15);
 
                             historyPane.setHgap(20);
                             historyPane.setVgap(5);
@@ -255,9 +247,6 @@ public class JobPortal extends Application {
                                 stage.setScene(applicantPage);
                             });
 
-                            exitHistory.setOnAction((ActionEvent ex) -> {
-                                stage.setScene(loginPage);
-                            });
                         });
 
                         viewJobStatuses.setOnAction((ActionEvent jobStatuses) -> {
@@ -268,14 +257,12 @@ public class JobPortal extends Application {
 
                             Label jobStatusesLabel = new Label("Jobs Applied For:");
                             Label allJobStatuses = new Label(((Applicant) loggedUser).getJobStatus());
-                            Button exitJS = new Button("EXIT");
                             Button returnJS = new Button("Back");
                             GridPane jobStatusPane = new GridPane();
 
                             jobStatusPane.add(jobStatusesLabel, 10, 3);
                             jobStatusPane.add(allJobStatuses, 10, 4);
                             jobStatusPane.add(returnJS, 10, 14);
-                            jobStatusPane.add(exitJS, 10, 15);
 
                             jobStatusPane.setHgap(20);
                             jobStatusPane.setVgap(5);
@@ -284,10 +271,6 @@ public class JobPortal extends Application {
 
                             returnJS.setOnAction((ActionEvent goBack) -> {
                                 stage.setScene(applicantPage);
-                            });
-
-                            exitJS.setOnAction((ActionEvent ex) -> {
-                                stage.setScene(loginPage);
                             });
 
                         });
@@ -311,7 +294,7 @@ public class JobPortal extends Application {
                         Button addJobs = new Button("Add a job");
                         Button viewOpenJobs = new Button("View all open jobs"); // for a specific job, view the applicants
                         Button viewAllApps = new Button("View all applicants"); // for a specific applicant, view the jobs they applied for
-                        Button exit = new Button("EXIT");
+                        Button logout = new Button("Logout");
                         GridPane messageGrid = new GridPane();
                         GridPane buttonGrid = new GridPane();
 
@@ -320,7 +303,7 @@ public class JobPortal extends Application {
                         buttonGrid.add(addJobs, 1, 0);
                         buttonGrid.add(viewOpenJobs, 2, 0);
                         buttonGrid.add(viewAllApps, 1, 2);
-                        buttonGrid.add(exit, 2, 2);
+                        buttonGrid.add(logout, 2, 2);
 
                         BorderPane HRPlacement = new BorderPane();
                         messageGrid.setHgap(20);
@@ -332,7 +315,7 @@ public class JobPortal extends Application {
 
                         HRPortalScene.getChildren().addAll(HRPlacement);
 
-                        exit.setOnAction((ActionEvent ex) -> {
+                        logout.setOnAction((ActionEvent ex) -> {
                             stage.setScene(loginPage);
                         });
 
@@ -353,7 +336,7 @@ public class JobPortal extends Application {
                             Label positionLabel = new Label("What position are we creating?");
                             TextField positionField = new TextField();
                             Button createNewPost = new Button("Create job");
-                            Button Exit = new Button("EXIT");
+                            Button returnAddJ = new Button("Back");
                             GridPane cMessageGrid = new GridPane();
                             GridPane dateGrid = new GridPane();
                             GridPane positionGrid = new GridPane();
@@ -364,7 +347,7 @@ public class JobPortal extends Application {
                             positionGrid.add(positionLabel, 1, 0);
                             positionGrid.add(positionField, 2, 0);
                             positionGrid.add(createNewPost, 1, 2);
-                            positionGrid.add(Exit, 1, 4);
+                            positionGrid.add(returnAddJ, 1, 4);
 
                             cMessageGrid.setHgap(20);
                             cMessageGrid.setVgap(5);
@@ -390,9 +373,7 @@ public class JobPortal extends Application {
 
                             });
 
-                            // where we create job postings
-
-                            Exit.setOnAction((ActionEvent exitPage) -> {
+                            returnAddJ.setOnAction((ActionEvent exitPage) -> {
                                 stage.setScene(HRBasePage);
                             });
                         });
@@ -407,13 +388,13 @@ public class JobPortal extends Application {
                                 dropdown.getItems().add(jobPosting.getPosition());
                             }
                             Button ApplicantButton = new Button("See applicants");
-                            Button Exit = new Button("EXIT");
+                            Button returnViewJ = new Button("Back");
                             GridPane ViewJobsGrid = new GridPane();
 
                             ViewJobsGrid.add(ChooseJob, 1, 0);
                             ViewJobsGrid.add(dropdown, 2, 0);
                             ViewJobsGrid.add(ApplicantButton, 3, 0);
-                            ViewJobsGrid.add(Exit, 4, 0);
+                            ViewJobsGrid.add(returnViewJ, 4, 0);
 
                             ViewJobsGrid.setHgap(20);
                             ViewJobsGrid.setVgap(5);
@@ -421,7 +402,7 @@ public class JobPortal extends Application {
                             ViewJobsPlacement.setTop(ViewJobsGrid);
                             HRViewJobs.getChildren().add(ViewJobsPlacement);
 
-                            Exit.setOnAction((ActionEvent exitPage) -> {
+                            returnViewJ.setOnAction((ActionEvent exitPage) -> {
                                 stage.setScene(HRBasePage);
                             });
 
@@ -464,14 +445,14 @@ public class JobPortal extends Application {
                                 }
                             }
                             Label appInfo = new Label("");
-                            Button Exit = new Button("EXIT");
+                            Button returnViewApp = new Button("Back");
                             Button viewButton = new Button("View applicants");
                             GridPane ViewAppsGrid = new GridPane();
 
                             ViewAppsGrid.add(dropApp, 10, 0);
                             ViewAppsGrid.add(viewButton, 10, 1);
                             ViewAppsGrid.add(appInfo, 10, 2);
-                            ViewAppsGrid.add(Exit, 10, 15);
+                            ViewAppsGrid.add(returnViewApp, 10, 15);
 
                             ViewAppsGrid.setHgap(20);
                             ViewAppsGrid.setVgap(5);
@@ -479,7 +460,7 @@ public class JobPortal extends Application {
                             ViewJobsPlacement.setTop(ViewAppsGrid);
                             viewApps.getChildren().add(ViewJobsPlacement);
 
-                            Exit.setOnAction((ActionEvent exitPage) -> {
+                            returnViewApp.setOnAction((ActionEvent exitPage) -> {
                                 stage.setScene(HRBasePage);
                             });
 
@@ -506,9 +487,9 @@ public class JobPortal extends Application {
                         Button getInterviewees = new Button("Get Interviewees");
                         Button approve = new Button("Approve");
                         Button decline = new Button("Decline");
-                        Button exit = new Button("EXIT");
+                        Button logout = new Button("Logout");
 
-                        interviewerSelectionPane.add(exit, 1, 3);
+                        interviewerSelectionPane.add(logout, 1, 3);
                         interviewerSelectionPane.add(getInterviewees, 1, 1);
                         interviewerSelectionPane.add(approve, 5, 1);
                         interviewerSelectionPane.add(decline, 5, 2);
@@ -527,7 +508,7 @@ public class JobPortal extends Application {
 
                         });
 
-                        exit.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
+                        logout.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
 
                         //getInterviewees.setOnAction((ActionEvent click) -> ((Interviewer)loggedUser).getInterviewees());
 
@@ -538,8 +519,8 @@ public class JobPortal extends Application {
 
                         intPortalScene.getChildren().addAll(interviewerSelectionPane);
 
-                    }// what happens if they are not an interviewer but have a login;
-                    //send message wrong user type?
+                    }
+
                     else {
                         stage.setScene(loginPage);
                     }
