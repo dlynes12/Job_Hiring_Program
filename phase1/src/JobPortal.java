@@ -221,7 +221,7 @@ public class JobPortal extends Application {
                                 a.applyToJob(jobManager.getJob(selectedRadio));
                                 stage.setScene(loginPage);
                             });
-q
+
                             returnApp.setOnAction((ActionEvent ex) -> {
                                 stage.setScene(applicantPage);
                             });
