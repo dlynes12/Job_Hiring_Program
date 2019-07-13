@@ -1,29 +1,39 @@
 Create a new User:
 ----------------------------------------------------------------------
+1) Press the "New User" button
+2) Fill in the desired username and password corresponding fields
+3) From the radio button options, select the desired account type
+4) Press the "Create" button
 
-1) Press the "Create User" button and fill in the Username and password field
-2) Then choose a user account type from the radio button options
-3) Press "Create"
-
-****assumptions: no two users can have the same username *****
+**** Assumptions: No two users can have the same username *****
 
 
 
 Create a job:
 -----------------------------------------------------------------------
-Assuming an HR Coordinator has been created the HR Coordinator can add jobs by:
-1) Signing into a valid HR account
-2) Pressing "Add a job" and fill in the info
-3) Press "Create job"
+Assuming an HR Coordinator has been created:
+1) Login into a valid HR account
+2) Press the "Add a job" button
+3) Specify the closing date by pressing on the calendar icon and selecting
+    the desired date
+4) Specify the job position being created in the corresponding field
+5) Press the "Create job" button
 
 
 
-View Jobs an Applicant has applied to (through HR interface):
+View the jobs an Applicant has applied to (through HR interface):
 -----------------------------------------------------------------------
+1) Login into a valid HR account
+2) Press "View all applicants"
+3) Click the drop down menu, and select the desired applicant
+3) Press the "View applicants" button
 
 
 
 
-
-View all Applicants of a job:
+View all Applicants for a specific job posting (through HR interface):
 -----------------------------------------------------------------------
+1) Login into a valid HR account
+2) Press the "View all open jobs" button
+3) Click the drop down menu to select the job you wish to view
+4) Press the "See applicants" button

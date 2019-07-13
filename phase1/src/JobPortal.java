@@ -19,7 +19,7 @@ import java.util.Date;
 
 public class JobPortal extends Application {
 
-    // SIGNIN PAGE
+    // SIGN-IN PAGE
     @Override
 
     //TODO: Before handing in please erase any dead code you see and fix all naming conventions <3
@@ -28,11 +28,10 @@ public class JobPortal extends Application {
         UserAccess userManager = new UserAccess();
         JobAccess jobManager = new JobAccess();
         Storage storage = new Storage();
-        ApplicationModel applicationModel = new ApplicationModel();
-        //JobPosting jobPosting = new JobPosting();
         Group loginScene = new Group();
+        
         stage.setTitle("Job Application Portal");
-        Scene loginPage = new Scene(loginScene, 600, 600);
+        Scene loginPage = new Scene(loginScene, 600, 200);
         stage.setScene(loginPage);
         stage.show();
         Button log_in = new Button("Log in");
@@ -169,15 +168,15 @@ public class JobPortal extends Application {
                         Label labelFileUpload = new Label("Submit your resume");
                         Label labelEnterResume = new Label("Enter your resume");
 
-                        applicantSelectionPane.add(exit, 2, 9);
-                        applicantSelectionPane.add(getFile, 2, 2);
-                        applicantSelectionPane.add(getResume, 2, 4);
-                        applicantSelectionPane.add(labelFileUpload, 0, 2);
-                        applicantSelectionPane.add(resume, 2, 3);
-                        applicantSelectionPane.add(labelEnterResume, 0, 4);
-                        applicantSelectionPane.add(applyJob, 2, 6);
-                        applicantSelectionPane.add(viewHistory, 2, 7);
-                        applicantSelectionPane.add(viewJobStatuses, 2, 8);
+                        applicantSelectionPane.add(exit, 4, 9);
+                        applicantSelectionPane.add(getFile, 4, 2);
+                        applicantSelectionPane.add(getResume, 4, 4);
+                        applicantSelectionPane.add(labelFileUpload, 2, 2);
+                        applicantSelectionPane.add(resume, 4, 3);
+                        applicantSelectionPane.add(labelEnterResume, 2, 4);
+                        applicantSelectionPane.add(applyJob, 4, 6);
+                        applicantSelectionPane.add(viewHistory, 4, 7);
+                        applicantSelectionPane.add(viewJobStatuses, 4, 8);
 
 
                         StackPane resumeUpload = new StackPane();
@@ -306,7 +305,7 @@ public class JobPortal extends Application {
                     Scene HRBasePage = new Scene(HRPortalScene, 450, 250);
                     stage.setScene(HRBasePage);
                     if (loggedUser.getClass() == HR_Coordinator.class) {
-                        String welcomeMessage = "Welcome to the Human Resources Page, " + loggedUser.getUsername();
+                        String welcomeMessage = "Welcome to the Human Resources page, " + loggedUser.getUsername();
                         Label welcomeLabel = new Label(welcomeMessage);
                         Label actions = new Label("What do you want to do? Please select an option below:");
                         Button addJobs = new Button("Add a job");
@@ -501,7 +500,7 @@ public class JobPortal extends Application {
                     if (loggedUser.getClass() == Interviewer.class) {
                         GridPane interviewerSelectionPane = new GridPane();
 
-                        String welcomeMessage = "Welcome to the Interviewer Page, " + loggedUser.getUsername();
+                        String welcomeMessage = "Welcome to the Interviewer page, " + loggedUser.getUsername();
                         Label welcomeLabel = new Label(welcomeMessage);
 
                         Button getInterviewees = new Button("Get Interviewees");
