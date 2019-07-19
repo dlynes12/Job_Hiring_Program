@@ -6,15 +6,17 @@ public class JobPosting{
     private Date datePosted;
     private Date dateClosed;
     private String position;
+    private String company;
     private HiringPool candidatePool;
     private int interviewRounds;
     protected ArrayList<Applicant> applicants = new ArrayList<>();
 
-    public JobPosting(Date datePosted, Date dateClosed, String position, int interviewRounds) {
+    public JobPosting(Date datePosted, Date dateClosed, String position, int interviewRounds, String company) {
         this.datePosted = datePosted;
         this.dateClosed = dateClosed;
         this.position = position;
         this.interviewRounds = interviewRounds;
+        this.company = company;
     }
 
     public Date getDatePosted() { return this.datePosted; }
