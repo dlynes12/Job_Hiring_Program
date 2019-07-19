@@ -30,7 +30,11 @@ public class InterviewManager {
     // methods used while job is open  -----------------------------------------------------------
 
     public void applyToJob(Applicant applicant){
-        this.approvedApplicants.add(applicant);
+        boolean inList = false;
+        for (Applicant user: this.approvedApplicants){
+            if (user.getUsername().equals(applicant.getUsername())){inList = true;}
+        }
+        if (!inList){this.approvedApplicants.add(applicant);}
     }
 
     public void withdrawlApp(Applicant applicant){
