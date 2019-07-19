@@ -11,37 +11,52 @@ public class InterviewManager {
 
     and so on, until the a single applicant gets hired
 
+
+    How to check the status of an applicant: check if the applicant is in the candidates list,
+        if they are not in the list, they have been rejected,
+        if they are in the list their status is the integer value of the roundNum
+                0: resume submitted; (Job is open)
+                1: phone interview; (Job is closed)
+
     */
 
-    ArrayList<Applicant> ApprovedApplicants = new ArrayList<>();
-    private Map<Applicant, Integer> candidates = new HashMap();
+    ArrayList<Applicant> approvedApplicants = new ArrayList<>(); // ppl that have applied for the job/ started a new round
+    private ArrayList<Applicant> candidates = new ArrayList<>(); // people who are waiting to be moved to the next round
+    private ArrayList<Applicant> rejectedFromRound = new ArrayList<>();
     private ArrayList<Applicant> rejectedApplicants = new ArrayList<>();
     String position;
     int roundNum =0;
 
+    // methods used while job is open  -----------------------------------------------------------
 
-    InterviewManager(ArrayList<Applicant> applicantsList){
-        this.ApprovedApplicants = applicantsList;
+    public void applyToJob(Applicant applicant){
+        this.approvedApplicants.add(applicant);
     }
 
-    public void sendListToInterview(UserAccess userAccess){
+    public void withdrawlApp(Applicant applicant){
+        this.approvedApplicants.remove(applicant);
+    }
+
+    /// methods to use once job is closed-------------------------------------------------------------------
+
+    public void sendListToInterview(UserAccess userAccess){ //method to distribute applicants to interviewers
         int numInterviewer = 0;
         int numApplicants = 0;
         ArrayList<Interviewer> intList = userAccess.getListInterviewers();
         if (intList.size() == 1) {
             //send the whole list to one interviewer
-            for (Applicant a: ApprovedApplicants){
+            for (Applicant a: approvedApplicants){
                 intList.get(numInterviewer).addToList(a,position);
             }
         }else{
-            while (ApprovedApplicants.size() > numApplicants){
+            while (approvedApplicants.size() > numApplicants){
                 while (intList.size() >= numInterviewer){
-                    Applicant a = ApprovedApplicants.get(numApplicants);
+                    Applicant a = approvedApplicants.get(numApplicants);
                     intList.get(numInterviewer).addToList(a,position);
                     numApplicants += 1;
                     numInterviewer +=1;
                 }
-                if (intList.size()==(numInterviewer-1) && ApprovedApplicants.size() > numApplicants){ // if there are still more Applicants to add
+                if (intList.size()==(numInterviewer-1) && approvedApplicants.size() > numApplicants){ // if there are still more Applicants to add
                     numInterviewer =0; //loop back through the list of interviewers and keep add to their list
                 }
 
@@ -49,27 +64,57 @@ public class InterviewManager {
         }
     }
 
-    public void nextRound(Applicant applicant) {
-        this.candidates.put(applicant, this.candidates.get(applicant) + 1);
+    public void nextRound(Applicant applicant) { //method to recommend an applicant
+        boolean inList = false;
+        for (Applicant user: this.candidates){
+            if (user.getUsername().equals(applicant.getUsername())){
+                inList = true;
+            }
+        }
+        if (!inList){this.candidates.add(applicant);}
     }
 
-    public void removeFromPool(Applicant applicant){
+    public void reject(Applicant applicant){ //method to reject an applicant
         this.rejectedApplicants.add(applicant);
+        this.rejectedFromRound.add(applicant);
     }
 
-    public boolean advanceRound(){
+    private boolean advanceRound(){ // never actually called except by getRecommendList()
         boolean advance = false;
         int numApproved = 0;
         int numDeclined = 0;
-        for (Applicant key: candidates.keySet()){
+        for (Applicant key: candidates){
             numApproved +=1;
         }
-        for (Applicant declined: rejectedApplicants){
-            numDeclined +=2;
+        for (Applicant declined: rejectedFromRound){
+            numDeclined +=1;
         }
-        if (numApproved+numDeclined == ApprovedApplicants.size()){advance = true;}
+        if (numApproved+numDeclined == approvedApplicants.size()){advance = true;}
         return advance;
     }
 
+    public ArrayList<Applicant> getRecommendList(){ // list of applicants who have moved onto the next round & are being sent to HR
+        ArrayList<Applicant> appsForNextRound = new ArrayList<>();
+        if (this.advanceRound()){
+            for (Applicant a: candidates){
+                appsForNextRound.add(a);
+            }
+        }
+        return appsForNextRound;
+    }
+
+    public void getListFromHR(ArrayList<Applicant> applicants){ // gets list of applicants from HR for the next round
+        this.approvedApplicants = applicants;
+        this.candidates = new ArrayList<>();
+        this.rejectedFromRound = new ArrayList<>();
+        roundNum +=1;
+    }
+
+    public ArrayList<Applicant> viewCompleteListApplicants(){ // view everyone who has applied for the job
+    ArrayList compList = new ArrayList();
+    compList.addAll(candidates);
+    compList.addAll(rejectedApplicants);
+    return compList;
+    }
 
 }

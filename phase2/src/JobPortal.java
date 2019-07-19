@@ -480,46 +480,69 @@ public class JobPortal extends Application {
 
                         String welcomeMessage = "Welcome to the Interviewer page, " + loggedUser.getUsername();
                         Label welcomeLabel = new Label(welcomeMessage);
+                        Label chooseJobLab = new Label("Choose a job:");
+                        ComboBox dropdown = new ComboBox();
+                        for (JobPosting jobPosting : jobManager.ViewJobs()) {
+                            dropdown.getItems().add(jobPosting.getPosition());
+                        }
 
                         Button getInterviewees = new Button("Get Interviewees");
-                        Button approve = new Button("Approve");
-                        Button decline = new Button("Decline");
                         Button logout = new Button("Logout");
 
+                        GridPane chooseJobPane = new GridPane();
+                        chooseJobPane.add(welcomeLabel,1,0);
+                        chooseJobPane.add(chooseJobLab,1,2);
+                        chooseJobPane.add(dropdown,2,2);
+                        chooseJobPane.add(getInterviewees,3,2);
+                        chooseJobPane.setHgap(20);
+                        chooseJobPane.setVgap(5);
+                        BorderPane interviewerPlacement = new BorderPane();
+                        interviewerPlacement.setTop(chooseJobPane);
+                        interviewerPlacement.setBottom(interviewerSelectionPane);
                         interviewerSelectionPane.add(logout, 1, 3);
-                        interviewerSelectionPane.add(getInterviewees, 1, 1);
-                        interviewerSelectionPane.add(approve, 5, 1);
-                        interviewerSelectionPane.add(decline, 5, 2);
-                        interviewerSelectionPane.add(welcomeLabel, 1, 0);
-
                         interviewerSelectionPane.setHgap(20);
                         interviewerSelectionPane.setVgap(20);
-                        ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
 
 
                         getInterviewees.setOnAction((ActionEvent ev) -> {
+                            // get the Applicant list for each job
                             Integer i = 0;
-                            for (JobPosting jP : jobManager.ViewJobs()) {
-                                RadioButton radioButton = new RadioButton(jP.getPosition());
-                                radioButton.setToggleGroup(radioSet);
-                                interviewerSelectionPane.add(radioButton, 0, i + 1);
-                                i++;
-                            }
+                            String choice = (String) dropdown.getValue();
+                            String[] listOfApp = jobManager.getJob(choice).viewApplicants().split(",");
+                            if (listOfApp.length != 0 && listOfApp[0] != "") {
+                                ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
+                                Label chooseApp = new Label("Choose an Applicant:");
+                                interviewerSelectionPane.add(chooseApp, 1, i);
+                                for (String app : listOfApp) {
+                                    RadioButton radioButton = new RadioButton(app);
+                                    radioButton.setToggleGroup(radioSet);
+                                    interviewerSelectionPane.add(radioButton, 1, i + 1);
+                                    i++;
+                                }
+                                Button approve = new Button("Approve");
+                                Button decline = new Button("Decline");
+                                interviewerSelectionPane.add(approve, 3, 1);
+                                interviewerSelectionPane.add(decline, 3, 2);
 
+
+//                            Integer i = 0;
+//                            for (JobPosting jP : jobManager.ViewJobs()) {
+//                                RadioButton radioButton = new RadioButton(jP.getPosition());
+//                                interviewerSelectionPane.add(radioButton, 0, i + 1);
+//                                i++;
+                            }
                         });
 
                         logout.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
 
-                        getInterviewees.setOnAction((ActionEvent click) -> ((Interviewer)loggedUser).getInterviewees());
+                        //getInterviewees.setOnAction((ActionEvent click) -> ((Interviewer)loggedUser).getInterviewees());
 
-                        approve.setOnAction((ActionEvent click) -> {
-                            String selectedRadio = (((RadioButton) radioSet.getSelectedToggle()).getText());
-                            ((Interviewer)loggedUser).recommend()});
+                        //approve.setOnAction((ActionEvent click) -> ((Interviewer)loggedUser).recommend());
 
-                        decline.setOnAction((ActionEvent click) -> ((Interviewer)loggedUser).decline());
+                        //decline.setOnAction((ActionEvent click) -> ((Interviewer)loggedUser).decline());
 
 
-                        intPortalScene.getChildren().addAll(interviewerSelectionPane);
+                        intPortalScene.getChildren().addAll(interviewerPlacement);
 
                     }
 
