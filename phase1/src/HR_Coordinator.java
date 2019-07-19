@@ -8,6 +8,10 @@ public class HR_Coordinator extends User{
         super(Username,Password);
     }
 
+    public void hire(){
+
+    }
+
     public void matchItoA(Interviewer interviewer, Applicant applicant, JobPosting jobPosting){
         // loop thru list of applicants,
         // call addPool()
