@@ -1,0 +1,110 @@
+
+======================================= JOB DUTIES LOG =================================================================
+
+Please be clear on what you are working on under the Responsibility portion.
+
+Every time you commit please add new responsibility section in your log.
+
+Any concerns please write them under your comments!
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+ GABY
+------------------------------------------------------------------------------------------------------------------------
+
+Responsibility:
+- Work on Applicant class
+
+Comments:
+- added jobApplied attribute for Applicant
+- working on the Login function
+- not sure how to access the ArrayList in the UserAccess class due to how the object of the class gets instantiated.
+- made a temp arraylist to check for existing applicants to get the login function rolling.
+
+
+Responsibility:
+- Worked on JobPosting
+
+Comments:
+- created addApplicant() - adds applicant to ArrayList of applicants per posting.
+
+
+------------------------------------------------------------------------------------------------------------------------
+ DWIGHT
+------------------------------------------------------------------------------------------------------------------------
+
+Responsibility:
+- Work on UserAccess
+
+Comments:
+-Changed constructors for HR Coordinator, Interviewer and Applicant
+-Changed addUser in UserAccess class
+-created login method [LogInUser()] for UserAccess class
+
+
+
+Responsibility:
+- Created a class to hold Job Postings
+
+Comments:
+- class can do operations across multiple jobpostings, including allowing you to view a specific
+ job posting
+
+
+
+ Responsibility:
+ -created a User signup page
+
+ Comments:
+ - changed the UserAccess instance used to sign in; now have pointer and user being signed in
+ - created new signup page and changed buttons on logon page to Radios (to remove bug)
+ - overwrote getusername() and getpassword functions in Interviewer and HR (to remove bug)
+ - individual scenes for each user type linked to login page
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+ DANIEL
+------------------------------------------------------------------------------------------------------------------------
+
+Responsibility:
+- Work on UI for interviewer
+- Work on UI for work on hr
+- Work on Job application UI
+
+
+
+Comments:
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+ SANTI
+------------------------------------------------------------------------------------------------------------------------
+
+Responsibility:
+
+Comments:
+
+
+------------------------------------------------------------------------------------------------------------------------
+ HOWARD
+------------------------------------------------------------------------------------------------------------------------
+
+Responsibility:
+- Revise design of UI
+- Work on HR Coordinator
+- work on README.txt
+
+Comments:
+
+
+------------------------------------------------------------------------------------------------------------------------
+ MARK
+------------------------------------------------------------------------------------------------------------------------
+
+Responsibility:
+- Work on Interviewer
+
+Comments:
