@@ -33,23 +33,11 @@ public class JobPortal extends Application {
         Group loginScene = new Group();
         List<String> list;
 
-//        try{
-//            list = readUserList();
-//            if(list != null) {
-//                for (String s : list) {
-//                    try{
-//                        readFile(s);
-//                    }catch(IOException ex){
-//                        System.out.println(ex.getMessage());
-//                    }
-//                }
-//            }
-//        }catch(ClassNotFoundException|IOException ex){
-//            System.out.println(ex.getMessage());
-//        }
-
         try{
-              readUserList();
+              list = readUserList();
+              for(Object o: list){
+                  userManager.addUser((User)o);
+              }
         }catch(ClassNotFoundException|IOException ex){
             System.out.println(ex.getMessage());
         }
@@ -220,11 +208,10 @@ public class JobPortal extends Application {
         User u = (User) objectInputStream.readObject();
         System.out.println(u);
     }
-    public static void readUserList() throws IOException, ClassNotFoundException{
+    public List readUserList() throws IOException, ClassNotFoundException{
         ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(("users.bin")));
         List l = (List) objectInputStream.readObject();
-        System.out.println(l);
-//        return l;
+        return l;
     }
 }
 

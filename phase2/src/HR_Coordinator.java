@@ -224,7 +224,7 @@ public class HR_Coordinator extends User{
     }
 
     public String toString(){
-        return "*********** \n" + this.getUsername() + "\n" + this.getPassword() + "\n" + "***********";
+        return "{H," + this.getUsername() + "," + this.getPassword() + "}";
 
     }
 

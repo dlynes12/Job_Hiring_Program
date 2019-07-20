@@ -91,10 +91,7 @@ public class Applicant extends User {
 
     @Override
     public String toString() {
-        return "Applicant{" +
-                "jobsApplied=" + jobsApplied +
-                ", username='" + username + '\'' +
-                '}';
+        return "{A," + jobsApplied + "," + username+ "}";
     }
 
     public void applicantGUISetUp(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage){
