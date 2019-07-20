@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
 
 public class JobPosting{
@@ -47,15 +48,9 @@ public class JobPosting{
 
     //HR needs to have access to this information as well.
     public void addApplicant (Applicant applicant){
-        boolean flag = false;
-        for(Applicant a: this.applicants) {
-            if ((a.getUsername().equals(applicant.getUsername()))) {
-                flag = true;
-            }
-        }
-        if(!flag){
+        if(!this.applicants.contains(applicant)){
             this.applicants.add(applicant);
-            this.candidatePool.addToPool(applicant, 0); //initial status
+            this.candidatePool.addToPool(applicant,0);
         }
     }
 

@@ -29,6 +29,11 @@ public class JobPortal extends Application {
         Storage storage = new Storage();
         Group loginScene = new Group();
 
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Password/Username Not Found");
+        alert.setHeaderText("Do not leave any of the fields empty.");
+        alert.setContentText("Please Try Again");
+
         stage.setTitle("Job Application Portal");
         Scene loginPage = new Scene(loginScene, 600, 200);
         stage.setScene(loginPage);
@@ -113,37 +118,46 @@ public class JobPortal extends Application {
                     Applicant tempApp = new Applicant(newUserField.getText(), newPassField.getText());
                     if (userManager.addUser(tempApp)) {
                         stage.setScene(loginPage);
+                    }else{
+                        alert.showAndWait();
                     }
                 } else if (radioSet.getSelectedToggle() == radioHR) {
                     HR_Coordinator tempHR = new HR_Coordinator(newUserField.getText(), newPassField.getText());
                     if (userManager.addUser(tempHR)) {
                         stage.setScene(loginPage);
+                    }else{
+                        alert.showAndWait();
                     }
                 } else if (radioSet.getSelectedToggle() == radioInt) {
                     Interviewer tempInt = new Interviewer(newUserField.getText(), newPassField.getText());
                     if (userManager.addUser(tempInt)) {
                         stage.setScene(loginPage);
+                    }else{
+                        alert.showAndWait();
                     }
                 }
             });
-
         });
 
         log_in.setOnAction((ActionEvent e) -> {
             String UName = username.getText();
             String Pass = password.getText();
-            User loggedUser = userManager.login(UName, Pass); // the user that is actually logged in
-            if (loggedUser != null) {
-                if (loginRadio.getSelectedToggle() == applicantButton) {
-                    ((Applicant) loggedUser).applicantGUISetUp(stage, loggedUser, jobManager, loginPage, storage);
+            try {
+                User loggedUser = userManager.login(UName, Pass); // the user that is actually logged in
+                if (loggedUser != null) {
+                    if (loginRadio.getSelectedToggle() == applicantButton) {
+                        ((Applicant) loggedUser).applicantGUISetUp(stage, loggedUser, jobManager, loginPage, storage);
 
-                } else if (loginRadio.getSelectedToggle() == hRButton) {
-                    ((HR_Coordinator) loggedUser).HRGUISetUp(stage, loggedUser, jobManager, loginPage, storage, userManager);
-                } else if (loginRadio.getSelectedToggle() == interviewerButton) {
-                    ((Interviewer) loggedUser).getInterviewPane(stage, loggedUser, jobManager, loginPage);
-                } else {
-                    stage.setScene(loginPage);
+                    } else if (loginRadio.getSelectedToggle() == hRButton) {
+                        ((HR_Coordinator) loggedUser).HRGUISetUp(stage, loggedUser, jobManager, loginPage, storage, userManager);
+                    } else if (loginRadio.getSelectedToggle() == interviewerButton) {
+                        ((Interviewer) loggedUser).getInterviewPane(stage, loggedUser, jobManager, loginPage);
+                    } else {
+                        stage.setScene(loginPage);
+                    }
                 }
+            }catch (NullPointerException e1){
+                alert.showAndWait();
             }
         });
     }

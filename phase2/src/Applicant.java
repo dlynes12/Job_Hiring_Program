@@ -51,7 +51,7 @@ public class Applicant extends User {
     }
 
     public void getDocs(String username) {
-        st.readFile(username + ".txt");
+//        st.readFile(username + ".txt");
     }
 
     public void applyToJob(JobPosting jobPosting) {
@@ -124,7 +124,7 @@ public class Applicant extends User {
             });
             getResume.setOnAction((ActionEvent eve) -> {
                 String resumeText = resume.getText();
-                storage.writeFile(loggedUser.getUsername(), resumeText);
+//                storage.writeFile(loggedUser.getUsername(), resumeText);
             });
 
             Label labelFileUpload = new Label("Submit your resume");

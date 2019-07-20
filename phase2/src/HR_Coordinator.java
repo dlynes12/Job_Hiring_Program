@@ -25,11 +25,6 @@ public class HR_Coordinator extends User{
         // interviewer.addApplicant(applicant);
     }
 
-    public String toString(){
-        return "*********** \n" + this.getUsername() + "\n" + this.getPassword() + "\n" + "***********";
-
-    }
-
     void HRGUISetUp(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage, Storage storage, UserAccess userManager)
     {
         Group HRPortalScene = new Group();
@@ -83,6 +78,7 @@ public class HR_Coordinator extends User{
                 Label closingMessage = new Label("Closing Date:");
                 Label positionLabel = new Label("What position are we creating?");
                 TextField positionField = new TextField();
+                TextField companyField = new TextField();
                 Button createNewPost = new Button("Create job");
                 Button returnAddJ = new Button("Back");
                 GridPane cMessageGrid = new GridPane();
@@ -94,6 +90,7 @@ public class HR_Coordinator extends User{
                 dateGrid.add(datePicker, 2, 0);
                 positionGrid.add(positionLabel, 1, 0);
                 positionGrid.add(positionField, 2, 0);
+                positionGrid.add(companyField, 3,0);
                 positionGrid.add(createNewPost, 1, 2);
                 positionGrid.add(returnAddJ, 1, 4);
 
@@ -116,7 +113,8 @@ public class HR_Coordinator extends User{
                     Date closeDate = null;
                     closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                     String position = positionField.getText();
-                    jobManager.addJob(today, closeDate, position, 0);
+                    String company = companyField.getText();
+                    jobManager.addJob(today, closeDate, position, 0, company);
                     stage.setScene(HRBasePage);
 
                 });
@@ -222,6 +220,13 @@ public class HR_Coordinator extends User{
         //send message wrong user type?
         else {
             stage.setScene(loginPage);
-        }}
+        }
+    }
+
+    public String toString(){
+        return "*********** \n" + this.getUsername() + "\n" + this.getPassword() + "\n" + "***********";
+
+    }
+
 
 }

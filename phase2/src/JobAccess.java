@@ -5,8 +5,8 @@ public class JobAccess{
 
     private ArrayList<JobPosting> JobPostings = new ArrayList<>();
     //Manage Jobs Function-------------------------------------------------------------------
-    public boolean addJob(Date datePosted, Date dateClosed, String position, int rounds) {
-        JobPosting job = new JobPosting(datePosted, dateClosed, position, rounds);
+    public boolean addJob(Date datePosted, Date dateClosed, String position, int rounds, String company) {
+        JobPosting job = new JobPosting(datePosted, dateClosed, position, rounds, company);
         boolean add = false;
         if (this.getJob(position) == null && !position.trim().isEmpty()) {
             this.JobPostings.add(job);

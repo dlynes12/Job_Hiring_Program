@@ -27,12 +27,6 @@ public class Interviewer extends User {
         applicantsList.put(applicant,position);
     }
 
-
-    public String toString(){
-        return "*********** \n" + this.getUsername() + "\n" + this.getPassword() + "\n" + "***********";
-
-    }
-
     public void getInterviewees() {
 
     }
@@ -114,6 +108,10 @@ public class Interviewer extends User {
             intPortalScene.getChildren().addAll(interviewerPlacement);
 
         }
+
+    }
+    public String toString(){
+        return "*********** \n" + this.getUsername() + "\n" + this.getPassword() + "\n" + "***********";
 
     }
 }
