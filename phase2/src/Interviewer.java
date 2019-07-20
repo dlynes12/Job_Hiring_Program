@@ -108,7 +108,6 @@ public class Interviewer extends User {
             intPortalScene.getChildren().addAll(interviewerPlacement);
 
         }
-
     }
     public String toString(){
         return "{I," + this.getUsername() + "," + this.getPassword() +"}";

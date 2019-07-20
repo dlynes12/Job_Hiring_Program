@@ -91,7 +91,7 @@ public class Applicant extends User {
 
     @Override
     public String toString() {
-        return "{A," + jobsApplied + "," + username+ "}";
+        return "{A," + this.getJobs() + "," + this.getUsername() + "," + this.getPassword() + "}";
     }
 
     public void applicantGUISetUp(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage){

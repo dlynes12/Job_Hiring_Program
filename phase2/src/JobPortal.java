@@ -35,6 +35,7 @@ public class JobPortal extends Application {
 
         try{
               list = readUserList();
+              System.out.println(list);
               for(Object o: list){
                   userManager.addUser((User)o);
               }
