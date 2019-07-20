@@ -5,7 +5,6 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-
 import java.util.*;
 
 public class Interviewer extends User {
@@ -35,36 +34,42 @@ public class Interviewer extends User {
     //GUI CONTROLS FOR INTERVIEWS
 
     public void getInterviewPane(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage) {
-        Group intPortalScene = new Group();
-        Scene scene = new Scene(intPortalScene, 600, 600);
-        stage.setScene(scene);
         if (loggedUser.getClass() == Interviewer.class) {
-            GridPane interviewerSelectionPane = new GridPane();
+
+            Group intPortalScene = new Group();
+            Scene scene = new Scene(intPortalScene, 600, 600);
+            stage.setScene(scene);
 
             String welcomeMessage = "Welcome to the Interviewer page, " + loggedUser.getUsername();
             Label welcomeLabel = new Label(welcomeMessage);
             Label chooseJobLab = new Label("Choose a job:");
             ComboBox dropdown = new ComboBox();
-            for (JobPosting jobPosting : jobManager.ViewJobs()) {
-                dropdown.getItems().add(jobPosting.getPosition());
-            }
+            GridPane interviewerSelectionPane = new GridPane();
+            GridPane chooseJobPane = new GridPane();
+            BorderPane interviewerPlacement = new BorderPane();
 
             Button getInterviewees = new Button("Get Interviewees");
             Button logout = new Button("Logout");
+            Button approve = new Button("Approve");
+            Button decline = new Button("Decline");
 
-            GridPane chooseJobPane = new GridPane();
+            interviewerSelectionPane.add(approve, 3, 1);
+            interviewerSelectionPane.add(decline, 3, 2);
+            interviewerSelectionPane.add(logout, 1, 3);
+            interviewerSelectionPane.setHgap(20);
+            interviewerSelectionPane.setVgap(20);
+            interviewerPlacement.setTop(chooseJobPane);
+            interviewerPlacement.setBottom(interviewerSelectionPane);
             chooseJobPane.add(welcomeLabel,1,0);
             chooseJobPane.add(chooseJobLab,1,2);
             chooseJobPane.add(dropdown,2,2);
             chooseJobPane.add(getInterviewees,3,2);
             chooseJobPane.setHgap(20);
             chooseJobPane.setVgap(5);
-            BorderPane interviewerPlacement = new BorderPane();
-            interviewerPlacement.setTop(chooseJobPane);
-            interviewerPlacement.setBottom(interviewerSelectionPane);
-            interviewerSelectionPane.add(logout, 1, 3);
-            interviewerSelectionPane.setHgap(20);
-            interviewerSelectionPane.setVgap(20);
+
+            for (JobPosting jobPosting : jobManager.ViewJobs()) {
+                dropdown.getItems().add(jobPosting.getPosition());
+            }
 
             getInterviewees.setOnAction((ActionEvent ev) -> {
                 // get the Applicant list for each job
@@ -81,37 +86,21 @@ public class Interviewer extends User {
                         interviewerSelectionPane.add(radioButton, 1, i + 1);
                         i++;
                     }
-                    Button approve = new Button("Approve");
-                    Button decline = new Button("Decline");
-                    interviewerSelectionPane.add(approve, 3, 1);
-                    interviewerSelectionPane.add(decline, 3, 2);
 
-
-//                            Integer i = 0;
-//                            for (JobPosting jP : jobManager.ViewJobs()) {
-//                                RadioButton radioButton = new RadioButton(jP.getPosition());
-//                                interviewerSelectionPane.add(radioButton, 0, i + 1);
-//                                i++;
                 }
             });
-
 
             logout.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
 
             //getInterviewees.setOnAction((ActionEvent click) -> ((Interviewer)loggedUser).getInterviewees());
-
             //approve.setOnAction((ActionEvent click) -> ((Interviewer)loggedUser).recommend());
-
             //decline.setOnAction((ActionEvent click) -> ((Interviewer)loggedUser).decline());
 
-
             intPortalScene.getChildren().addAll(interviewerPlacement);
-
         }
     }
     public String toString(){
         return "{I," + this.getUsername() + "," + this.getPassword() +"}";
-
     }
 }
 
