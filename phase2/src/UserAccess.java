@@ -3,7 +3,6 @@ import java.util.Date;
 
 public class UserAccess {
     public ArrayList<User> users = new ArrayList();
-    Storage st = new Storage();
 
 
     // LOGIN FUNCTIONS----------------------------------------------------------------------

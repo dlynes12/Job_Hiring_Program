@@ -18,7 +18,6 @@ public class Applicant extends User {
     private HashMap<String, String> jobsApplied = new HashMap<>();
 
     String username = this.getUsername();
-    Storage st = new Storage();
 
     public Applicant(String username, String password) {
         super(username, password);
@@ -95,11 +94,10 @@ public class Applicant extends User {
         return "Applicant{" +
                 "jobsApplied=" + jobsApplied +
                 ", username='" + username + '\'' +
-                ", st=" + st +
                 '}';
     }
 
-    public void applicantGUISetUp(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage, Storage storage){
+    public void applicantGUISetUp(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage){
         Group applicantPortalScene = new Group();
         Scene applicantPage = new Scene(applicantPortalScene, 600, 600);
         stage.setScene(applicantPage);

@@ -9,13 +9,16 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class JobPortal extends Application {
 
@@ -24,14 +27,35 @@ public class JobPortal extends Application {
 
 
     public void start(Stage stage) throws Exception {
+
         UserAccess userManager = new UserAccess();
         JobAccess jobManager = new JobAccess();
-        Storage storage = new Storage();
         Group loginScene = new Group();
+        List<String> list;
 
+//        try{
+//            list = readUserList();
+//            if(list != null) {
+//                for (String s : list) {
+//                    try{
+//                        readFile(s);
+//                    }catch(IOException ex){
+//                        System.out.println(ex.getMessage());
+//                    }
+//                }
+//            }
+//        }catch(ClassNotFoundException|IOException ex){
+//            System.out.println(ex.getMessage());
+//        }
+
+        try{
+              readUserList();
+        }catch(ClassNotFoundException|IOException ex){
+            System.out.println(ex.getMessage());
+        }
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Password/Username Not Found");
-        alert.setHeaderText("Do not leave any of the fields empty.");
+        alert.setHeaderText("Do not leave any of the fields empty, and make sure that you input the correct password /username.");
         alert.setContentText("Please Try Again");
 
         stage.setTitle("Job Application Portal");
@@ -118,24 +142,32 @@ public class JobPortal extends Application {
                     Applicant tempApp = new Applicant(newUserField.getText(), newPassField.getText());
                     if (userManager.addUser(tempApp)) {
                         stage.setScene(loginPage);
-                    }else{
+                    }else {
                         alert.showAndWait();
                     }
                 } else if (radioSet.getSelectedToggle() == radioHR) {
                     HR_Coordinator tempHR = new HR_Coordinator(newUserField.getText(), newPassField.getText());
                     if (userManager.addUser(tempHR)) {
                         stage.setScene(loginPage);
-                    }else{
+                    }else {
                         alert.showAndWait();
                     }
                 } else if (radioSet.getSelectedToggle() == radioInt) {
                     Interviewer tempInt = new Interviewer(newUserField.getText(), newPassField.getText());
                     if (userManager.addUser(tempInt)) {
                         stage.setScene(loginPage);
-                    }else{
+                    }else {
                         alert.showAndWait();
                     }
+                }else {
+                    alert.showAndWait();
                 }
+                try{
+                    writeUserList(userManager.users);
+                }catch(IOException ex){
+                    System.out.println(ex.getMessage());
+                }
+
             });
         });
 
@@ -146,14 +178,20 @@ public class JobPortal extends Application {
                 User loggedUser = userManager.login(UName, Pass); // the user that is actually logged in
                 if (loggedUser != null) {
                     if (loginRadio.getSelectedToggle() == applicantButton) {
-                        ((Applicant) loggedUser).applicantGUISetUp(stage, loggedUser, jobManager, loginPage, storage);
+                        ((Applicant) loggedUser).applicantGUISetUp(stage, loggedUser, jobManager, loginPage);
 
                     } else if (loginRadio.getSelectedToggle() == hRButton) {
-                        ((HR_Coordinator) loggedUser).HRGUISetUp(stage, loggedUser, jobManager, loginPage, storage, userManager);
+                        ((HR_Coordinator) loggedUser).HRGUISetUp(stage, loggedUser, jobManager, loginPage, userManager);
                     } else if (loginRadio.getSelectedToggle() == interviewerButton) {
                         ((Interviewer) loggedUser).getInterviewPane(stage, loggedUser, jobManager, loginPage);
                     } else {
                         stage.setScene(loginPage);
+                    }
+
+                    try{
+                        writeToFile(loggedUser);
+                    }catch(IOException ex){
+                        System.out.println(ex.getMessage());
                     }
                 }
             }catch (NullPointerException e1){
@@ -166,6 +204,27 @@ public class JobPortal extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public static void writeUserList(List a) throws IOException {
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(("users.bin")));
+        objectOutputStream.writeObject(a);
+    }
+
+    public static void writeToFile(User u) throws IOException {
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream((u.getUsername()+ ".bin")));
+        objectOutputStream.writeObject(u);
+    }
+    public static void readFile(String uName) throws IOException, ClassNotFoundException{
+        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream((uName+ ".bin")));
+        User u = (User) objectInputStream.readObject();
+        System.out.println(u);
+    }
+    public static void readUserList() throws IOException, ClassNotFoundException{
+        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(("users.bin")));
+        List l = (List) objectInputStream.readObject();
+        System.out.println(l);
+//        return l;
     }
 }
 

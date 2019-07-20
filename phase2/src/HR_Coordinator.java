@@ -25,7 +25,7 @@ public class HR_Coordinator extends User{
         // interviewer.addApplicant(applicant);
     }
 
-    void HRGUISetUp(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage, Storage storage, UserAccess userManager)
+    void HRGUISetUp(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage, UserAccess userManager)
     {
         Group HRPortalScene = new Group();
         Scene HRBasePage = new Scene(HRPortalScene, 450, 250);
