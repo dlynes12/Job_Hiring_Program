@@ -26,10 +26,20 @@ public class InterviewManager {
     private ArrayList<Applicant> rejectedApplicants = new ArrayList<>();
     String position;
     int roundNum =0;
+    ArrayList<String>hiringStage = new ArrayList<>();
+    //todo: work on way for Applicants to see the progress of their application through InterviewManager
 
     // methods used while job is open  -----------------------------------------------------------
 
-    public void applyToJob(Applicant applicant){
+    public void addStage(String stageInProcess){ // add a new stage in the interview process, makes the hiring process dynamic
+        boolean inList = false;
+        for (String stage: hiringStage){
+            if (stageInProcess.equals(stage)){inList = true;}
+        }
+        if (!inList){hiringStage.add(stageInProcess);}
+    }
+
+    public void applyToJob(Applicant applicant){ // may be useless
         boolean inList = false;
         for (Applicant user: this.approvedApplicants){
             if (user.getUsername().equals(applicant.getUsername())){inList = true;}
@@ -37,11 +47,13 @@ public class InterviewManager {
         if (!inList){this.approvedApplicants.add(applicant);}
     }
 
-    public void withdrawlApp(Applicant applicant){
+    public void withdrawApp(Applicant applicant){
         this.approvedApplicants.remove(applicant);
     }
 
     /// methods to use once job is closed-------------------------------------------------------------------
+
+    InterviewManager(ArrayList<Applicant> listApplicants){this.approvedApplicants = listApplicants;}
 
     public void sendListToInterview(UserAccess userAccess){ //method to distribute applicants to interviewers
         int numInterviewer = 0;
@@ -114,11 +126,6 @@ public class InterviewManager {
         roundNum +=1;
     }
 
-    public ArrayList<Applicant> viewCompleteListApplicants(){ // view everyone who has applied for the job
-    ArrayList compList = new ArrayList();
-    compList.addAll(candidates);
-    compList.addAll(rejectedApplicants);
-    return compList;
-    }
+  // complete list of applicants is in JobPostings Class
 
 }

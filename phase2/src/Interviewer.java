@@ -14,13 +14,13 @@ public class Interviewer extends User {
         super(username,password);
     }
 
-    public void recommend(Applicant applicant, JobPosting job){
-        job.getCandidatePool().nextRound(applicant);
-    }
-
-    public void decline(Applicant applicant, JobPosting job){
-        job.getCandidatePool().removeFromPool(applicant);
-    }
+//    public void recommend(Applicant applicant, JobPosting job){
+//        job.getCandidatePool().nextRound(applicant);
+//    }
+//
+//    public void decline(Applicant applicant, JobPosting job){
+//        job.getCandidatePool().removeFromPool(applicant);
+//    }
 
     public void addToList(Applicant applicant, String position){
         applicantsList.put(applicant,position);
@@ -33,7 +33,7 @@ public class Interviewer extends User {
 
     //GUI CONTROLS FOR INTERVIEWS
 
-    public void getInterviewPane(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage) {
+    public void getInterviewPane(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage, UserAccess userManager) {
         if (loggedUser.getClass() == Interviewer.class) {
 
             Group intPortalScene = new Group();
@@ -86,14 +86,28 @@ public class Interviewer extends User {
                         interviewerSelectionPane.add(radioButton, 1, i + 1);
                         i++;
                     }
-
+                    //todo: look at applyJob in Applicant GUI method
+                    approve.setOnAction((ActionEvent click) -> {
+                        RadioButton selectedRadio = (RadioButton)radioSet.getSelectedToggle();
+                        String selectedApplicant = selectedRadio.getText();
+                        Applicant appObj = (Applicant) userManager.getUser(selectedApplicant);
+                        jobManager.getJob(choice).getHiringProcessor().nextRound(appObj);
+                        selectedRadio.setStyle("-fx-selected-color: green; -fx-unselected-color: green;"); // changes the colour of a button to red once
+                    });                                                                         //they have been recommended
+                    decline.setOnAction((ActionEvent click) -> {
+                        RadioButton selectedRadio = (RadioButton)radioSet.getSelectedToggle();
+                        String selectedApplicant = selectedRadio.getText();
+                        Applicant appObj = (Applicant) userManager.getUser(selectedApplicant);
+                        jobManager.getJob(choice).getHiringProcessor().reject(appObj);
+                        selectedRadio.setStyle("-fx-selected-color: red; -fx-unselected-color: red;");
+                    });
                 }
             });
 
             logout.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
 
-            //getInterviewees.setOnAction((ActionEvent click) -> ((Interviewer)loggedUser).getInterviewees());
-            //approve.setOnAction((ActionEvent click) -> ((Interviewer)loggedUser).recommend());
+
+
             //decline.setOnAction((ActionEvent click) -> ((Interviewer)loggedUser).decline());
 
             intPortalScene.getChildren().addAll(interviewerPlacement);

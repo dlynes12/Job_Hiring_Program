@@ -1,3 +1,4 @@
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -8,6 +9,7 @@ public class JobPosting{
     private Date dateClosed;
     private String position;
     private String company;
+    private InterviewManager HiringProcessor;
     private HiringPool candidatePool;
     private int interviewRounds;
     protected ArrayList<Applicant> applicants = new ArrayList<>();
@@ -50,7 +52,7 @@ public class JobPosting{
     public void addApplicant (Applicant applicant){
         if(!this.applicants.contains(applicant)){
             this.applicants.add(applicant);
-            this.candidatePool.addToPool(applicant,0);
+            //this.candidatePool.addToPool(applicant,0);
         }
     }
 
@@ -65,5 +67,17 @@ public class JobPosting{
         return result;
     }
 
+    public boolean startInterviewProcess(){
+        boolean start = false;
+        Date today = new Date();
+        Instant now = Instant.now();
+        today.from(now);
+        if (today.after(dateClosed)){
+            HiringProcessor = new InterviewManager(applicants);
+            start = true;
+        }
+        return start;
+    }
 
+    public InterviewManager getHiringProcessor() {return HiringProcessor;}
 }
