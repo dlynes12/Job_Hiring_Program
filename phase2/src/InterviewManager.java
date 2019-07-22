@@ -24,9 +24,10 @@ public class InterviewManager {
     private ArrayList<Applicant> candidates = new ArrayList<>(); // people who are waiting to be moved to the next round
     private ArrayList<Applicant> rejectedFromRound = new ArrayList<>();
     private ArrayList<Applicant> rejectedApplicants = new ArrayList<>();
-    String position;
+    JobPosting jobPosting;
+    //String position;
     int roundNum =0;
-    ArrayList<String>hiringStage = new ArrayList<>();
+    ArrayList<String>hiringStage = new ArrayList<>(); // list of all the stages in the hiring process
     //todo: work on way for Applicants to see the progress of their application through InterviewManager
 
     // methods used while job is open  -----------------------------------------------------------
@@ -53,11 +54,18 @@ public class InterviewManager {
 
     /// methods to use once job is closed-------------------------------------------------------------------
 
-    InterviewManager(ArrayList<Applicant> listApplicants){this.approvedApplicants = listApplicants;}
+    InterviewManager(ArrayList<Applicant> listApplicants, JobPosting job){
+        this.approvedApplicants = listApplicants;
+        this.jobPosting = job;
+        for (Applicant a: approvedApplicants){
+            a.updateStatus(jobPosting,hiringStage.get(roundNum));
+        }
+    }
 
     public void sendListToInterview(UserAccess userAccess){ //method to distribute applicants to interviewers
         int numInterviewer = 0;
         int numApplicants = 0;
+        String position = jobPosting.getPosition();
         ArrayList<Interviewer> intList = userAccess.getListInterviewers();
         if (intList.size() == 1) {
             //send the whole list to one interviewer
@@ -124,6 +132,10 @@ public class InterviewManager {
         this.candidates = new ArrayList<>();
         this.rejectedFromRound = new ArrayList<>();
         roundNum +=1;
+        for (Applicant a: candidates){
+            a.updateStatus(jobPosting,hiringStage.get(roundNum));
+        }
+
     }
 
   // complete list of applicants is in JobPostings Class

@@ -73,7 +73,7 @@ public class JobPosting{
         Instant now = Instant.now();
         today.from(now);
         if (today.after(dateClosed)){
-            HiringProcessor = new InterviewManager(applicants);
+            HiringProcessor = new InterviewManager(applicants, this);
             start = true;
         }
         return start;

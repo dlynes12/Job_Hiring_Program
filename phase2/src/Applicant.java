@@ -76,7 +76,6 @@ public class Applicant extends User {
     }
 
     public void updateStatus(JobPosting job, String status) {
-
         this.jobsApplied.put(job.getPosition(), status);
     }
 
