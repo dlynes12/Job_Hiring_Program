@@ -1,3 +1,5 @@
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.control.*;
@@ -26,8 +28,12 @@ public class Interviewer extends User {
         applicantsList.put(applicant,position);
     }
 
-    public void getInterviewees() {
-
+    public ArrayList<Applicant> getInterviewees() {
+        ArrayList<Applicant> listOfInterviewees = new ArrayList<>();
+        for (Applicant a: applicantsList.keySet()){
+            listOfInterviewees.add(a);
+        }
+        return listOfInterviewees;
     }
 
 
@@ -54,7 +60,7 @@ public class Interviewer extends User {
             Button decline = new Button("Decline");
 
             interviewerSelectionPane.add(approve, 3, 1);
-            interviewerSelectionPane.add(decline, 3, 2);
+            interviewerSelectionPane.add(decline, 4, 1);
             interviewerSelectionPane.add(logout, 1, 3);
             interviewerSelectionPane.setHgap(20);
             interviewerSelectionPane.setVgap(20);
@@ -71,11 +77,11 @@ public class Interviewer extends User {
                 dropdown.getItems().add(jobPosting.getPosition());
             }
 
-            getInterviewees.setOnAction((ActionEvent ev) -> {
+            /*getInterviewees.setOnAction((ActionEvent ev) -> {
                 // get the Applicant list for each job
                 Integer i = 0;
                 String choice = (String) dropdown.getValue();
-                String[] listOfApp = jobManager.getJob(choice).viewApplicants().split(",");
+                String[] listOfApp = jobManager.getJob(choice).viewApplicants(this).split(",");
                 if (listOfApp.length != 0 && listOfApp[0] != "") {
                     ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
                     Label chooseApp = new Label("Choose an Applicant:");
@@ -100,6 +106,38 @@ public class Interviewer extends User {
                         Applicant appObj = (Applicant) userManager.getUser(selectedApplicant);
                         jobManager.getJob(choice).getHiringProcessor().reject(appObj);
                         selectedRadio.setStyle("-fx-selected-color: red; -fx-unselected-color: red;");
+                    });
+                }
+            });*/
+            getInterviewees.setOnAction((ActionEvent ev) -> {
+                // get the Applicant list for each job
+                Integer i = 0;
+                String choice = (String) dropdown.getValue();
+                String[] listOfApp = jobManager.getJob(choice).viewApplicants(this).split(",");
+                if (listOfApp.length != 0 && listOfApp[0] != ""){
+                    Label chooseApp = new Label("Choose an Applicant:");
+                    interviewerSelectionPane.add(chooseApp, 1, i);
+                    ListView<String> scrollListApps = new ListView<>();
+                    ObservableList<String> listApps= FXCollections.observableArrayList();
+                    scrollListApps.setItems(listApps);
+                    scrollListApps.setPrefSize(100.00,70.00);
+                    for (String app : listOfApp) {
+                        listApps.add(app);
+                    }
+                    interviewerSelectionPane.add(scrollListApps, 1, i + 1);
+                    //todo: look at applyJob in Applicant GUI method
+                    approve.setOnAction((ActionEvent click) -> {
+                        String selectedApplicant = scrollListApps.getSelectionModel().getSelectedItem();
+                        Applicant appObj = (Applicant) userManager.getUser(selectedApplicant);
+                        jobManager.getJob(choice).getHiringProcessor().nextRound(appObj);
+                        // we can delete the applicant from the applicantList after a person has been
+                        // recommended or declined; then check if the applicantList is empty to advance
+                        // the round
+                    });                                                                         //they have been recommended
+                    decline.setOnAction((ActionEvent click) -> {
+                        String selectedApplicant = scrollListApps.getSelectionModel().getSelectedItem();
+                        Applicant appObj = (Applicant) userManager.getUser(selectedApplicant);
+                        jobManager.getJob(choice).getHiringProcessor().reject(appObj);
                     });
                 }
             });

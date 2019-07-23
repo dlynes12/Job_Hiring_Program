@@ -56,10 +56,32 @@ public class JobPosting{
         }
     }
 
-    public String viewApplicants(){
+    public String viewApplicants(Interviewer interviewer){ //view all Applicants still in the hiring process
         String listOfApplicants = "";
         String result;
-        for (Applicant applicant: this.applicants){
+        Date today = new Date();
+        Instant now = Instant.now();
+        today.from(now);
+        if (today.before(this.getDateClosed())){
+            for (Applicant applicant: this.applicants){  //list before was this.applicants
+                listOfApplicants = listOfApplicants + applicant.getUsername() + ",";
+            }
+            if (listOfApplicants.length() ==0){result = listOfApplicants;}
+            else {result = listOfApplicants.substring(0, listOfApplicants.length()-1);} //takes off the last comma
+        }else{
+            for (Applicant applicant: interviewer.getInterviewees()){
+                listOfApplicants = listOfApplicants + applicant.getUsername() + ",";
+            }
+            if (listOfApplicants.length() ==0){result = listOfApplicants;}
+            else {result = listOfApplicants.substring(0, listOfApplicants.length()-1);} //takes off the last comma
+        }
+        return result;
+    }
+
+    public String viewAllApplicants(){
+        String listOfApplicants = "";
+        String result;
+        for (Applicant applicant: this.applicants){  //list before was this.applicants
             listOfApplicants = listOfApplicants + applicant.getUsername() + ",";
         }
         if (listOfApplicants.length() ==0){result = listOfApplicants;}
@@ -69,12 +91,14 @@ public class JobPosting{
 
     public boolean startInterviewProcess(){
         boolean start = false;
-        Date today = new Date();
-        Instant now = Instant.now();
-        today.from(now);
-        if (today.after(dateClosed)){
-            HiringProcessor = new InterviewManager(applicants, this);
-            start = true;
+        if (!this.applicants.isEmpty()){
+            Date today = new Date();
+            Instant now = Instant.now();
+            today.from(now);
+            if (today.after(dateClosed)){
+                HiringProcessor = new InterviewManager(applicants, this);
+                start = true;
+            }
         }
         return start;
     }

@@ -53,3 +53,15 @@ Apply for a job (through Applicant interface)
 4) Press the "Apply" button
 
 *** Assumptions: There are already pre-existing jobs created by HR ***
+
+
+View list of Applicants to be Interviewed:
+----------------------------------------------------------------------
+Each Interviewer has their own list of Applicants that they must interview.
+This list is visible after the job posting has closed. Before the job
+posting is closed all interviews can see the list of applicants who have
+applied.
+
+1) Login to a valid Interviewer account
+2) Choose a job that you would like interview candidates for
+3) Press the "Get Interviewees" button

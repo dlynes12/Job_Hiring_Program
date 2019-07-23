@@ -155,7 +155,7 @@ public class HR_Coordinator extends User{
                 ApplicantButton.setOnAction((ActionEvent seeApps) -> {
                     Integer i = 0;
                     String choice = (String) dropdown.getValue();
-                    String[] listOfApp = jobManager.getJob(choice).viewApplicants().split(",");
+                    String[] listOfApp = jobManager.getJob(choice).viewAllApplicants().split(",");  //was .viewApplicants() before
                     if (listOfApp.length != 0 && listOfApp[0] != "") {
                         GridPane appViewer = new GridPane();
                         ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
