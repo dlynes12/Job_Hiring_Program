@@ -77,6 +77,7 @@ public class HR_Coordinator extends User{
                 DatePicker datePicker = new DatePicker();
                 Label closingMessage = new Label("Closing Date:");
                 Label positionLabel = new Label("What position are we creating?");
+                Label companyLabel = new Label("What company is this for?");
                 TextField positionField = new TextField();
                 TextField companyField = new TextField();
                 Button createNewPost = new Button("Create job");
@@ -90,9 +91,10 @@ public class HR_Coordinator extends User{
                 dateGrid.add(datePicker, 2, 0);
                 positionGrid.add(positionLabel, 1, 0);
                 positionGrid.add(positionField, 2, 0);
-                positionGrid.add(companyField, 3,0);
-                positionGrid.add(createNewPost, 1, 2);
-                positionGrid.add(returnAddJ, 1, 4);
+                positionGrid.add(companyLabel,1,2);
+                positionGrid.add(companyField, 2,2);
+                positionGrid.add(createNewPost, 1, 4);
+                positionGrid.add(returnAddJ, 1, 6);
 
                 cMessageGrid.setHgap(20);
                 cMessageGrid.setVgap(5);

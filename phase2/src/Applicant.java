@@ -187,6 +187,10 @@ public class Applicant extends User {
                 Scene historyPage = new Scene(historyViewerScene, 600, 600);
                 stage.setScene(historyPage);
 
+//todo: add a way for applicants to withdraw their applications after job has closed but before someone has been hired
+// use withdrawApp() method from InterviewManager class to withdraw a candidates application from a job
+// maybe use a dropdown menu to select the job, then that populates the job status and the ability to withdraw the application
+
                 Label accountInfo = new Label(((Applicant)loggedUser).getInfo());
                 Button returnButton = new Button("Back");
                 GridPane historyPane = new GridPane();
@@ -205,8 +209,7 @@ public class Applicant extends User {
 
             });
 
-//todo: use withdrawApp() method from InterviewManager class to withdraw a candidates application from a job
-// maybe use a dropdown menu to select the job, then that populates the job status and the ability to withdraw the application
+
             viewJobStatuses.setOnAction((ActionEvent jobStatuses) -> {
                 Group jobStatusViewerScene = new Group();
                 Scene jobStatusPage = new Scene(jobStatusViewerScene, 600, 600);

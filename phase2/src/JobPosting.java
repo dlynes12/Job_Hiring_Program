@@ -10,7 +10,7 @@ public class JobPosting{
     private String position;
     private String company;
     private InterviewManager HiringProcessor;
-    private HiringPool candidatePool;
+    //private HiringPool candidatePool;
     private int interviewRounds;
     protected ArrayList<Applicant> applicants = new ArrayList<>();
 
@@ -44,9 +44,9 @@ public class JobPosting{
         this.position = position;
     }
 
-    public HiringPool getCandidatePool(){
-        return this.candidatePool;
-    }
+//    public HiringPool getCandidatePool(){
+//        return this.candidatePool;
+//    }
 
     //HR needs to have access to this information as well.
     public void addApplicant (Applicant applicant){

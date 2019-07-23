@@ -92,7 +92,7 @@ public class Interviewer extends User {
                         interviewerSelectionPane.add(radioButton, 1, i + 1);
                         i++;
                     }
-                    //todo: look at applyJob in Applicant GUI method
+
                     approve.setOnAction((ActionEvent click) -> {
                         RadioButton selectedRadio = (RadioButton)radioSet.getSelectedToggle();
                         String selectedApplicant = selectedRadio.getText();
@@ -125,7 +125,7 @@ public class Interviewer extends User {
                         listApps.add(app);
                     }
                     interviewerSelectionPane.add(scrollListApps, 1, i + 1);
-                    //todo: look at applyJob in Applicant GUI method
+
                     approve.setOnAction((ActionEvent click) -> {
                         String selectedApplicant = scrollListApps.getSelectionModel().getSelectedItem();
                         Applicant appObj = (Applicant) userManager.getUser(selectedApplicant);
