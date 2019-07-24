@@ -40,14 +40,6 @@ public class InterviewManager {
         if (!inList){hiringStage.add(stageInProcess);}
     }
 
-    public void applyToJob(Applicant applicant){ // may be useless
-        boolean inList = false;
-        for (Applicant user: this.approvedApplicants){
-            if (user.getUsername().equals(applicant.getUsername())){inList = true;}
-        }
-        if (!inList){this.approvedApplicants.add(applicant);}
-    }
-
     public void withdrawApp(Applicant applicant){
         this.approvedApplicants.remove(applicant);
     }
