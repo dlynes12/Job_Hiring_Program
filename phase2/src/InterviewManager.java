@@ -66,26 +66,18 @@ public class InterviewManager {
 
     public void sendListToInterview(UserAccess userAccess){ //method to distribute applicants to interviewers
         int numInterviewer = 0;
-        int numApplicants = 0;
         String position = jobPosting.getPosition();
         ArrayList<Interviewer> intList = userAccess.getListInterviewers();
         if (intList.size() == 1) {
             //send the whole list to one interviewer
-            for (Applicant a: approvedApplicants){
-                intList.get(numInterviewer).addToList(a,position);
+            for (Applicant applicant: approvedApplicants){
+                intList.get(numInterviewer).addToList(applicant,position);
             }
         }else{
-            while (approvedApplicants.size() > numApplicants){
-                while (intList.size() >= numInterviewer){
-                    Applicant a = approvedApplicants.get(numApplicants);
-                    intList.get(numInterviewer).addToList(a,position);
-                    numApplicants += 1;
-                    numInterviewer +=1;
-                }
-                if (intList.size()==(numInterviewer-1) && approvedApplicants.size() > numApplicants){ // if there are still more Applicants to add
-                    numInterviewer =0; //loop back through the list of interviewers and keep add to their list
-                }
-
+            for(Applicant applicant: approvedApplicants){
+                if (numInterviewer == intList.size()){numInterviewer = 0;}
+                intList.get(numInterviewer).addToList(applicant,position);
+                numInterviewer += 1;
             }
         }
     }
