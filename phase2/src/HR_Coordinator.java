@@ -117,6 +117,8 @@ public class HR_Coordinator extends User{
 
                 createJobs.getChildren().addAll(CreateJobPlacement);
 
+
+                //TODO: should we number the stages to show the order they are in?
                 addStageToProcess.setOnAction((ActionEvent addStage) -> {
                     String str = intStageField.getText();
                     if (!str.trim().isEmpty() && str != null){

@@ -6,16 +6,18 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import jdk.nashorn.internal.runtime.regexp.JoniRegExp;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Date;
 
 public class Applicant extends User {
-    private HashMap<String, String> jobsApplied = new HashMap<>();
+    private HashMap<JobPosting, String> jobsApplied = new HashMap<>();
 
     String username = this.getUsername();
 
@@ -36,11 +38,12 @@ public class Applicant extends User {
 
     public String getJobs() {
 
-        String s = " ";
+        String s = "";
 
         if (!this.jobsApplied.isEmpty()) {
-            for (String key : this.jobsApplied.keySet()) {
-                s = s + key + "\n";
+            for (JobPosting job : this.jobsApplied.keySet()) {
+
+                s = s + job.getPosition() + "\n";
             }
         } else {
             s = s + "Applicant has not applied for a job";
@@ -49,14 +52,38 @@ public class Applicant extends User {
         return s;
     }
 
+    public String getJobHistory(){
+
+        String history = "";
+
+        if (!this.jobsApplied.isEmpty()){
+
+            Date today = new Date();
+            Instant now = Instant.now();
+            today.from(now);
+
+            for (JobPosting job: this.jobsApplied.keySet()){
+                if (today.after(job.getDateClosed())){
+
+                    history = history + job.getPosition() + " - CLOSED: " + job.getDateClosed() + "\n";
+                }
+
+                else {
+                    history = history + job.getPosition() + "- OPEN\n";
+                }
+            }
+        }
+
+        return history;
+    }
+
     public void getDocs(String username) {
 //        st.readFile(username + ".txt");
     }
 
     public void applyToJob(JobPosting jobPosting) {
-        this.jobsApplied.put(jobPosting.getPosition(), "Submitted Resume/CV");
+        this.jobsApplied.put(jobPosting, "Submitted Resume/CV");
         jobPosting.addApplicant(this);
-
     }
 
     public String getJobStatus() {
@@ -64,8 +91,8 @@ public class Applicant extends User {
         String s = "";
 
         if (!this.jobsApplied.isEmpty()) {
-            for (String key : this.jobsApplied.keySet()) {
-                s = s + key + ": " + this.jobsApplied.get(key) + "\n";
+            for (JobPosting key : this.jobsApplied.keySet()) {
+                s = s + key.getPosition() + ": " + this.jobsApplied.get(key) + "\n";
             }
         } else {
             s = s + "Applicant has not applied for a job";
@@ -76,16 +103,14 @@ public class Applicant extends User {
     }
 
     public void updateStatus(JobPosting job, String status) {
-        this.jobsApplied.put(job.getPosition(), status);
+        this.jobsApplied.put(job, status);
     }
 
-    public void getHistory() {
-    }
 
     public String getInfo(){
         return "Applicant Username: " + username + '\n' +
                 "\n Date Created: " + this.getDateCreated() + "\n" +
-                "\nJobs Applied To:\n" + this.getJobs();
+                "\nJobs Applied To:\n" + this.getJobHistory();
     }
 
     @Override
@@ -170,9 +195,13 @@ public class Applicant extends User {
                     //System.out.println(radioSet.getSelectedToggle());
                     Applicant a = (Applicant) loggedUser;
                     String selectedRadio = (((RadioButton) radioSet.getSelectedToggle()).getText());
+                    Button back = new Button("Back");
                     //jobManager.getJob(selectedRadio).addApplicant(a);
                     a.applyToJob(jobManager.getJob(selectedRadio));
-                    stage.setScene(loginPage);
+
+                    back.setOnAction((ActionEvent goBack) -> {
+                        stage.setScene(applicantPage);
+                    });
                 });
 
                 returnApp.setOnAction((ActionEvent ex) -> {
@@ -206,7 +235,6 @@ public class Applicant extends User {
                 returnButton.setOnAction((ActionEvent goBack) -> {
                     stage.setScene(applicantPage);
                 });
-
             });
 
 

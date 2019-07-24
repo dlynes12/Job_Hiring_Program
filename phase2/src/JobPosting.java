@@ -36,9 +36,7 @@ public class JobPosting{
         return this.dateClosed;
     }
 
-    public void setDateClosed(Date dateClosed) {
-        this.dateClosed = dateClosed;
-    }
+    public void setDateClosed(Date dateClosed) { this.dateClosed = dateClosed; }
 
     public String getPosition() {
         return this.position;
