@@ -38,6 +38,16 @@ public class JobAccess{
         return result;
     }
 
+    public JobPosting getClosedJob(String jobTitle) {
+        JobPosting result = null;
+        for (int i = 0; i < closedJobs.size(); i++) {
+            if (closedJobs.get(i).getPosition().equals(jobTitle)) {
+                result = closedJobs.get(i);
+            }
+        }
+        return result;
+    }
+
     public boolean removeJob(String position) {
         //check if the position is in our job postings
         //todo: automate the start of the hiring process

@@ -7,10 +7,12 @@ public class UserAccess {
 
     // LOGIN FUNCTIONS----------------------------------------------------------------------
     boolean addUser(User user) {
-        boolean add = false;
+        boolean add = true;
         if (user.getUsername().matches(".*[\\S]+") && user.getPassword().matches(".*[\\S]+")) {
-            this.users.add(user);
-            add = true;
+            for (User account: users){
+                if ( account.getUsername().equals(user.getUsername())){add = false;}
+            }
+            if (add){this.users.add(user);}
         }
 //        st.writeFile("userData.txt", );
         return add;
