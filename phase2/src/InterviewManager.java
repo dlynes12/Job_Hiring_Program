@@ -46,9 +46,10 @@ public class InterviewManager {
 
     /// methods to use once job is closed-------------------------------------------------------------------
 
-    InterviewManager(ArrayList<Applicant> listApplicants, JobPosting job){
+    InterviewManager(ArrayList<Applicant> listApplicants, JobPosting job, ArrayList<String> stages){
         this.approvedApplicants = listApplicants;
         this.jobPosting = job;
+        this.hiringStage = stages;
         for (Applicant a: approvedApplicants){
             a.updateStatus(jobPosting,hiringStage.get(roundNum));
         }

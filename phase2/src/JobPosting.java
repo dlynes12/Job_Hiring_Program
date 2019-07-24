@@ -1,3 +1,5 @@
+import javafx.collections.ObservableList;
+
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,13 +15,15 @@ public class JobPosting{
     //private HiringPool candidatePool;
     private int interviewRounds;
     protected ArrayList<Applicant> applicants = new ArrayList<>();
+    ArrayList<String> listOfStages = new ArrayList<>();
 
-    public JobPosting(Date datePosted, Date dateClosed, String position, int interviewRounds, String company) {
+    public JobPosting(Date datePosted, Date dateClosed, String position, int interviewRounds, String company, ArrayList<String> stagesOfInterv) {
         this.datePosted = datePosted;
         this.dateClosed = dateClosed;
         this.position = position;
         this.interviewRounds = interviewRounds;
         this.company = company;
+        this.listOfStages = stagesOfInterv;
     }
 
     public Date getDatePosted() { return this.datePosted; }
@@ -96,7 +100,7 @@ public class JobPosting{
             Instant now = Instant.now();
             today.from(now);
             if (today.after(dateClosed)){
-                HiringProcessor = new InterviewManager(applicants, this);
+                HiringProcessor = new InterviewManager(applicants, this, this.listOfStages);
                 start = true;
             }
         }

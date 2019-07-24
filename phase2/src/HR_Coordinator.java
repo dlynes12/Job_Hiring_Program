@@ -1,3 +1,5 @@
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -9,6 +11,7 @@ import javafx.stage.Stage;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 
 // One HR Person hires for their own section of the company
@@ -19,11 +22,6 @@ public class HR_Coordinator extends User{
         super(Username,Password);
     }
 
-    public void matchItoA(JobPosting jobPosting){
-        // loop thru list of applicants,
-        // call addPool()
-        // interviewer.addApplicant(applicant);
-    }
 
     void HRGUISetUp(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage, UserAccess userManager)
     {
@@ -65,7 +63,7 @@ public class HR_Coordinator extends User{
             //Job Creation page -- where we create job postings
             addJobs.setOnAction((ActionEvent addJob) -> {
                 Group createJobs = new Group();
-                Scene createJobsPage = new Scene(createJobs, 600, 600);
+                Scene createJobsPage = new Scene(createJobs, 650, 600);
                 stage.setScene(createJobsPage);
                 // get today's date
                 Date today = new Date();
@@ -78,13 +76,19 @@ public class HR_Coordinator extends User{
                 Label closingMessage = new Label("Closing Date:");
                 Label positionLabel = new Label("What position are we creating?");
                 Label companyLabel = new Label("What company is this for?");
+                Label intStageLabel = new Label("Please add a stage to the interview process:");
+                Label viewStagesLabel = new Label(); // view all the stages that have been added
                 TextField positionField = new TextField();
                 TextField companyField = new TextField();
-                Button createNewPost = new Button("Create job");
+                TextField intStageField = new TextField();
+                intStageField.setPromptText("i.e. Phone Interview");
+                Button addStageToProcess = new Button("Add Stage");
+                Button createNewPost = new Button("Create Job");
                 Button returnAddJ = new Button("Back");
                 GridPane cMessageGrid = new GridPane();
                 GridPane dateGrid = new GridPane();
                 GridPane positionGrid = new GridPane();
+                ObservableList<String> listStages = FXCollections.observableArrayList();
 
                 cMessageGrid.add(closingMessage, 1, 0);
                 dateGrid.add(closingMessage, 1, 0);
@@ -93,8 +97,11 @@ public class HR_Coordinator extends User{
                 positionGrid.add(positionField, 2, 0);
                 positionGrid.add(companyLabel,1,2);
                 positionGrid.add(companyField, 2,2);
-                positionGrid.add(createNewPost, 1, 4);
-                positionGrid.add(returnAddJ, 1, 6);
+                positionGrid.add(intStageLabel,1,4);
+                positionGrid.add(intStageField,2,4);
+                positionGrid.add(addStageToProcess,3,4);
+                positionGrid.add(createNewPost, 1, 8);
+                positionGrid.add(returnAddJ, 1, 10);
 
                 cMessageGrid.setHgap(20);
                 cMessageGrid.setVgap(5);
@@ -110,15 +117,32 @@ public class HR_Coordinator extends User{
 
                 createJobs.getChildren().addAll(CreateJobPlacement);
 
-                createNewPost.setOnAction((ActionEvent CreateJob) -> {
-                    LocalDate year = datePicker.getValue();
-                    Date closeDate = null;
-                    closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-                    String position = positionField.getText();
-                    String company = companyField.getText();
-                    jobManager.addJob(today, closeDate, position, 0, company);
-                    stage.setScene(HRBasePage);
+                addStageToProcess.setOnAction((ActionEvent addStage) -> {
+                    String str = intStageField.getText();
+                    if (!str.trim().isEmpty() && str != null){
+                        listStages.add(str);
+                        ListView<String> showStagesList = new ListView<>();
+                        showStagesList.setItems(listStages);
+                        showStagesList.setPrefSize(100.00,70.00);
+                        positionGrid.add(showStagesList,1,6);
+                        intStageField.clear();
+                    }
+                });
 
+                createNewPost.setOnAction((ActionEvent CreateJob) -> {
+                    if (!listStages.isEmpty()){
+                        LocalDate year = datePicker.getValue();
+                        Date closeDate = null;
+                        closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+                        String position = positionField.getText();
+                        String company = companyField.getText();
+                        ArrayList<String> listIntStages = new ArrayList<>();
+                        for (String str: listStages){
+                            listIntStages.add(str);
+                        }
+                        jobManager.addJob(today, closeDate, position, 0, company, listIntStages);
+                        stage.setScene(HRBasePage);
+                    }
                 });
 
                 returnAddJ.setOnAction((ActionEvent exitPage) -> {
