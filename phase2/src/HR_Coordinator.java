@@ -33,7 +33,7 @@ public class HR_Coordinator extends User{
             Label welcomeLabel = new Label(welcomeMessage);
             Label actions = new Label("What do you want to do? Please select an option below:");
             Button addJobs = new Button("Add a job");
-            Button viewOpenJobs = new Button("View all open jobs"); // for a specific job, view the applicants
+            Button viewOpenJobs = new Button("Manage closed jobs"); // for a specific job, view the applicants
             Button viewAllApps = new Button("View all applicants"); // for a specific applicant, view the jobs they applied for
             Button logout = new Button("Logout");
             GridPane messageGrid = new GridPane();
@@ -155,18 +155,29 @@ public class HR_Coordinator extends User{
                 Scene createJobsPage = new Scene(HRViewJobs, 600, 600);
                 stage.setScene(createJobsPage);
                 Label ChooseJob = new Label("Choose a job:");
-                ComboBox dropdown = new ComboBox();
+                /*ComboBox dropdown = new ComboBox();
                 for (JobPosting jobPosting : jobManager.ViewJobs()) {
                     dropdown.getItems().add(jobPosting.getPosition());
-                }
+                }*/
                 Button ApplicantButton = new Button("See applicants");
+                Button distributeApps = new Button("Distribute applicants");
                 Button returnViewJ = new Button("Back");
                 GridPane ViewJobsGrid = new GridPane();
 
+                ListView<String> scrollListJobs = new ListView<>();
+                ObservableList<String> listJobs= FXCollections.observableArrayList();
+                scrollListJobs.setItems(listJobs);
+                scrollListJobs.setPrefSize(160.00,120.00);
+                int j = -1;
+                for (JobPosting jobPosting : jobManager.ViewJobs()) {
+                    listJobs.add(jobPosting.getPosition());
+                }
+                ViewJobsGrid.add(scrollListJobs, 2, j + 1);
+
                 ViewJobsGrid.add(ChooseJob, 1, 0);
-                ViewJobsGrid.add(dropdown, 2, 0);
-                ViewJobsGrid.add(ApplicantButton, 3, 0);
-                ViewJobsGrid.add(returnViewJ, 4, 0);
+                ViewJobsGrid.add(distributeApps, 3, 2);
+                ViewJobsGrid.add(ApplicantButton, 3, 1);
+                ViewJobsGrid.add(returnViewJ, 3, 3);
 
                 ViewJobsGrid.setHgap(20);
                 ViewJobsGrid.setVgap(5);
@@ -179,21 +190,29 @@ public class HR_Coordinator extends User{
                 });
 
                 ApplicantButton.setOnAction((ActionEvent seeApps) -> {
-                    Integer i = 0;
-                    String choice = (String) dropdown.getValue();
+                    int i = 0;
+                    String choice = (String) scrollListJobs.getSelectionModel().getSelectedItem();;
                     String[] listOfApp = jobManager.getJob(choice).viewAllApplicants().split(",");  //was .viewApplicants() before
                     if (listOfApp.length != 0 && listOfApp[0] != "") {
                         GridPane appViewer = new GridPane();
-                        ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
-                        Label chooseApp = new Label("Choose an Applicant:");
-                        appViewer.add(chooseApp, 1, i);
+                        //ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
+                        //Label chooseApp = new Label("Choose an Applicant:");
+                        //ViewJobsGrid.add(chooseApp, 1, i);
+                        ListView<String> scrollListApps = new ListView<>();
+                        ObservableList<String> listApps= FXCollections.observableArrayList();
+                        scrollListApps.setItems(listApps);
+                        scrollListApps.setPrefSize(160.00,120.00);
                         for (String app : listOfApp) {
-                            RadioButton radioButton = new RadioButton(app);
-                            radioButton.setToggleGroup(radioSet);
-                            appViewer.add(radioButton, 1, i + 1);
-                            i++;
+                            //RadioButton radioButton = new RadioButton(app);
+                            //radioButton.setToggleGroup(radioSet);
+                            //appViewer.add(radioButton, 1, i + 1);
+                            listApps.add(app);
+                            //i++;
                         }
-                        Button viewButton = new Button("VIEW INFO");
+                        ViewJobsGrid.add(scrollListApps, 2, i + 1);
+
+
+                        /*Button viewButton = new Button("VIEW INFO");
                         appViewer.add(viewButton, 3, i + 1);
                         appViewer.setHgap(20);
                         appViewer.setVgap(5);
@@ -201,7 +220,7 @@ public class HR_Coordinator extends User{
 
                         viewButton.setOnAction((ActionEvent ViewAppDocs) -> {
                             // see the specific applicant's documents
-                        });
+                        });*/
                     }
                 });
             });
