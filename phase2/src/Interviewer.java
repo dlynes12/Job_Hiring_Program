@@ -24,6 +24,8 @@ public class Interviewer extends User {
 //        job.getCandidatePool().removeFromPool(applicant);
 //    }
 
+    //TODO when someone gets hired, please change the 'filled' boolean for the jobPosting to TRUE
+
     public void addToList(Applicant applicant, String position){
         applicantsList.put(applicant,position);
     }

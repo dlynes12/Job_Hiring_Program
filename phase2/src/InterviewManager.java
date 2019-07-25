@@ -20,6 +20,8 @@ public class InterviewManager {
 
     */
 
+    //TODO we need to have an attribute of how many people we are hiring
+
     ArrayList<Applicant> approvedApplicants = new ArrayList<>(); // ppl that have applied for the job/ started a new round
     private ArrayList<Applicant> candidates = new ArrayList<>(); // people who are waiting to be moved to the next round
     private ArrayList<Applicant> rejectedFromRound = new ArrayList<>();

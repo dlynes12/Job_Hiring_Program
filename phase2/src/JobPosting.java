@@ -12,6 +12,8 @@ public class JobPosting{
     private String position;
     private String company;
     private InterviewManager HiringProcessor;
+    private Boolean filled = false;
+
     //private HiringPool candidatePool;
     private int interviewRounds;
     protected ArrayList<Applicant> applicants = new ArrayList<>();
@@ -41,6 +43,8 @@ public class JobPosting{
     public String getPosition() {
         return this.position;
     }
+
+    public Boolean isFilled() { return this.filled; }
 
     public void setPosition(String position) {
         this.position = position;
