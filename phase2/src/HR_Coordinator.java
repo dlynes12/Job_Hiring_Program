@@ -63,7 +63,7 @@ public class HR_Coordinator extends User{
             //Job Creation page -- where we create job postings
             addJobs.setOnAction((ActionEvent addJob) -> {
                 Group createJobs = new Group();
-                Scene createJobsPage = new Scene(createJobs, 650, 600);
+                Scene createJobsPage = new Scene(createJobs, 725, 600);
                 stage.setScene(createJobsPage);
                 // get today's date
                 Date today = new Date();
@@ -77,18 +77,31 @@ public class HR_Coordinator extends User{
                 Label positionLabel = new Label("What position are we creating?");
                 Label companyLabel = new Label("What company is this for?");
                 Label intStageLabel = new Label("Please add a stage to the interview process:");
-                Label viewStagesLabel = new Label(); // view all the stages that have been added
+                Label viewInterviewerLabel = new Label("Select Interviewers to interview people for this job:"); // view all the stages that have been added
                 TextField positionField = new TextField();
                 TextField companyField = new TextField();
                 TextField intStageField = new TextField();
                 intStageField.setPromptText("i.e. Phone Interview");
                 Button addStageToProcess = new Button("Add Stage");
+                Button addInterviewer = new Button("Add Interviewer");
                 Button createNewPost = new Button("Create Job");
                 Button returnAddJ = new Button("Back");
                 GridPane cMessageGrid = new GridPane();
                 GridPane dateGrid = new GridPane();
                 GridPane positionGrid = new GridPane();
                 ObservableList<String> listStages = FXCollections.observableArrayList();
+                ObservableList<String> listInterviewers = FXCollections.observableArrayList(); //for dropdown
+                ObservableList<String> chosenInterviewers = FXCollections.observableArrayList(); // for ViewList
+                ComboBox<String> interviewerDropdown = new ComboBox<>(); // not populating bc getListInterviewers() method in UserAccess not working
+                for (Interviewer interviewer: userManager.getListInterviewers()){
+                    //listInterviewers.add(interviewer.getUsername());
+                    interviewerDropdown.getItems().add(interviewer.getUsername());
+                }
+
+                interviewerDropdown.setMaxWidth(200.00);
+                interviewerDropdown.setMinWidth(200.00);
+
+
 
                 cMessageGrid.add(closingMessage, 1, 0);
                 dateGrid.add(closingMessage, 1, 0);
@@ -100,8 +113,11 @@ public class HR_Coordinator extends User{
                 positionGrid.add(intStageLabel,1,4);
                 positionGrid.add(intStageField,2,4);
                 positionGrid.add(addStageToProcess,3,4);
-                positionGrid.add(createNewPost, 1, 8);
-                positionGrid.add(returnAddJ, 1, 10);
+                positionGrid.add(viewInterviewerLabel,1,8);/////////////
+                positionGrid.add(interviewerDropdown,2,8);
+                positionGrid.add(addInterviewer,3,8);
+                positionGrid.add(createNewPost, 1, 10);
+                positionGrid.add(returnAddJ, 1, 12);
 
                 cMessageGrid.setHgap(20);
                 cMessageGrid.setVgap(5);
@@ -131,6 +147,18 @@ public class HR_Coordinator extends User{
                     }
                 });
 
+                addInterviewer.setOnAction((ActionEvent addIntToList) ->{
+                    String interviewerUsername = interviewerDropdown.getValue();
+                    if (interviewerUsername != null){
+                        chosenInterviewers.add(interviewerUsername);
+                        ListView<String> choiceInterviewers = new ListView<>();
+                        choiceInterviewers.setItems(chosenInterviewers);
+                        choiceInterviewers.setPrefSize(100.00,70.00);
+                        positionGrid.add(choiceInterviewers,1,9);
+                    }
+
+                });
+
                 createNewPost.setOnAction((ActionEvent CreateJob) -> {
                     if (!listStages.isEmpty()){
                         LocalDate year = datePicker.getValue();
@@ -142,7 +170,11 @@ public class HR_Coordinator extends User{
                         for (String str: listStages){
                             listIntStages.add(str);
                         }
-                        jobManager.addJob(today, closeDate, position, 0, company, listIntStages);
+                        ArrayList<Interviewer> decidedListOfInt= new ArrayList<>();
+                        for (String str: chosenInterviewers){
+                            decidedListOfInt.add((Interviewer) userManager.getUser(str));
+                        }
+                        jobManager.addJob(today, closeDate, position, 0, company, listIntStages, decidedListOfInt);//---------------------------------------------
                         stage.setScene(HRBasePage);
                     }
                 });

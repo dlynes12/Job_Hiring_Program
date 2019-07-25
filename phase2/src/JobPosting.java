@@ -12,6 +12,7 @@ public class JobPosting{
     private String position;
     private String company;
     private InterviewManager HiringProcessor;
+    private ArrayList<Interviewer> chosenInterviers;
     private Boolean filled = false;
 
     //private HiringPool candidatePool;
@@ -19,13 +20,14 @@ public class JobPosting{
     protected ArrayList<Applicant> applicants = new ArrayList<>();
     ArrayList<String> listOfStages = new ArrayList<>();
 
-    public JobPosting(Date datePosted, Date dateClosed, String position, int interviewRounds, String company, ArrayList<String> stagesOfInterv) {
+    public JobPosting(Date datePosted, Date dateClosed, String position, int interviewRounds, String company, ArrayList<String> stagesOfInterv, ArrayList<Interviewer> activeInterviewers) {
         this.datePosted = datePosted;
         this.dateClosed = dateClosed;
         this.position = position;
         this.interviewRounds = interviewRounds;
         this.company = company;
         this.listOfStages = stagesOfInterv;
+        this.chosenInterviers = activeInterviewers;
     }
 
     public Date getDatePosted() { return this.datePosted; }
@@ -102,7 +104,7 @@ public class JobPosting{
             Instant now = Instant.now();
             today.from(now);
             if (today.after(dateClosed)){
-                HiringProcessor = new InterviewManager(applicants, this, this.listOfStages);
+                HiringProcessor = new InterviewManager(applicants, this, this.listOfStages, chosenInterviers);
                 start = true;
             }
         }

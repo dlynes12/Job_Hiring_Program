@@ -8,8 +8,8 @@ public class JobAccess{
     private ArrayList<JobPosting> JobPostings = new ArrayList<>();
     private ArrayList<JobPosting> closedJobs = new ArrayList<>();
     //Manage Open Jobs Function-------------------------------------------------------------------
-    public boolean addJob(Date datePosted, Date dateClosed, String position, int rounds, String company, ArrayList<String> listOfInterv) {
-        JobPosting job = new JobPosting(datePosted, dateClosed, position, rounds, company, listOfInterv);
+    public boolean addJob(Date datePosted, Date dateClosed, String position, int rounds, String company, ArrayList<String> listOfInterv, ArrayList<Interviewer> chosenInterviewers) {
+        JobPosting job = new JobPosting(datePosted, dateClosed, position, rounds, company, listOfInterv,chosenInterviewers);
         boolean add = false;
         if (this.getJob(position) == null && !position.trim().isEmpty()) {
             this.JobPostings.add(job);

@@ -33,11 +33,11 @@ public class UserAccess {
         if (!temp.getPassword().equals(password)){temp = null;}
         return temp;
     }
-
-    public ArrayList<Interviewer> getListInterviewers(){
+//todo: fix getListInterviewer by making a list of Interviewers and adding to it once an Interviewer is created
+    public ArrayList<Interviewer> getListInterviewers(){ /// buggy doesnt work
         ArrayList<Interviewer> ListInt = new ArrayList<>();
         for (User user: users){
-            if (user.getClass().isInstance(Interviewer.class)){
+            if (user.getClass().isInstance(Interviewer.class)){  /// Interviewers ae being returned as type User so code isn't running
                 ListInt.add(((Interviewer) user));
             }
         }

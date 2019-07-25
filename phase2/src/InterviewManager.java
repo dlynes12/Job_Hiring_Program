@@ -30,6 +30,7 @@ public class InterviewManager {
     //String position;
     int roundNum =0;
     ArrayList<String>hiringStage = new ArrayList<>(); // list of all the stages in the hiring process
+    ArrayList<Interviewer> chosenInterviewers;
     //todo: work on way for Applicants to see the progress of their application through InterviewManager
 
     // methods used while job is open  -----------------------------------------------------------
@@ -48,13 +49,14 @@ public class InterviewManager {
 
     /// methods to use once job is closed-------------------------------------------------------------------
 
-    InterviewManager(ArrayList<Applicant> listApplicants, JobPosting job, ArrayList<String> stages){
+    InterviewManager(ArrayList<Applicant> listApplicants, JobPosting job, ArrayList<String> stages, ArrayList<Interviewer> lstChosenInterviewers){
         this.approvedApplicants = listApplicants;
         this.jobPosting = job;
         this.hiringStage = stages;
         for (Applicant a: approvedApplicants){
             a.updateStatus(jobPosting,hiringStage.get(roundNum));
         }
+        this.chosenInterviewers = lstChosenInterviewers;
     }
 
     public ArrayList<Applicant> getRoundOfApplicants(){return this.approvedApplicants;}
@@ -62,16 +64,16 @@ public class InterviewManager {
     public void sendListToInterview(UserAccess userAccess){ //method to distribute applicants to interviewers
         int numInterviewer = 0;
         String position = jobPosting.getPosition();
-        ArrayList<Interviewer> intList = userAccess.getListInterviewers();
-        if (intList.size() == 1) {
+        //ArrayList<Interviewer> intList = userAccess.getListInterviewers();
+        if (this.chosenInterviewers.size() == 1) {
             //send the whole list to one interviewer
             for (Applicant applicant: approvedApplicants){
-                intList.get(numInterviewer).addToList(applicant,position);
+                this.chosenInterviewers.get(numInterviewer).addToList(applicant,position);
             }
         }else{
             for(Applicant applicant: approvedApplicants){
-                if (numInterviewer == intList.size()){numInterviewer = 0;}
-                intList.get(numInterviewer).addToList(applicant,position);
+                if (numInterviewer == this.chosenInterviewers.size()){numInterviewer = 0;}
+                this.chosenInterviewers.get(numInterviewer).addToList(applicant,position);
                 numInterviewer += 1;
             }
         }
