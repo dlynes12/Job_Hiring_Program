@@ -86,19 +86,23 @@ public class Applicant extends User {
         jobPosting.addApplicant(this);
     }
 
-    public String getJobStatus() {
+    //TODO: change how get JobStatus works - to just individually retrieve the status.
+    public String getJobStatus(JobPosting jobPosting) {
 
-        String s = "";
+//        String s = "";
+//
+//        if (!this.jobsApplied.isEmpty()) {
+//            for (JobPosting key : this.jobsApplied.keySet()) {
+//                s = s + key.getPosition() + ": " + this.jobsApplied.get(key) + "\n";
+//            }
+//        } else {
+//            s = s + "Applicant has not applied for a job";
+//        }
+//
+//        return s;
 
-        if (!this.jobsApplied.isEmpty()) {
-            for (JobPosting key : this.jobsApplied.keySet()) {
-                s = s + key.getPosition() + ": " + this.jobsApplied.get(key) + "\n";
-            }
-        } else {
-            s = s + "Applicant has not applied for a job";
-        }
-
-        return s;
+        String status = this.jobsApplied.get(jobPosting);
+        return status;
 
     }
 
@@ -243,14 +247,22 @@ public class Applicant extends User {
                 Scene jobStatusPage = new Scene(jobStatusViewerScene, 600, 600);
                 stage.setScene(jobStatusPage);
 
-
+                Integer i = 1;
                 Label jobStatusesLabel = new Label("Jobs Applied For:");
-                Label allJobStatuses = new Label(((Applicant) loggedUser).getJobStatus());
+                //Label allJobStatuses = new Label(((Applicant) loggedUser).getJobStatus());
                 Button returnJS = new Button("Back");
                 GridPane jobStatusPane = new GridPane();
+                ToggleGroup jobRadioSet = new ToggleGroup();
 
-                jobStatusPane.add(jobStatusesLabel, 10, 3);
-                jobStatusPane.add(allJobStatuses, 10, 4);
+                for (JobPosting job: this.jobsApplied.keySet()){
+                    RadioButton jobRadioButton = new RadioButton(job.getPosition() + " - "+ this.getJobStatus(job));
+                    jobRadioButton.setToggleGroup(jobRadioSet);
+                    jobStatusPane.add(jobRadioButton, 10, i + 1);
+                    i++;
+                }
+
+                jobStatusPane.add(jobStatusesLabel, 10, 0);
+                //jobStatusPane.add(allJobStatuses, 10, 4);
                 jobStatusPane.add(returnJS, 10, 14);
 
                 jobStatusPane.setHgap(20);

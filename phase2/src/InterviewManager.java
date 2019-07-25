@@ -90,6 +90,7 @@ public class InterviewManager {
     public void reject(Applicant applicant){ //method to reject an applicant
         this.rejectedApplicants.add(applicant);
         this.rejectedFromRound.add(applicant);
+        applicant.updateStatus(this.jobPosting, "Rejected");
     }
 
     private boolean advanceRound(){ // never actually called except by getRecommendList()
