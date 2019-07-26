@@ -144,6 +144,7 @@ public class JobPortal extends Application {
                 } else if (radioSet.getSelectedToggle() == radioInt) {
                     Interviewer tempInt = new Interviewer(newUserField.getText(), newPassField.getText());
                     if (userManager.addUser(tempInt)) {
+                        userManager.addInterviewer(tempInt);
                         stage.setScene(loginPage);
                     }else {
                         alert.showAndWait();
@@ -191,6 +192,7 @@ public class JobPortal extends Application {
 
     // View + Controller
 
+    //todo: serialize list of interviewers in UserAccess
     public static void main(String[] args) {
         launch(args);
     }

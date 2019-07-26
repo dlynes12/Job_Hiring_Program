@@ -150,11 +150,17 @@ public class HR_Coordinator extends User{
                 addInterviewer.setOnAction((ActionEvent addIntToList) ->{
                     String interviewerUsername = interviewerDropdown.getValue();
                     if (interviewerUsername != null){
-                        chosenInterviewers.add(interviewerUsername);
-                        ListView<String> choiceInterviewers = new ListView<>();
-                        choiceInterviewers.setItems(chosenInterviewers);
-                        choiceInterviewers.setPrefSize(100.00,70.00);
-                        positionGrid.add(choiceInterviewers,1,9);
+                        boolean add = true;
+                        for (String str: chosenInterviewers){
+                            if (str == interviewerUsername){add = false;}
+                        }
+                        if (add){
+                            chosenInterviewers.add(interviewerUsername);
+                            ListView<String> choiceInterviewers = new ListView<>();
+                            choiceInterviewers.setItems(chosenInterviewers);
+                            choiceInterviewers.setPrefSize(100.00,70.00);
+                            positionGrid.add(choiceInterviewers,1,9);
+                        }
                     }
 
                 });

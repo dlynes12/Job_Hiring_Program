@@ -3,6 +3,7 @@ import java.util.Date;
 
 public class UserAccess {
     public ArrayList<User> users = new ArrayList();
+    private ArrayList<Interviewer> employedInterviewers = new ArrayList<>();
 
 
     // LOGIN FUNCTIONS----------------------------------------------------------------------
@@ -33,15 +34,25 @@ public class UserAccess {
         if (!temp.getPassword().equals(password)){temp = null;}
         return temp;
     }
-//todo: fix getListInterviewer by making a list of Interviewers and adding to it once an Interviewer is created
+
     public ArrayList<Interviewer> getListInterviewers(){ /// buggy doesnt work
-        ArrayList<Interviewer> ListInt = new ArrayList<>();
-        for (User user: users){
-            if (user.getClass().isInstance(Interviewer.class)){  /// Interviewers ae being returned as type User so code isn't running
-                ListInt.add(((Interviewer) user));
-            }
+//        ArrayList<Interviewer> ListInt = new ArrayList<>();
+//        for (User user: users){
+//            if (user.getClass().isInstance(Interviewer.class)){  /// Interviewers ae being returned as type User so code isn't running
+//                ListInt.add(((Interviewer) user));
+//            }
+//        }
+        return employedInterviewers;
+    }
+
+    public boolean addInterviewer(Interviewer interviewer){
+        boolean add = true;
+        for (Interviewer account: employedInterviewers){
+            if ( account.getUsername().equals(interviewer.getUsername())){add = false;}
         }
-        return ListInt;
+        if (add){this.employedInterviewers.add(interviewer);}
+//        st.writeFile("userData.txt", );
+        return add;
     }
 
 //    public String listUses(ArrayList<User> a){
