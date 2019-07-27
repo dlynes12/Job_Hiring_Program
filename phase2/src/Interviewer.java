@@ -146,10 +146,6 @@ public class Interviewer extends User {
 
             logout.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
 
-
-
-            //decline.setOnAction((ActionEvent click) -> ((Interviewer)loggedUser).decline());
-
             intPortalScene.getChildren().addAll(interviewerPlacement);
         }
     }
@@ -157,4 +153,3 @@ public class Interviewer extends User {
         return "{I," + this.getUsername() + "," + this.getPassword() +"}";
     }
 }
-

@@ -32,7 +32,6 @@ public class JobAccess{
         for (int i = 0; i < JobPostings.size(); i++) {
             if (JobPostings.get(i).getPosition().equals(jobTitle)) {
                 result = JobPostings.get(i);
-
             }
         }
         return result;
@@ -60,14 +59,9 @@ public class JobAccess{
             remove = true;
         }
         return remove;
-
-
     }
 
     public ArrayList<JobPosting> ViewJobs() {return JobPostings;} // see all the job postings available
 
     public ArrayList<JobPosting> viewClosedJobs(){return closedJobs;}
-
-
-
 }

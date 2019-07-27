@@ -22,12 +22,12 @@ public class HR_Coordinator extends User{
     }
 
 
-    void HRGUISetUp(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage, UserAccess userManager)
-    {
-        Group HRPortalScene = new Group();
-        Scene HRBasePage = new Scene(HRPortalScene, 450, 250);
-        stage.setScene(HRBasePage);
+    void HRGUISetUp(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage, UserAccess userManager){
         if (loggedUser.getClass() == HR_Coordinator.class) {
+            Group HRPortalScene = new Group();
+            Scene HRBasePage = new Scene(HRPortalScene, 450, 250);
+            stage.setScene(HRBasePage);
+
             String welcomeMessage = "Welcome to the Human Resources page, " + loggedUser.getUsername();
             Label welcomeLabel = new Label(welcomeMessage);
             Label actions = new Label("What do you want to do? Please select an option below:");
@@ -88,10 +88,14 @@ public class HR_Coordinator extends User{
                 GridPane cMessageGrid = new GridPane();
                 GridPane dateGrid = new GridPane();
                 GridPane positionGrid = new GridPane();
+
+
+
                 ObservableList<String> listStages = FXCollections.observableArrayList();
                 ObservableList<String> listInterviewers = FXCollections.observableArrayList(); //for dropdown
                 ObservableList<String> chosenInterviewers = FXCollections.observableArrayList(); // for ViewList
                 ComboBox<String> interviewerDropdown = new ComboBox<>(); // not populating bc getListInterviewers() method in UserAccess not working
+
                 for (Interviewer interviewer: userManager.getListInterviewers()){
                     //listInterviewers.add(interviewer.getUsername());
                     interviewerDropdown.getItems().add(interviewer.getUsername());
@@ -99,8 +103,6 @@ public class HR_Coordinator extends User{
 
                 interviewerDropdown.setMaxWidth(200.00);
                 interviewerDropdown.setMinWidth(200.00);
-
-
 
                 cMessageGrid.add(closingMessage, 1, 0);
                 dateGrid.add(closingMessage, 1, 0);
@@ -311,6 +313,4 @@ public class HR_Coordinator extends User{
         return "{H," + this.getUsername() + "," + this.getPassword() + "}";
 
     }
-
-
 }

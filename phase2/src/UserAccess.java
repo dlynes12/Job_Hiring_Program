@@ -1,10 +1,8 @@
 import java.util.ArrayList;
-import java.util.Date;
 
 public class UserAccess {
     public ArrayList<User> users = new ArrayList();
     private ArrayList<Interviewer> employedInterviewers = new ArrayList<>();
-
 
     // LOGIN FUNCTIONS----------------------------------------------------------------------
     boolean addUser(User user) {
@@ -71,4 +69,3 @@ public class UserAccess {
     }
 
 }
-

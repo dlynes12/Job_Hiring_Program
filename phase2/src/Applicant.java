@@ -14,11 +14,8 @@ import java.util.Date;
 public class Applicant extends User {
     private HashMap<JobPosting, String> jobsApplied = new HashMap<>();
 
-    String username = this.getUsername();
-
     public Applicant(String username, String password) {
         super(username, password);
-
     }
 
     @Override
@@ -32,43 +29,32 @@ public class Applicant extends User {
     }
 
     public String getJobs() {
-
         String s = "";
-
         if (!this.jobsApplied.isEmpty()) {
             for (JobPosting job : this.jobsApplied.keySet()) {
-
                 s = s + job.getPosition() + "\n";
             }
         } else {
             s = s + "Applicant has not applied for a job";
         }
-
         return s;
     }
 
     public String getJobHistory(){
-
         String history = "";
-
         if (!this.jobsApplied.isEmpty()){
-
             Date today = new Date();
             Instant now = Instant.now();
             today.from(now);
-
             for (JobPosting job: this.jobsApplied.keySet()){
                 if (today.after(job.getDateClosed())){
-
                     history = history + job.getPosition() + " - CLOSED: " + job.getDateClosed() + "\n";
                 }
-
                 else {
                     history = history + job.getPosition() + "- OPEN\n";
                 }
             }
         }
-
         return history;
     }
 
@@ -98,16 +84,14 @@ public class Applicant extends User {
 
         String status = this.jobsApplied.get(jobPosting);
         return status;
-
     }
 
     public void updateStatus(JobPosting job, String status) {
         this.jobsApplied.put(job, status);
     }
 
-
     public String getInfo(){
-        return "Applicant Username: " + username + '\n' +
+        return "Applicant Username: " + this.getUsername() + '\n' +
                 "\n Date Created: " + this.getDateCreated() + "\n" +
                 "\nJobs Applied To:\n" + this.getJobHistory();
     }
@@ -118,11 +102,17 @@ public class Applicant extends User {
     }
 
     public void applicantGUISetUp(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage){
-        Group applicantPortalScene = new Group();
-        Scene applicantPage = new Scene(applicantPortalScene, 600, 600);
-        stage.setScene(applicantPage);
         if (loggedUser.getClass() == Applicant.class) {
+
+            Group applicantPortalScene = new Group();
+            Scene applicantPage = new Scene(applicantPortalScene, 600, 600);
+            stage.setScene(applicantPage);
+
             GridPane applicantSelectionPane = new GridPane();
+            StackPane resumeUpload = new StackPane();
+            TextField resume = new TextField();
+            Label labelFileUpload = new Label("Submit your resume");
+            Label labelEnterResume = new Label("Enter your resume");
 
             Button getResume = new Button("Submit your resume");
             Button applyJob = new Button("Apply to jobs");
@@ -131,7 +121,18 @@ public class Applicant extends User {
             Button viewJobStatuses = new Button("Job Statuses");
             Button logout = new Button("Logout");
 
-            TextField resume = new TextField();
+            applicantSelectionPane.add(logout, 4, 9);
+            applicantSelectionPane.add(getFile, 4, 2);
+            applicantSelectionPane.add(getResume, 4, 4);
+            applicantSelectionPane.add(labelFileUpload, 2, 2);
+            applicantSelectionPane.add(resume, 4, 3);
+            applicantSelectionPane.add(labelEnterResume, 2, 4);
+            applicantSelectionPane.add(applyJob, 4, 6);
+            applicantSelectionPane.add(viewHistory, 4, 7);
+            applicantSelectionPane.add(viewJobStatuses, 4, 8);
+            applicantSelectionPane.setHgap(20);
+            applicantSelectionPane.setVgap(20);
+
             getFile.setOnAction((ActionEvent openFile) -> {
                 FileChooser fileChooser = new FileChooser();
                 //fileChooser.setInitialDirectory();
@@ -144,26 +145,6 @@ public class Applicant extends User {
                 String resumeText = resume.getText();
 //                storage.writeFile(loggedUser.getUsername(), resumeText);
             });
-
-            Label labelFileUpload = new Label("Submit your resume");
-            Label labelEnterResume = new Label("Enter your resume");
-
-            applicantSelectionPane.add(logout, 4, 9);
-            applicantSelectionPane.add(getFile, 4, 2);
-            applicantSelectionPane.add(getResume, 4, 4);
-            applicantSelectionPane.add(labelFileUpload, 2, 2);
-            applicantSelectionPane.add(resume, 4, 3);
-            applicantSelectionPane.add(labelEnterResume, 2, 4);
-            applicantSelectionPane.add(applyJob, 4, 6);
-            applicantSelectionPane.add(viewHistory, 4, 7);
-            applicantSelectionPane.add(viewJobStatuses, 4, 8);
-
-
-            StackPane resumeUpload = new StackPane();
-            applicantSelectionPane.setHgap(20);
-            applicantSelectionPane.setVgap(20);
-
-            logout.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
 
             applyJob.setOnAction((ActionEvent apply) -> {
                 Integer i = 0;
@@ -183,12 +164,10 @@ public class Applicant extends User {
 
                 jobViewer.add(applyButton, 4, 5);
                 jobViewer.add(returnApp, 4, 6);
-
                 jobViewer.setHgap(10);
                 jobViewer.setVgap(5);
                 jobPortalScene.getChildren().add(jobViewer);
                 stage.show();
-
 
                 applyButton.setOnAction((ActionEvent event) -> {
                     //System.out.println(radioSet.getSelectedToggle());
@@ -209,6 +188,7 @@ public class Applicant extends User {
 
             });
 
+            logout.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
             //Account History page
             viewHistory.setOnAction((ActionEvent history) -> {
                 Group historyViewerScene = new Group();
@@ -225,7 +205,6 @@ public class Applicant extends User {
 
                 historyPane.add(accountInfo, 10, 0);
                 historyPane.add(returnButton, 10, 14);
-
                 historyPane.setHgap(20);
                 historyPane.setVgap(5);
 
@@ -259,7 +238,6 @@ public class Applicant extends User {
                 jobStatusPane.add(jobStatusesLabel, 10, 0);
                 //jobStatusPane.add(allJobStatuses, 10, 4);
                 jobStatusPane.add(returnJS, 10, 14);
-
                 jobStatusPane.setHgap(20);
                 jobStatusPane.setVgap(5);
 
@@ -271,14 +249,10 @@ public class Applicant extends User {
 
             });
 
-
             resumeUpload.getChildren().addAll(applicantSelectionPane);
             applicantPortalScene.getChildren().addAll(resumeUpload);
         }// what happens if they are not an applicant but have a login;
         //send message wrong user type?
 
     }
-
-
-
 }

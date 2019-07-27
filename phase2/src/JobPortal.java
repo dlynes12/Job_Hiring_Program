@@ -6,26 +6,15 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 public class JobPortal extends Application {
 
     // SIGN-IN PAGE
     @Override
-
-
     public void start(Stage stage) throws Exception {
 
         UserAccess userManager = new UserAccess();
@@ -68,7 +57,6 @@ public class JobPortal extends Application {
         TextField password = new TextField();
         DatePicker datePicker = new DatePicker();
 
-
         gridPane.add(labelUsername, 2, 0);
         gridPane.add(labelPassword, 2, 2);
         gridPane.add(labelDate,2 , 4);
@@ -82,8 +70,6 @@ public class JobPortal extends Application {
         gridPane.add(datePicker,4,4);
         gridPane.setHgap(10);
         LocalDate todaysDate =  datePicker.getValue();
-
-
 
         StackPane box = new StackPane();
         box.getChildren().addAll(gridPane);
@@ -112,7 +98,6 @@ public class JobPortal extends Application {
             GridPane grid = new GridPane();
 
             userInfo.add(exit, 8, 4);
-
             userInfo.add(createUserLab, 2, 0);
             userInfo.add(createPassLab, 2, 2);
             userInfo.add(newUserField, 4, 0);
@@ -166,7 +151,6 @@ public class JobPortal extends Application {
                 }catch(IOException ex){
                     System.out.println(ex.getMessage());
                 }
-
             });
         });
 
@@ -226,5 +210,3 @@ public class JobPortal extends Application {
         return l;
     }
 }
-
-

@@ -125,9 +125,5 @@ public class InterviewManager {
         for (Applicant a: candidates){
             a.updateStatus(jobPosting,hiringStage.get(roundNum));
         }
-
-    }
-
-  // complete list of applicants is in JobPostings Class
-
+    }// complete list of applicants is in JobPostings Class
 }

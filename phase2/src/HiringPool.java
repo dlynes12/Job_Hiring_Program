@@ -27,6 +27,4 @@ public class HiringPool {
 
     public void hire(Applicant applicant, JobPosting job){
     }
-
-
 }

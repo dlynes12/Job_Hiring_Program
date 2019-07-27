@@ -24,5 +24,3 @@ public abstract class User implements java.io.Serializable{
     public Date getDateCreated(){ return this.dateCreated; }
 
 }
-
-
