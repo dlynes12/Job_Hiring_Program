@@ -62,12 +62,16 @@ public class JobPortal extends Application {
         interviewerButton.setToggleGroup(loginRadio);
         Label labelUsername = new Label("Username");
         Label labelPassword = new Label("Password");
+        Label labelDate = new Label("Todays Date");
         GridPane gridPane = new GridPane();
         TextField username = new TextField();
         TextField password = new TextField();
+        DatePicker datePicker = new DatePicker();
+
 
         gridPane.add(labelUsername, 2, 0);
         gridPane.add(labelPassword, 2, 2);
+        gridPane.add(labelDate,2 , 4);
         gridPane.add(username, 4, 0);
         gridPane.add(password, 4, 2);
         gridPane.add(applicantButton, 2, 7);
@@ -75,7 +79,11 @@ public class JobPortal extends Application {
         gridPane.add(interviewerButton, 4, 7);
         gridPane.add(log_in, 7, 4);
         gridPane.add(new_user, 9, 4);
+        gridPane.add(datePicker,4,4);
         gridPane.setHgap(10);
+        LocalDate todaysDate =  datePicker.getValue();
+
+
 
         StackPane box = new StackPane();
         box.getChildren().addAll(gridPane);
@@ -104,6 +112,7 @@ public class JobPortal extends Application {
             GridPane grid = new GridPane();
 
             userInfo.add(exit, 8, 4);
+
             userInfo.add(createUserLab, 2, 0);
             userInfo.add(createPassLab, 2, 2);
             userInfo.add(newUserField, 4, 0);
