@@ -8,15 +8,15 @@ public class UserAccess {
 
     // LOGIN FUNCTIONS----------------------------------------------------------------------
     boolean addUser(User user) {
-        boolean add = true;
-        if (user.getUsername().matches(".*[\\S]+") && user.getPassword().matches(".*[\\S]+")) {
+        boolean added = false;
+        if (checkInput(user.getUsername(), user.getPassword())){
             for (User account: users){
-                if ( account.getUsername().equals(user.getUsername())){add = false;}
+                if ( account.getUsername().equals(user.getUsername())){added = true;}
             }
-            if (add){this.users.add(user);}
+            if (!added){this.users.add(user); return true;}
+            else {return false;}
         }
-//        st.writeFile("userData.txt", );
-        return add;
+        else {return false;}
     }
 
     public User getUser(String username) {
@@ -53,6 +53,10 @@ public class UserAccess {
         if (add){this.employedInterviewers.add(interviewer);}
 //        st.writeFile("userData.txt", );
         return add;
+    }
+
+    public Boolean checkInput(String username, String password){
+        return username.matches(".*[\\S]+.*") && password.matches(".*[\\S]+.*");
     }
 
 //    public String listUses(ArrayList<User> a){

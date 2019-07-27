@@ -77,8 +77,8 @@ public class JobPortal extends Application {
         gridPane.add(applicantButton, 2, 7);
         gridPane.add(hRButton, 3, 7);
         gridPane.add(interviewerButton, 4, 7);
-        gridPane.add(log_in, 7, 4);
-        gridPane.add(new_user, 9, 4);
+        gridPane.add(log_in, 7, 5);
+        gridPane.add(new_user, 9, 5);
         gridPane.add(datePicker,4,4);
         gridPane.setHgap(10);
         LocalDate todaysDate =  datePicker.getValue();
