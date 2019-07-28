@@ -32,7 +32,7 @@ public class Interviewer extends User {
 
     public ArrayList<Applicant> getInterviewees() {
         ArrayList<Applicant> listOfInterviewees = new ArrayList<>();
-        for (Applicant a: applicantsList.keySet()){
+        for (Applicant a: applicantsList.keySet())  {
             listOfInterviewees.add(a);
         }
         return listOfInterviewees;

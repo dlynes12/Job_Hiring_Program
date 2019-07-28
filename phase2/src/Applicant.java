@@ -1,3 +1,4 @@
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -7,12 +8,16 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
+import java.io.IOException;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Date;
 
 public class Applicant extends User {
     private HashMap<JobPosting, String> jobsApplied = new HashMap<>();
+    private HashMap<String, ArrayList> userDocs = new HashMap<>();
+    Storage store = new Storage();
 
     public Applicant(String username, String password) {
         super(username, password);
@@ -58,8 +63,17 @@ public class Applicant extends User {
         return history;
     }
 
-    public void getDocs(String username) {
-//        st.readFile(username + ".txt");
+    public void getDocs(String username) throws IOException, ClassNotFoundException {
+        store.readDocFile(username + "docs.bin");
+    }
+
+    public void setDocsHash(User u, Boolean a, Boolean b, String s) throws IOException {
+        ArrayList<Boolean> docs = new ArrayList<>();
+        docs.add(a);
+        docs.add(b);
+        userDocs.put(u.getUsername(),docs);
+
+        store.writeDocFile(u,s);
     }
 
     public void applyToJob(JobPosting jobPosting) {
@@ -143,7 +157,11 @@ public class Applicant extends User {
             });
             getResume.setOnAction((ActionEvent eve) -> {
                 String resumeText = resume.getText();
-//                storage.writeFile(loggedUser.getUsername(), resumeText);
+                try {
+                    store.writeDocFile(loggedUser, resumeText);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             });
 
             applyJob.setOnAction((ActionEvent apply) -> {

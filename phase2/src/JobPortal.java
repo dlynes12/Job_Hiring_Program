@@ -20,10 +20,11 @@ public class JobPortal extends Application {
         UserAccess userManager = new UserAccess();
         JobAccess jobManager = new JobAccess();
         Group loginScene = new Group();
+        Storage store = new Storage();
         List<String> list;
 
         try{
-              list = readUserList();
+              list = store.readUserList();
               System.out.println(list);
               for(Object o: list){
                   userManager.addUser((User)o);
@@ -147,7 +148,7 @@ public class JobPortal extends Application {
                     alert.showAndWait();
                 }
                 try{
-                    writeUserList(userManager.users);
+                    store.writeUserList(userManager.users);
                 }catch(IOException ex){
                     System.out.println(ex.getMessage());
                 }
@@ -172,7 +173,7 @@ public class JobPortal extends Application {
                     }
 
                     try{
-                        writeToFile(loggedUser);
+                        store.writeToFile(loggedUser);
                     }catch(IOException ex){
                         System.out.println(ex.getMessage());
                     }
@@ -190,23 +191,4 @@ public class JobPortal extends Application {
         launch(args);
     }
 
-    public static void writeUserList(List a) throws IOException {
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(("users.bin")));
-        objectOutputStream.writeObject(a);
-    }
-
-    public static void writeToFile(User u) throws IOException {
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream((u.getUsername()+ ".bin")));
-        objectOutputStream.writeObject(u);
-    }
-    public static void readFile(String uName) throws IOException, ClassNotFoundException{
-        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream((uName+ ".bin")));
-        User u = (User) objectInputStream.readObject();
-        System.out.println(u);
-    }
-    public List readUserList() throws IOException, ClassNotFoundException{
-        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(("users.bin")));
-        List l = (List) objectInputStream.readObject();
-        return l;
-    }
 }
