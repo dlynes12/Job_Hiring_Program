@@ -10,7 +10,7 @@ import javafx.scene.layout.GridPane;
 import java.util.*;
 
 public class Interviewer extends User {
-    Map<Applicant,String> applicantsList = new HashMap<>();
+    private Map<Applicant,String> applicantsList = new HashMap<>();
 
     public Interviewer(String username, String password){
         super(username,password);
@@ -26,11 +26,11 @@ public class Interviewer extends User {
 
     //TODO when someone gets hired, please change the 'filled' boolean for the jobPosting to TRUE
 
-    public void addToList(Applicant applicant, String position){
+    void addToList(Applicant applicant, String position){
         applicantsList.put(applicant,position);
     }
 
-    public ArrayList<Applicant> getInterviewees() {
+    ArrayList<Applicant> getInterviewees() {
         ArrayList<Applicant> listOfInterviewees = new ArrayList<>();
         for (Applicant a: applicantsList.keySet())  {
             listOfInterviewees.add(a);
@@ -38,10 +38,9 @@ public class Interviewer extends User {
         return listOfInterviewees;
     }
 
-
     //GUI CONTROLS FOR INTERVIEWS
 
-    public void getInterviewPane(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage, UserAccess userManager) {
+    void getInterviewPane(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage, UserAccess userManager) {
         if (loggedUser.getClass() == Interviewer.class) {
 
             Group intPortalScene = new Group();
@@ -79,54 +78,19 @@ public class Interviewer extends User {
                 dropdown.getItems().add(jobPosting.getPosition());
             }
 
-            /*getInterviewees.setOnAction((ActionEvent ev) -> {
-                // get the Applicant list for each job
-                Integer i = 0;
-                String choice = (String) dropdown.getValue();
-                String[] listOfApp = jobManager.getJob(choice).viewApplicants(this).split(",");
-                if (listOfApp.length != 0 && listOfApp[0] != "") {
-                    ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
-                    Label chooseApp = new Label("Choose an Applicant:");
-                    interviewerSelectionPane.add(chooseApp, 1, i);
-                    for (String app : listOfApp) {
-                        RadioButton radioButton = new RadioButton(app);
-                        radioButton.setToggleGroup(radioSet);
-                        interviewerSelectionPane.add(radioButton, 1, i + 1);
-                        i++;
-                    }
-
-                    approve.setOnAction((ActionEvent click) -> {
-                        RadioButton selectedRadio = (RadioButton)radioSet.getSelectedToggle();
-                        String selectedApplicant = selectedRadio.getText();
-                        Applicant appObj = (Applicant) userManager.getUser(selectedApplicant);
-                        jobManager.getJob(choice).getHiringProcessor().nextRound(appObj);
-                        selectedRadio.setStyle("-fx-selected-color: green; -fx-unselected-color: green;"); // changes the colour of a button to red once
-                    });                                                                         //they have been recommended
-                    decline.setOnAction((ActionEvent click) -> {
-                        RadioButton selectedRadio = (RadioButton)radioSet.getSelectedToggle();
-                        String selectedApplicant = selectedRadio.getText();
-                        Applicant appObj = (Applicant) userManager.getUser(selectedApplicant);
-                        jobManager.getJob(choice).getHiringProcessor().reject(appObj);
-                        selectedRadio.setStyle("-fx-selected-color: red; -fx-unselected-color: red;");
-                    });
-                }
-            });*/
             getInterviewees.setOnAction((ActionEvent ev) -> {
                 // get the Applicant list for each job
-                Integer i = 0;
                 String choice = (String) dropdown.getValue();
                 String[] listOfApp = jobManager.getJob(choice).viewApplicants(this).split(",");
-                if (listOfApp.length != 0 && listOfApp[0] != ""){
+                if (listOfApp.length != 0 && !isNullOrEmpty(listOfApp[0])){
                     Label chooseApp = new Label("Choose an Applicant:");
-                    interviewerSelectionPane.add(chooseApp, 1, i);
+                    interviewerSelectionPane.add(chooseApp, 1, 0);
                     ListView<String> scrollListApps = new ListView<>();
                     ObservableList<String> listApps= FXCollections.observableArrayList();
                     scrollListApps.setItems(listApps);
                     scrollListApps.setPrefSize(100.00,70.00);
-                    for (String app : listOfApp) {
-                        listApps.add(app);
-                    }
-                    interviewerSelectionPane.add(scrollListApps, 1, i + 1);
+                    listApps.addAll(Arrays.asList(listOfApp));
+                    interviewerSelectionPane.add(scrollListApps, 1, 1);
 
                     approve.setOnAction((ActionEvent click) -> {
                         String selectedApplicant = scrollListApps.getSelectionModel().getSelectedItem();

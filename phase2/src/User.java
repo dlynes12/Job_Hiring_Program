@@ -23,4 +23,8 @@ public abstract class User implements java.io.Serializable{
 
     public Date getDateCreated(){ return this.dateCreated; }
 
+    public static boolean isNullOrEmpty(String str) {
+        return str == null || str.isEmpty();
+    }
+
 }

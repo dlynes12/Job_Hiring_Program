@@ -8,10 +8,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 // One HR Person hires for their own section of the company
@@ -234,14 +232,13 @@ public class HR_Coordinator extends User{
                         ObservableList<String> listApps= FXCollections.observableArrayList();
                         scrollListApps.setItems(listApps);
                         scrollListApps.setPrefSize(160.00,120.00);
-                        //RadioButton radioButton = new RadioButton(app);
-                        //radioButton.setToggleGroup(radioSet);
-                        //appViewer.add(radioButton, 1, i + 1);
-                        //i++;
-                        listApps.addAll(Arrays.asList(listOfApp));
-//                        for (String app : listOfApp) {
-//                            listApps.add(app);
-//                        }
+                        for (String app : listOfApp) {
+                            //RadioButton radioButton = new RadioButton(app);
+                            //radioButton.setToggleGroup(radioSet);
+                            //appViewer.add(radioButton, 1, i + 1);
+                            listApps.add(app);
+                            //i++;
+                        }
                         ViewJobsGrid.add(scrollListApps, 2, i + 1);
 
 
@@ -297,10 +294,6 @@ public class HR_Coordinator extends User{
         else {
             stage.setScene(loginPage);
         }
-    }
-
-    public static boolean isNullOrEmpty(String str) {
-        return str == null || str.isEmpty();
     }
 
     public String toString(){
