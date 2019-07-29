@@ -1,4 +1,3 @@
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -10,14 +9,13 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Date;
 
 public class Applicant extends User {
     private HashMap<JobPosting, String> jobsApplied = new HashMap<>();
-    private HashMap<String, ArrayList> userDocs = new HashMap<>();
-    Storage store = new Storage();
+//    private HashMap<String, ArrayList> userDocs = new HashMap<>();
+    private Storage store = new Storage();
 
     public Applicant(String username, String password) {
         super(username, password);
@@ -33,56 +31,56 @@ public class Applicant extends User {
         return super.getDateCreated();
     }
 
-    public String getJobs() {
-        String s = "";
+    private String getJobs() {
+        StringBuilder s = new StringBuilder();
         if (!this.jobsApplied.isEmpty()) {
             for (JobPosting job : this.jobsApplied.keySet()) {
-                s = s + job.getPosition() + "\n";
+                s.append(job.getPosition()).append("\n");
             }
         } else {
-            s = s + "Applicant has not applied for a job";
+            s.append("Applicant has not applied for a job");
         }
-        return s;
+        return s.toString();
     }
 
-    public String getJobHistory(){
-        String history = "";
+    private String getJobHistory(){
+        StringBuilder history = new StringBuilder();
         if (!this.jobsApplied.isEmpty()){
             Date today = new Date();
             Instant now = Instant.now();
             today.from(now);
             for (JobPosting job: this.jobsApplied.keySet()){
                 if (today.after(job.getDateClosed())){
-                    history = history + job.getPosition() + " - CLOSED: " + job.getDateClosed() + "\n";
+                    history.append(job.getPosition()).append(" - CLOSED: ").append(job.getDateClosed()).append("\n");
                 }
                 else {
-                    history = history + job.getPosition() + "- OPEN\n";
+                    history.append(job.getPosition()).append("- OPEN\n");
                 }
             }
         }
-        return history;
+        return history.toString();
     }
 
-    public void getDocs(String username) throws IOException, ClassNotFoundException {
-        store.readDocFile(username + "docs.bin");
-    }
+//    public void getDocs(String username) throws IOException, ClassNotFoundException {
+//        store.readDocFile(username + "docs.bin");
+//    }
 
-    public void setDocsHash(User u, Boolean a, Boolean b, String s) throws IOException {
-        ArrayList<Boolean> docs = new ArrayList<>();
-        docs.add(a);
-        docs.add(b);
-        userDocs.put(u.getUsername(),docs);
+//    public void setDocsHash(User u, Boolean a, Boolean b, String s) throws IOException {
+//        ArrayList<Boolean> docs = new ArrayList<>();
+//        docs.add(a);
+//        docs.add(b);
+//        userDocs.put(u.getUsername(),docs);
+//
+//        store.writeDocFile(u,s);
+//    }
 
-        store.writeDocFile(u,s);
-    }
-
-    public void applyToJob(JobPosting jobPosting) {
+    private void applyToJob(JobPosting jobPosting) {
         this.jobsApplied.put(jobPosting, "Submitted Resume/CV");
         jobPosting.addApplicant(this);
     }
 
     //TODO: change how get JobStatus works - to just individually retrieve the status.
-    public String getJobStatus(JobPosting jobPosting) {
+    private String getJobStatus(JobPosting jobPosting) {
 
 //        String s = "";
 //
@@ -96,15 +94,14 @@ public class Applicant extends User {
 //
 //        return s;
 
-        String status = this.jobsApplied.get(jobPosting);
-        return status;
+        return this.jobsApplied.get(jobPosting);
     }
 
-    public void updateStatus(JobPosting job, String status) {
+    void updateStatus(JobPosting job, String status) {
         this.jobsApplied.put(job, status);
     }
 
-    public String getInfo(){
+    String getInfo(){
         return "Applicant Username: " + this.getUsername() + '\n' +
                 "\n Date Created: " + this.getDateCreated() + "\n" +
                 "\nJobs Applied To:\n" + this.getJobHistory();
@@ -115,7 +112,7 @@ public class Applicant extends User {
         return "{A," + this.getJobs() + "," + this.getUsername() + "," + this.getPassword() + "}";
     }
 
-    public void applicantGUISetUp(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage){
+    void applicantGUISetUp(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage){
         if (loggedUser.getClass() == Applicant.class) {
 
             Group applicantPortalScene = new Group();
@@ -165,7 +162,7 @@ public class Applicant extends User {
             });
 
             applyJob.setOnAction((ActionEvent apply) -> {
-                Integer i = 0;
+                int i = 0;
                 Group jobPortalScene = new Group();
                 stage.setScene(new Scene(jobPortalScene, 600, 600));
                 Button returnApp = new Button("Back");
@@ -195,14 +192,10 @@ public class Applicant extends User {
                     //jobManager.getJob(selectedRadio).addApplicant(a);
                     a.applyToJob(jobManager.getJob(selectedRadio));
 
-                    back.setOnAction((ActionEvent goBack) -> {
-                        stage.setScene(applicantPage);
-                    });
+                    back.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));
                 });
 
-                returnApp.setOnAction((ActionEvent ex) -> {
-                    stage.setScene(applicantPage);
-                });
+                returnApp.setOnAction((ActionEvent ex) -> stage.setScene(applicantPage));
 
             });
 
@@ -228,9 +221,7 @@ public class Applicant extends User {
 
                 historyViewerScene.getChildren().addAll(historyPane);
 
-                returnButton.setOnAction((ActionEvent goBack) -> {
-                    stage.setScene(applicantPage);
-                });
+                returnButton.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));
             });
 
 
@@ -239,7 +230,7 @@ public class Applicant extends User {
                 Scene jobStatusPage = new Scene(jobStatusViewerScene, 600, 600);
                 stage.setScene(jobStatusPage);
 
-                Integer i = 1;
+                int i = 1;
                 Label jobStatusesLabel = new Label("Jobs Applied For:");
                 //Label allJobStatuses = new Label(((Applicant) loggedUser).getJobStatus());
                 Button returnJS = new Button("Back");
@@ -261,9 +252,7 @@ public class Applicant extends User {
 
                 jobStatusViewerScene.getChildren().addAll(jobStatusPane);
 
-                returnJS.setOnAction((ActionEvent goBack) -> {
-                    stage.setScene(applicantPage);
-                });
+                returnJS.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));
 
             });
 
