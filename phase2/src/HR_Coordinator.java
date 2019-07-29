@@ -11,13 +11,14 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 // One HR Person hires for their own section of the company
 public class HR_Coordinator extends User{
 
 
-    public HR_Coordinator(String Username,String Password){
+    HR_Coordinator(String Username, String Password){
         super(Username,Password);
     }
 
@@ -55,9 +56,7 @@ public class HR_Coordinator extends User{
 
             HRPortalScene.getChildren().addAll(HRPlacement);
 
-            logout.setOnAction((ActionEvent ex) -> {
-                stage.setScene(loginPage);
-            });
+            logout.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
 
             //Job Creation page -- where we create job postings
             addJobs.setOnAction((ActionEvent addJob) -> {
@@ -92,7 +91,7 @@ public class HR_Coordinator extends User{
 
 
                 ObservableList<String> listStages = FXCollections.observableArrayList();
-                ObservableList<String> listInterviewers = FXCollections.observableArrayList(); //for dropdown
+//                ObservableList<String> listInterviewers = FXCollections.observableArrayList(); //for dropdown
                 ObservableList<String> chosenInterviewers = FXCollections.observableArrayList(); // for ViewList
                 ComboBox<String> interviewerDropdown = new ComboBox<>(); // not populating bc getListInterviewers() method in UserAccess not working
 
@@ -137,9 +136,9 @@ public class HR_Coordinator extends User{
 
                 //TODO: should we number the stages to show the order they are in?
                 addStageToProcess.setOnAction((ActionEvent addStage) -> {
-                    String str = intStageField.getText();
-                    if (!str.trim().isEmpty() && str != null){
-                        listStages.add(str);
+                    String strISF = intStageField.getText();
+                    if (!isNullOrEmpty(strISF)){
+                        listStages.add(strISF);
                         ListView<String> showStagesList = new ListView<>();
                         showStagesList.setItems(listStages);
                         showStagesList.setPrefSize(100.00,70.00);
@@ -150,10 +149,10 @@ public class HR_Coordinator extends User{
 
                 addInterviewer.setOnAction((ActionEvent addIntToList) ->{
                     String interviewerUsername = interviewerDropdown.getValue();
-                    if (interviewerUsername != null){
+                    if (!isNullOrEmpty(interviewerUsername)){
                         boolean add = true;
                         for (String str: chosenInterviewers){
-                            if (str == interviewerUsername){add = false;}
+                            if (str.equals(interviewerUsername)){add = false;}
                         }
                         if (add){
                             chosenInterviewers.add(interviewerUsername);
@@ -168,15 +167,11 @@ public class HR_Coordinator extends User{
 
                 createNewPost.setOnAction((ActionEvent CreateJob) -> {
                     if (!listStages.isEmpty()){
-                        LocalDate year = datePicker.getValue();
-                        Date closeDate = null;
-                        closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+                        Date closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                         String position = positionField.getText();
                         String company = companyField.getText();
                         ArrayList<String> listIntStages = new ArrayList<>();
-                        for (String str: listStages){
-                            listIntStages.add(str);
-                        }
+                        listIntStages.addAll(listStages);
                         ArrayList<Interviewer> decidedListOfInt= new ArrayList<>();
                         for (String str: chosenInterviewers){
                             decidedListOfInt.add((Interviewer) userManager.getUser(str));
@@ -186,9 +181,7 @@ public class HR_Coordinator extends User{
                     }
                 });
 
-                returnAddJ.setOnAction((ActionEvent exitPage) -> {
-                    stage.setScene(HRBasePage);
-                });
+                returnAddJ.setOnAction((ActionEvent exitPage) -> stage.setScene(HRBasePage));
             });
 
             viewOpenJobs.setOnAction((ActionEvent viewJob) -> {
@@ -226,16 +219,14 @@ public class HR_Coordinator extends User{
                 ViewJobsPlacement.setTop(ViewJobsGrid);
                 HRViewJobs.getChildren().add(ViewJobsPlacement);
 
-                returnViewJ.setOnAction((ActionEvent exitPage) -> {
-                    stage.setScene(HRBasePage);
-                });
+                returnViewJ.setOnAction((ActionEvent exitPage) -> stage.setScene(HRBasePage));
 
                 ApplicantButton.setOnAction((ActionEvent seeApps) -> {
                     int i = 0;
-                    String choice = (String) scrollListJobs.getSelectionModel().getSelectedItem();;
+                    String choice = scrollListJobs.getSelectionModel().getSelectedItem();
                     String[] listOfApp = jobManager.getJob(choice).viewAllApplicants().split(",");  //was .viewApplicants() before
-                    if (listOfApp.length != 0 && listOfApp[0] != "") {
-                        GridPane appViewer = new GridPane();
+                    if (listOfApp.length != 0 && !isNullOrEmpty(listOfApp[0])) {
+                        //GridPane appViewer = new GridPane();
                         //ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
                         //Label chooseApp = new Label("Choose an Applicant:");
                         //ViewJobsGrid.add(chooseApp, 1, i);
@@ -243,13 +234,14 @@ public class HR_Coordinator extends User{
                         ObservableList<String> listApps= FXCollections.observableArrayList();
                         scrollListApps.setItems(listApps);
                         scrollListApps.setPrefSize(160.00,120.00);
-                        for (String app : listOfApp) {
-                            //RadioButton radioButton = new RadioButton(app);
-                            //radioButton.setToggleGroup(radioSet);
-                            //appViewer.add(radioButton, 1, i + 1);
-                            listApps.add(app);
-                            //i++;
-                        }
+                        //RadioButton radioButton = new RadioButton(app);
+                        //radioButton.setToggleGroup(radioSet);
+                        //appViewer.add(radioButton, 1, i + 1);
+                        //i++;
+                        listApps.addAll(Arrays.asList(listOfApp));
+//                        for (String app : listOfApp) {
+//                            listApps.add(app);
+//                        }
                         ViewJobsGrid.add(scrollListApps, 2, i + 1);
 
 
@@ -292,9 +284,7 @@ public class HR_Coordinator extends User{
                 ViewJobsPlacement.setTop(ViewAppsGrid);
                 viewApps.getChildren().add(ViewJobsPlacement);
 
-                returnViewApp.setOnAction((ActionEvent exitPage) -> {
-                    stage.setScene(HRBasePage);
-                });
+                returnViewApp.setOnAction((ActionEvent exitPage) -> stage.setScene(HRBasePage));
 
                 viewButton.setOnAction((ActionEvent seeApps) -> {
                     appInfo.setText(((Applicant)(userManager.getUser((String) dropApp.getValue()))).getInfo());
@@ -307,6 +297,10 @@ public class HR_Coordinator extends User{
         else {
             stage.setScene(loginPage);
         }
+    }
+
+    public static boolean isNullOrEmpty(String str) {
+        return str == null || str.isEmpty();
     }
 
     public String toString(){
