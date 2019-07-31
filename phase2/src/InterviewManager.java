@@ -20,15 +20,16 @@ public class InterviewManager {
 
     //TODO we need to have an attribute of how many people we are hiring
 
-    ArrayList<Applicant> approvedApplicants = new ArrayList<>(); // ppl that have applied for the job/ started a new round
+    private ArrayList<Applicant> approvedApplicants = new ArrayList<>(); // ppl that have applied for the job/ started a new round
     private ArrayList<Applicant> candidates = new ArrayList<>(); // people who are waiting to be moved to the next round
     private ArrayList<Applicant> rejectedFromRound = new ArrayList<>();
     private ArrayList<Applicant> rejectedApplicants = new ArrayList<>();
-    JobPosting jobPosting;
+    private ArrayList<String>hiringStage = new ArrayList<>(); // list of all the stages in the hiring process
+    private ArrayList<Interviewer> chosenInterviewers;
+    private JobPosting jobPosting;
     //String position;
     int roundNum =0;
-    ArrayList<String>hiringStage = new ArrayList<>(); // list of all the stages in the hiring process
-    ArrayList<Interviewer> chosenInterviewers;
+
     //todo: work on way for Applicants to see the progress of their application through InterviewManager
 
     // methods used while job is open  -----------------------------------------------------------
@@ -77,7 +78,7 @@ public class InterviewManager {
         }
     }
 
-    public void nextRound(Applicant applicant) { //method to recommend an applicant
+    void nextRound(Applicant applicant) { //method to recommend an applicant
         boolean inList = false;
         for (Applicant user: this.candidates){
             if (user.getUsername().equals(applicant.getUsername())){
@@ -87,7 +88,7 @@ public class InterviewManager {
         if (!inList){this.candidates.add(applicant);}
     }
 
-    public void reject(Applicant applicant){ //method to reject an applicant
+    void reject(Applicant applicant){ //method to reject an applicant
         this.rejectedApplicants.add(applicant);
         this.rejectedFromRound.add(applicant);
         applicant.updateStatus(this.jobPosting, "Rejected");

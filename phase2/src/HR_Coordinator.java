@@ -169,7 +169,9 @@ public class HR_Coordinator extends User{
                         String position = positionField.getText();
                         String company = companyField.getText();
                         ArrayList<String> listIntStages = new ArrayList<>();
-                        listIntStages.addAll(listStages);
+                        for (String str: listStages){
+                            listIntStages.add(str);
+                        }
                         ArrayList<Interviewer> decidedListOfInt= new ArrayList<>();
                         for (String str: chosenInterviewers){
                             decidedListOfInt.add((Interviewer) userManager.getUser(str));

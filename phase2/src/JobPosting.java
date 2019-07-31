@@ -14,7 +14,7 @@ public class JobPosting{
 
     //private HiringPool candidatePool;
     private int interviewRounds;
-    protected ArrayList<Applicant> applicants = new ArrayList<>();
+    private ArrayList<Applicant> applicants = new ArrayList<>();
     ArrayList<String> listOfStages = new ArrayList<>();
 
     public JobPosting(Date datePosted, Date dateClosed, String position, int interviewRounds, String company, ArrayList<String> stagesOfInterv, ArrayList<Interviewer> activeInterviewers) {
@@ -33,13 +33,13 @@ public class JobPosting{
         this.datePosted = datePosted;
     }
 
-    public Date getDateClosed() {
+    Date getDateClosed() {
         return this.dateClosed;
     }
 
     public void setDateClosed(Date dateClosed) { this.dateClosed = dateClosed; }
 
-    public String getPosition() {
+    String getPosition() {
         return this.position;
     }
 
@@ -62,39 +62,39 @@ public class JobPosting{
     }
 
     public String viewApplicants(Interviewer interviewer){ //view all Applicants still in the hiring process
-        String listOfApplicants = "";
+        StringBuilder listOfApplicants = new StringBuilder();
         String result;
         Date today = new Date();
         Instant now = Instant.now();
         today.from(now);
         if (today.before(this.getDateClosed())){
             for (Applicant applicant: this.applicants){  //list before was this.applicants
-                listOfApplicants = listOfApplicants + applicant.getUsername() + ",";
+                listOfApplicants.append(applicant.getUsername()).append(",");
             }
-            if (listOfApplicants.length() ==0){result = listOfApplicants;}
+            if (listOfApplicants.length() ==0){result = listOfApplicants.toString();}
             else {result = listOfApplicants.substring(0, listOfApplicants.length()-1);} //takes off the last comma
         }else{
             for (Applicant applicant: interviewer.getInterviewees()){
-                listOfApplicants = listOfApplicants + applicant.getUsername() + ",";
+                listOfApplicants.append(applicant.getUsername()).append(",");
             }
-            if (listOfApplicants.length() ==0){result = listOfApplicants;}
+            if (listOfApplicants.length() ==0){result = listOfApplicants.toString();}
             else {result = listOfApplicants.substring(0, listOfApplicants.length()-1);} //takes off the last comma
         }
         return result;
     }
 
-    public String viewAllApplicants(){
-        String listOfApplicants = "";
+    String viewAllApplicants(){
+        StringBuilder listOfApplicants = new StringBuilder();
         String result;
         for (Applicant applicant: this.applicants){  //list before was this.applicants
-            listOfApplicants = listOfApplicants + applicant.getUsername() + ",";
+            listOfApplicants.append(applicant.getUsername()).append(",");
         }
-        if (listOfApplicants.length() ==0){result = listOfApplicants;}
+        if (listOfApplicants.length() ==0){result = listOfApplicants.toString();}
         else {result = listOfApplicants.substring(0, listOfApplicants.length()-1);} //takes off the last comma
         return result;
     }
 
-    public boolean startInterviewProcess(){
+    boolean startInterviewProcess(){
         boolean start = false;
         if (!this.applicants.isEmpty()){
             Date today = new Date();
@@ -108,5 +108,5 @@ public class JobPosting{
         return start;
     }
 
-    public InterviewManager getHiringProcessor() {return HiringProcessor;}
+    InterviewManager getHiringProcessor() {return HiringProcessor;}
 }

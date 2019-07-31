@@ -70,7 +70,7 @@ public class JobPortal extends Application {
         gridPane.add(new_user, 9, 5);
         gridPane.add(datePicker,4,4);
         gridPane.setHgap(10);
-        LocalDate todaysDate =  datePicker.getValue();
+        //LocalDate todaysDate =  datePicker.getValue();
 
         StackPane box = new StackPane();
         box.getChildren().addAll(gridPane);

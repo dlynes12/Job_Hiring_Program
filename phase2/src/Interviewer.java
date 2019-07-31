@@ -89,8 +89,10 @@ public class Interviewer extends User {
                     ObservableList<String> listApps= FXCollections.observableArrayList();
                     scrollListApps.setItems(listApps);
                     scrollListApps.setPrefSize(100.00,70.00);
-                    listApps.addAll(Arrays.asList(listOfApp));
-                    interviewerSelectionPane.add(scrollListApps, 1, 1);
+                    for (String app : listOfApp) {
+                        listApps.add(app);
+                    }
+                    interviewerSelectionPane.add(scrollListApps, 1,  1);
 
                     approve.setOnAction((ActionEvent click) -> {
                         String selectedApplicant = scrollListApps.getSelectionModel().getSelectedItem();
