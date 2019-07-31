@@ -4,6 +4,9 @@ import java.util.Date;
 
 public class JobPosting{
 
+
+    //TODO we need to have an attribute of how many people we are hiring
+
     private Date datePosted;
     private Date dateClosed;
     private String position;
@@ -60,6 +63,13 @@ public class JobPosting{
         if(!this.applicants.contains(applicant)){
             this.applicants.add(applicant);
             //this.candidatePool.addToPool(applicant,0);
+        }
+    }
+
+    //TODO: make this consider the date - applicants can only withdraw before the closing date.
+    public void removeApplicant(Applicant applicant){
+        if (this.applicants.contains(applicant)){
+            this.applicants.remove(applicant);
         }
     }
 

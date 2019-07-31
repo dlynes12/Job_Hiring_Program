@@ -1,3 +1,4 @@
+import com.sun.codemodel.internal.JOp;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -79,27 +80,18 @@ public class Applicant extends User {
         jobPosting.addApplicant(this);
     }
 
-    //TODO: change how get JobStatus works - to just individually retrieve the status.
     private String getJobStatus(JobPosting jobPosting) {
-
-//        String s = "";
-//
-//        if (!this.jobsApplied.isEmpty()) {
-//            for (JobPosting key : this.jobsApplied.keySet()) {
-//                s = s + key.getPosition() + ": " + this.jobsApplied.get(key) + "\n";
-//            }
-//        } else {
-//            s = s + "Applicant has not applied for a job";
-//        }
-//
-//        return s;
-
         return this.jobsApplied.get(jobPosting);
     }
 
     void updateStatus(JobPosting job, String status) {
         this.jobsApplied.put(job, status);
     }
+
+    private void withdrawApplication(JobPosting jobPosting){
+        jobPosting.removeApplicant(this);
+    }
+
 
     String getInfo(){
         return "Applicant Username: " + this.getUsername() + '\n' +
@@ -234,6 +226,7 @@ public class Applicant extends User {
                 Label jobStatusesLabel = new Label("Jobs Applied For:");
                 //Label allJobStatuses = new Label(((Applicant) loggedUser).getJobStatus());
                 Button returnJS = new Button("Back");
+                Button withdraw = new Button("Withdraw Application");
                 GridPane jobStatusPane = new GridPane();
                 ToggleGroup jobRadioSet = new ToggleGroup();
 
@@ -245,12 +238,17 @@ public class Applicant extends User {
                 }
 
                 jobStatusPane.add(jobStatusesLabel, 10, 0);
-                //jobStatusPane.add(allJobStatuses, 10, 4);
+                jobStatusPane.add(withdraw, 10, 13);
                 jobStatusPane.add(returnJS, 10, 14);
                 jobStatusPane.setHgap(20);
                 jobStatusPane.setVgap(5);
 
                 jobStatusViewerScene.getChildren().addAll(jobStatusPane);
+
+                withdraw.setOnAction((ActionEvent withdrawApp) -> {
+                    JobPosting job = jobManager.getJob(((RadioButton) jobRadioSet.getSelectedToggle()).getText());
+                    this.withdrawApplication(job);
+                });
 
                 returnJS.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));
 
