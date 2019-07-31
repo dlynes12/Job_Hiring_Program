@@ -9,6 +9,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import java.io.*;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 public class JobPortal extends Application {
@@ -70,8 +72,7 @@ public class JobPortal extends Application {
         gridPane.add(new_user, 9, 5);
         gridPane.add(datePicker,4,4);
         gridPane.setHgap(10);
-        //LocalDate todaysDate =  datePicker.getValue();
-
+        Date closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
         StackPane box = new StackPane();
         box.getChildren().addAll(gridPane);
         loginScene.getChildren().addAll(box);
