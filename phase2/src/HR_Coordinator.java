@@ -193,7 +193,7 @@ public class HR_Coordinator extends User{
                 for (JobPosting jobPosting : jobManager.ViewJobs()) {
                     dropdown.getItems().add(jobPosting.getPosition());
                 }*/
-                Button ApplicantButton = new Button("See applicants");
+                Button viewApps = new Button("See applicants");
                 Button distributeApps = new Button("Distribute applicants");
                 Button returnViewJ = new Button("Back");
                 GridPane ViewJobsGrid = new GridPane();
@@ -210,7 +210,7 @@ public class HR_Coordinator extends User{
 
                 ViewJobsGrid.add(ChooseJob, 1, 0);
                 ViewJobsGrid.add(distributeApps, 3, 2);
-                ViewJobsGrid.add(ApplicantButton, 3, 1);
+                ViewJobsGrid.add(viewApps, 3, 1);
                 ViewJobsGrid.add(returnViewJ, 3, 3);
 
                 ViewJobsGrid.setHgap(20);
@@ -221,7 +221,7 @@ public class HR_Coordinator extends User{
 
                 returnViewJ.setOnAction((ActionEvent exitPage) -> stage.setScene(HRBasePage));
 
-                ApplicantButton.setOnAction((ActionEvent seeApps) -> {
+                viewApps.setOnAction((ActionEvent seeApps) -> {
                     int i = 0;
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();
                     String[] listOfApp = jobManager.getJob(choice).viewAllApplicants().split(",");  //was .viewApplicants() before
@@ -254,6 +254,13 @@ public class HR_Coordinator extends User{
                             // see the specific applicant's documents
                         });*/
                     }
+                });
+
+                distributeApps.setOnAction((ActionEvent disApps) -> {
+                    String choice = scrollListJobs.getSelectionModel().getSelectedItem();
+                    //String[] listOfApp = jobManager.getJob(choice).viewAllApplicants().split(",");
+                    JobPosting tempJob = jobManager.getJob(choice);
+                    tempJob.getHiringProcessor().sendListToInterview(userManager);
                 });
             });
 

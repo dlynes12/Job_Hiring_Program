@@ -49,6 +49,8 @@ public class JobPosting{
         this.position = position;
     }
 
+
+
 //    public HiringPool getCandidatePool(){
 //        return this.candidatePool;
 //    }

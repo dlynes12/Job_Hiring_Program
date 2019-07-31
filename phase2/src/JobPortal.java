@@ -54,7 +54,7 @@ public class JobPortal extends Application {
         interviewerButton.setToggleGroup(loginRadio);
         Label labelUsername = new Label("Username");
         Label labelPassword = new Label("Password");
-        Label labelDate = new Label("Todays Date");
+        Label labelDate = new Label("Today's Date");
         GridPane gridPane = new GridPane();
         TextField username = new TextField();
         TextField password = new TextField();
@@ -72,7 +72,7 @@ public class JobPortal extends Application {
         gridPane.add(new_user, 9, 5);
         gridPane.add(datePicker,4,4);
         gridPane.setHgap(10);
-        Date closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+        //Date closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
         StackPane box = new StackPane();
         box.getChildren().addAll(gridPane);
         loginScene.getChildren().addAll(box);
