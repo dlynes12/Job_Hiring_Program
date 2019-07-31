@@ -98,6 +98,12 @@ public class Interviewer extends User {
                         String selectedApplicant = scrollListApps.getSelectionModel().getSelectedItem();
                         Applicant appObj = (Applicant) userManager.getUser(selectedApplicant);
                         jobManager.getJob(choice).getHiringProcessor().nextRound(appObj);
+                        jobManager.getJob(choice).getHiringProcessor().getRoundOfApplicants().remove(appObj);
+                        if ((jobManager.getJob(choice).getHiringProcessor().candidates.size() < 2) &&
+                                (jobManager.getJob(choice).getHiringProcessor().approvedApplicants.size() < 2))
+                        {appObj.updateStatus(jobManager.getJob(choice),"Hired");
+
+                        }
                         // we can delete the applicant from the applicantList after a person has been
                         // recommended or declined; then check if the applicantList is empty to advance
                         // the round

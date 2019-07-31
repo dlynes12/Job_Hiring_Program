@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class InterviewManager {
 
+
     /* Initially, InterviewManager class gets all those who have applied to a job after the job has closed (in its constructor)
 
     Once the first round is complete, the class gets the approved list of applicants and shoots it to the HR coordinator, who then
@@ -20,10 +21,10 @@ public class InterviewManager {
 
     //TODO we need to have an attribute of how many people we are hiring
 
-    private ArrayList<Applicant> approvedApplicants = new ArrayList<>(); // ppl that have applied for the job/ started a new round
-    private ArrayList<Applicant> candidates = new ArrayList<>(); // people who are waiting to be moved to the next round
-    private ArrayList<Applicant> rejectedFromRound = new ArrayList<>();
-    private ArrayList<Applicant> rejectedApplicants = new ArrayList<>();
+    protected ArrayList<Applicant> approvedApplicants = new ArrayList<>(); // ppl that have applied for the job/ started a new round
+    protected ArrayList<Applicant> candidates = new ArrayList<>(); // people who are waiting to be moved to the next round
+    protected ArrayList<Applicant> rejectedFromRound = new ArrayList<>();
+    protected ArrayList<Applicant> rejectedApplicants = new ArrayList<>();
     private ArrayList<String>hiringStage = new ArrayList<>(); // list of all the stages in the hiring process
     private ArrayList<Interviewer> chosenInterviewers;
     private JobPosting jobPosting;

@@ -9,7 +9,7 @@ public class JobPosting{
     private String position;
     private String company;
     private InterviewManager HiringProcessor;
-    private ArrayList<Interviewer> chosenInterviers;
+    private ArrayList<Interviewer> chosenInterviewers;
     private Boolean filled = false;
 
     //private HiringPool candidatePool;
@@ -24,7 +24,7 @@ public class JobPosting{
         this.interviewRounds = interviewRounds;
         this.company = company;
         this.listOfStages = stagesOfInterv;
-        this.chosenInterviers = activeInterviewers;
+        this.chosenInterviewers = activeInterviewers;
     }
 
     public Date getDatePosted() { return this.datePosted; }
@@ -101,7 +101,7 @@ public class JobPosting{
             Instant now = Instant.now();
             today.from(now);
             if (today.after(dateClosed)){
-                HiringProcessor = new InterviewManager(applicants, this, this.listOfStages, chosenInterviers);
+                HiringProcessor = new InterviewManager(applicants, this, this.listOfStages, chosenInterviewers);
                 start = true;
             }
         }
