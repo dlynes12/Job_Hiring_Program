@@ -61,11 +61,6 @@ public class HR_Coordinator extends User{
                 Group createJobs = new Group();
                 Scene createJobsPage = new Scene(createJobs, 725, 600);
                 stage.setScene(createJobsPage);
-                // get today's date
-                Date today = new Date();
-                Instant now = Instant.now();
-                Date.from(now);
-
                 //-------------
                 //Date closingDate = new Date(int year,int month,int day);
                 DatePicker datePicker = new DatePicker();
@@ -176,7 +171,7 @@ public class HR_Coordinator extends User{
                         for (String str: chosenInterviewers){
                             decidedListOfInt.add((Interviewer) userManager.getUser(str));
                         }
-                        jobManager.addJob(today, closeDate, position, 0, company, listIntStages, decidedListOfInt);//---------------------------------------------
+                        jobManager.addJob(closeDate, position, 0, company, listIntStages, decidedListOfInt);//---------------------------------------------
                         stage.setScene(HRBasePage);
                     }
                 });
@@ -184,7 +179,7 @@ public class HR_Coordinator extends User{
                 returnAddJ.setOnAction((ActionEvent exitPage) -> stage.setScene(HRBasePage));
             });
 
-            viewOpenJobs.setOnAction((ActionEvent viewJob) -> {
+            viewOpenJobs.setOnAction((ActionEvent viewJob) -> { // this the closed jobs
                 Group HRViewJobs = new Group();
                 Scene createJobsPage = new Scene(HRViewJobs, 600, 600);
                 stage.setScene(createJobsPage);
@@ -203,7 +198,7 @@ public class HR_Coordinator extends User{
                 scrollListJobs.setItems(listJobs);
                 scrollListJobs.setPrefSize(160.00,120.00);
                 int j = -1;
-                for (JobPosting jobPosting : jobManager.ViewJobs()) {
+                for (JobPosting jobPosting : jobManager.viewClosedJobs()) {  //was ViewJobs before
                     listJobs.add(jobPosting.getPosition());
                 }
                 ViewJobsGrid.add(scrollListJobs, 2, j + 1);

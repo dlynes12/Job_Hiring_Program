@@ -1,28 +1,40 @@
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
-public class JobAccess{
+public class JobAccess implements Observer {
 
+    Date today;
     private ArrayList<JobPosting> JobPostings = new ArrayList<>();
     private ArrayList<JobPosting> closedJobs = new ArrayList<>();
+
+    @Override
+    public void update(Observable o, Object arg) {
+        for (JobPosting job: JobPostings){
+            if (job.getDateClosed().before(today)){
+                this.removeJob(job.getPosition());
+            }
+        }
+    }
+
+    public void retrieveTime(Date date){
+        today = date;
+    }
+
     //Manage Open Jobs Function-------------------------------------------------------------------
-    public boolean addJob(Date datePosted, Date dateClosed, String position, int rounds, String company, ArrayList<String> listOfInterv, ArrayList<Interviewer> chosenInterviewers) {
-        JobPosting job = new JobPosting(datePosted, dateClosed, position, rounds, company, listOfInterv,chosenInterviewers);
+    public boolean addJob(Date dateClosed, String position, int rounds, String company, ArrayList<String> listOfInterv, ArrayList<Interviewer> chosenInterviewers) {
+        JobPosting job = new JobPosting(today, dateClosed, position, rounds, company, listOfInterv,chosenInterviewers);
         boolean add = false;
         if (this.getJob(position) == null && !position.trim().isEmpty()) {
             this.JobPostings.add(job);
             add = true;
             //automatically close the job once it has closed
-            Timer jobTimer = new Timer();
-            TimerTask closeJob = new TimerTask() {
-                @Override
-                public void run() {
-                    removeJob(position);
-                }
-            };
-            jobTimer.schedule(closeJob, dateClosed);
+//            Timer jobTimer = new Timer();
+//            TimerTask closeJob = new TimerTask() {
+//                @Override
+//                public void run() {
+//                    removeJob(position);
+//                }
+//            };
+//            jobTimer.schedule(closeJob, dateClosed);
         }
         return add;
     }

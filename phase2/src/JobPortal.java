@@ -59,6 +59,10 @@ public class JobPortal extends Application {
         TextField username = new TextField();
         TextField password = new TextField();
         DatePicker datePicker = new DatePicker();
+        TimeKeeper timeKeeper = new TimeKeeper();
+        timeKeeper.addObserver(jobManager);
+
+
 
         gridPane.add(labelUsername, 2, 0);
         gridPane.add(labelPassword, 2, 2);
@@ -123,36 +127,45 @@ public class JobPortal extends Application {
             exit.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
 
             create.setOnAction((ActionEvent ProcessUser) -> {
-                if (radioSet.getSelectedToggle() == radioApp) {
-                    Applicant tempApp = new Applicant(newUserField.getText(), newPassField.getText());
-                    if (userManager.addUser(tempApp)) {
-                        stage.setScene(loginPage);
+                if (datePicker.getValue() != null){
+                     timeKeeper.updateTime(datePicker);
+                     int day = datePicker.getValue().getDayOfMonth();
+                     int month = datePicker.getValue().getMonthValue();
+                     int year = datePicker.getValue().getYear();
+                     Date today = new Date(year, month,day);
+                     jobManager.retrieveTime(today);
+                    if (radioSet.getSelectedToggle() == radioApp) {
+                        Applicant tempApp = new Applicant(newUserField.getText(), newPassField.getText());
+                        if (userManager.addUser(tempApp)) {
+                            stage.setScene(loginPage);
+                        }else {
+                            alert.showAndWait();
+                        }
+                    } else if (radioSet.getSelectedToggle() == radioHR) {
+                        HR_Coordinator tempHR = new HR_Coordinator(newUserField.getText(), newPassField.getText());
+                        if (userManager.addUser(tempHR)) {
+                            stage.setScene(loginPage);
+                        }else {
+                            alert.showAndWait();
+                        }
+                    } else if (radioSet.getSelectedToggle() == radioInt) {
+                        Interviewer tempInt = new Interviewer(newUserField.getText(), newPassField.getText());
+                        if (userManager.addUser(tempInt)) {
+                            userManager.addInterviewer(tempInt);
+                            stage.setScene(loginPage);
+                        }else {
+                            alert.showAndWait();
+                        }
                     }else {
                         alert.showAndWait();
                     }
-                } else if (radioSet.getSelectedToggle() == radioHR) {
-                    HR_Coordinator tempHR = new HR_Coordinator(newUserField.getText(), newPassField.getText());
-                    if (userManager.addUser(tempHR)) {
-                        stage.setScene(loginPage);
-                    }else {
-                        alert.showAndWait();
+                    try{
+                        store.writeUserList(userManager.users);
+                    }catch(IOException ex){
+                        System.out.println(ex.getMessage());
                     }
-                } else if (radioSet.getSelectedToggle() == radioInt) {
-                    Interviewer tempInt = new Interviewer(newUserField.getText(), newPassField.getText());
-                    if (userManager.addUser(tempInt)) {
-                        userManager.addInterviewer(tempInt);
-                        stage.setScene(loginPage);
-                    }else {
-                        alert.showAndWait();
-                    }
-                }else {
-                    alert.showAndWait();
                 }
-                try{
-                    store.writeUserList(userManager.users);
-                }catch(IOException ex){
-                    System.out.println(ex.getMessage());
-                }
+
             });
         });
 
