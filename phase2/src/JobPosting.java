@@ -14,8 +14,6 @@ public class JobPosting{
     private InterviewManager HiringProcessor;
     private ArrayList<Interviewer> chosenInterviewers;
     private Boolean filled = false;
-
-    //private HiringPool candidatePool;
     private int interviewRounds;
     private ArrayList<Applicant> applicants = new ArrayList<>();
     ArrayList<String> listOfStages = new ArrayList<>();

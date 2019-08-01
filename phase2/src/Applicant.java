@@ -7,6 +7,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import java.io.File;
 import java.io.IOException;
 import java.time.Instant;
@@ -15,7 +16,6 @@ import java.util.Date;
 
 public class Applicant extends User {
     private HashMap<JobPosting, String> jobsApplied = new HashMap<>();
-//    private HashMap<String, ArrayList> userDocs = new HashMap<>();
     private Storage store = new Storage();
 
     public Applicant(String username, String password) {
@@ -44,17 +44,16 @@ public class Applicant extends User {
         return s.toString();
     }
 
-    private String getJobHistory(){
+    private String getJobHistory() {
         StringBuilder history = new StringBuilder();
-        if (!this.jobsApplied.isEmpty()){
+        if (!this.jobsApplied.isEmpty()) {
             Date today = new Date();
             Instant now = Instant.now();
             today.from(now);
-            for (JobPosting job: this.jobsApplied.keySet()){
-                if (today.after(job.getDateClosed())){
+            for (JobPosting job : this.jobsApplied.keySet()) {
+                if (today.after(job.getDateClosed())) {
                     history.append(job.getPosition()).append(" - CLOSED: ").append(job.getDateClosed()).append("\n");
-                }
-                else {
+                } else {
                     history.append(job.getPosition()).append("- OPEN\n");
                 }
             }
@@ -88,13 +87,13 @@ public class Applicant extends User {
         this.jobsApplied.put(job, status);
     }
 
-    private void withdrawApplication(JobPosting jobPosting){
+    private void withdrawApplication(JobPosting jobPosting) {
         jobPosting.removeApplicant(this);
         this.updateStatus(jobPosting, "Application withdrawn");
     }
 
 
-    String getInfo(){
+    String getInfo() {
         return "Applicant Username: " + this.getUsername() + '\n' +
                 "\n Date Created: " + this.getDateCreated() + "\n" +
                 "\nJobs Applied To:\n" + this.getJobHistory();
@@ -105,7 +104,7 @@ public class Applicant extends User {
         return "{A," + this.getJobs() + "," + this.getUsername() + "," + this.getPassword() + "}";
     }
 
-    void applicantGUISetUp(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage){
+    void applicantGUISetUp(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage) {
         if (loggedUser.getClass() == Applicant.class) {
 
             Group applicantPortalScene = new Group();
@@ -203,7 +202,7 @@ public class Applicant extends User {
 // use withdrawApp() method from InterviewManager class to withdraw a candidates application from a job
 // maybe use a dropdown menu to select the job, then that populates the job status and the ability to withdraw the application
 
-                Label accountInfo = new Label(((Applicant)loggedUser).getInfo());
+                Label accountInfo = new Label(((Applicant) loggedUser).getInfo());
                 Button returnButton = new Button("Back");
                 GridPane historyPane = new GridPane();
 
@@ -231,8 +230,8 @@ public class Applicant extends User {
                 GridPane jobStatusPane = new GridPane();
                 ToggleGroup jobRadioSet = new ToggleGroup();
 
-                for (JobPosting job: this.jobsApplied.keySet()){
-                    RadioButton jobRadioButton = new RadioButton(job.getPosition() + " - "+ this.getJobStatus(job));
+                for (JobPosting job : this.jobsApplied.keySet()) {
+                    RadioButton jobRadioButton = new RadioButton(job.getPosition() + " - " + this.getJobStatus(job));
                     jobRadioButton.setToggleGroup(jobRadioSet);
                     jobStatusPane.add(jobRadioButton, 10, i + 1);
                     i++;
@@ -247,8 +246,14 @@ public class Applicant extends User {
                 jobStatusViewerScene.getChildren().addAll(jobStatusPane);
 
                 withdraw.setOnAction((ActionEvent withdrawApp) -> {
-                    JobPosting job = jobManager.getJob(((RadioButton) jobRadioSet.getSelectedToggle()).getText());
+
+                    RadioButton selectedToggle = (RadioButton) jobRadioSet.getSelectedToggle();
+                    String selectedToggleText = selectedToggle.getText();
+                    String[] textSplit = selectedToggleText.split(" - "); //splits the job name from it's status
+                    String jobPosition = textSplit[0];
+                    JobPosting job = jobManager.getJob(jobPosition);
                     this.withdrawApplication(job);
+
                 });
 
                 returnJS.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));
