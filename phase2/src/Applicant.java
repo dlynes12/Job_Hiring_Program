@@ -104,7 +104,8 @@ public class Applicant extends User {
         return "{A," + this.getJobs() + "," + this.getUsername() + "," + this.getPassword() + "}";
     }
 
-    void applicantGUISetUp(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage) {
+    void applicantGUISetUp(Stage stage, User loggedUser, SystemAdmin systemAdmin, Scene loginPage){
+    //void applicantGUISetUp(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage) {
         if (loggedUser.getClass() == Applicant.class) {
 
             Group applicantPortalScene = new Group();
@@ -162,7 +163,8 @@ public class Applicant extends User {
                 GridPane jobViewer = new GridPane();
 
                 ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
-                for (JobPosting jP : jobManager.ViewJobs()) {
+                //for (JobPosting jP : jobManager.ViewJobs()) {
+                for (JobPosting jP: systemAdmin.getJobManager().ViewJobs()) {
                     RadioButton radioButton = new RadioButton(jP.getPosition());
                     radioButton.setToggleGroup(radioSet);
                     jobViewer.add(radioButton, 0, i + 1);
@@ -182,7 +184,8 @@ public class Applicant extends User {
                     String selectedRadio = (((RadioButton) radioSet.getSelectedToggle()).getText());
                     Button back = new Button("Back");
                     //jobManager.getJob(selectedRadio).addApplicant(a);
-                    a.applyToJob(jobManager.getJob(selectedRadio));
+                    //a.applyToJob(jobManager.getJob(selectedRadio));
+                    a.applyToJob(systemAdmin.getJobManager().getJob(selectedRadio));
 
                     back.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));
                 });
@@ -251,7 +254,8 @@ public class Applicant extends User {
                     String selectedToggleText = selectedToggle.getText();
                     String[] textSplit = selectedToggleText.split(" - "); //splits the job name from it's status
                     String jobPosition = textSplit[0];
-                    JobPosting job = jobManager.getJob(jobPosition);
+                    //JobPosting job = jobManager.getJob(jobPosition);
+                    JobPosting job = systemAdmin.getJobManager().getJob(jobPosition);
                     this.withdrawApplication(job);
 
                 });

@@ -40,7 +40,8 @@ public class Interviewer extends User {
 
     //GUI CONTROLS FOR INTERVIEWS
 
-    void getInterviewPane(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage, UserAccess userManager) {
+    void getInterviewPane(Stage stage, User loggedUser, SystemAdmin systemAdmin, Scene loginPage){
+    //void getInterviewPane(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage, UserAccess userManager) {
         if (loggedUser.getClass() == Interviewer.class) {
 
             Group intPortalScene = new Group();
