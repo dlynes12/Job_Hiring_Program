@@ -90,6 +90,7 @@ public class Applicant extends User {
 
     private void withdrawApplication(JobPosting jobPosting){
         jobPosting.removeApplicant(this);
+        this.updateStatus(jobPosting, "Application withdrawn");
     }
 
 
