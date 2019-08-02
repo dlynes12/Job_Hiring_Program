@@ -12,8 +12,6 @@ public class TimeKeeper extends Observable {
 
     }
 
-    public void compareTime(){}
-
 
 
  }

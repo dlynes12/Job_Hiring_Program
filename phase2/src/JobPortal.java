@@ -166,12 +166,9 @@ public class JobPortal extends Application {
 
         log_in.setOnAction((ActionEvent e) -> {
             if (datePicker.getValue() != null){
-                timeKeeper.updateTime(datePicker);
-                int day = datePicker.getValue().getDayOfMonth();
-                int month = datePicker.getValue().getMonthValue();
-                int year = datePicker.getValue().getYear();
-                Date today = new Date(year, month,day);
+                Date today = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                 systemAdmin.getJobManager().retrieveTime(today);
+                timeKeeper.updateTime(datePicker);
                 String UName = username.getText();
                 String Pass = password.getText();
                 try {
