@@ -1,7 +1,10 @@
+import java.sql.Time;
+
 public class SystemAdmin {
 
     private JobAccess jobManager;
     private UserAccess userManager;
+    private TimeKeeper timeKeeper;
 
      public SystemAdmin(){
         this.jobManager = new JobAccess();
@@ -15,5 +18,7 @@ public class SystemAdmin {
     protected UserAccess getUserManager(){
          return this.userManager;
     }
+
+    protected TimeKeeper getTimeKeeper() { return this.timeKeeper; }
 
 }
