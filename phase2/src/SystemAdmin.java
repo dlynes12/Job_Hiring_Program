@@ -1,9 +1,11 @@
 import java.sql.Time;
+import java.util.HashMap;
 
 public class SystemAdmin {
 
     private JobAccess jobManager;
     private UserAccess userManager;
+    private HashMap<Company, HR_Coordinator> hRCoordinators;
     private TimeKeeper timeKeeper;
 
      public SystemAdmin(){
@@ -17,6 +19,12 @@ public class SystemAdmin {
 
     protected UserAccess getUserManager(){
          return this.userManager;
+    }
+
+    protected HR_Coordinator getCompanyHR(Company company){ return this.hRCoordinators.get(company); }
+
+    public void addCompanyHR(Company company, HR_Coordinator hrCoordinator){
+         this.hRCoordinators.put(company, hrCoordinator);
     }
 
     protected TimeKeeper getTimeKeeper() { return this.timeKeeper; }

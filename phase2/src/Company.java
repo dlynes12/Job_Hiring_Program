@@ -9,12 +9,9 @@ public class Company {
     public Company(String companyName, HR_Coordinator hrCoordinator){
         this.hrCoordinator = hrCoordinator;
         this.companyName = companyName;
-
     }
 
-    public void setHrCoordinator(HR_Coordinator hrCoordinator){
-        this.hrCoordinator = hrCoordinator;
-    }
+    public void setHrCoordinator(HR_Coordinator hrCoordinator){ this.hrCoordinator = hrCoordinator; }
 
     public HR_Coordinator getHrCoordinator(){ return this.hrCoordinator; }
 }
