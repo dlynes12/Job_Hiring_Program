@@ -9,7 +9,10 @@ public class TimeKeeper extends Observable {
         today = datePicker;
         setChanged(); // marks that the object has changed
         notifyObservers();
+
     }
+
+    public void compareTime(){}
 
 
 
