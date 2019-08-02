@@ -21,7 +21,7 @@ public class HR_Coordinator extends User{
     }
 
 
-    void HRGUISetUp(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage, UserAccess userManager){
+    void HRGUISetUp(Stage stage, User loggedUser, SystemAdmin systemAdmin, Scene loginPage){
         if (loggedUser.getClass() == HR_Coordinator.class) {
             Group HRPortalScene = new Group();
             Scene HRBasePage = new Scene(HRPortalScene, 450, 250);
@@ -88,7 +88,7 @@ public class HR_Coordinator extends User{
                 ObservableList<String> chosenInterviewers = FXCollections.observableArrayList(); // for ViewList
                 ComboBox<String> interviewerDropdown = new ComboBox<>(); // not populating bc getListInterviewers() method in UserAccess not working
 
-                for (Interviewer interviewer: userManager.getListInterviewers()){
+                for (Interviewer interviewer: systemAdmin.getUserManager().getListInterviewers()){
                     //listInterviewers.add(interviewer.getUsername());
                     interviewerDropdown.getItems().add(interviewer.getUsername());
                 }
@@ -169,9 +169,9 @@ public class HR_Coordinator extends User{
                         }
                         ArrayList<Interviewer> decidedListOfInt= new ArrayList<>();
                         for (String str: chosenInterviewers){
-                            decidedListOfInt.add((Interviewer) userManager.getUser(str));
+                            decidedListOfInt.add((Interviewer) systemAdmin.getUserManager().getUser(str));
                         }
-                        jobManager.addJob(closeDate, position, 0, company, listIntStages, decidedListOfInt);//---------------------------------------------
+                        systemAdmin.getJobManager().addJob(closeDate, position, 0, company, listIntStages, decidedListOfInt);//---------------------------------------------
                         stage.setScene(HRBasePage);
                     }
                 });
@@ -198,7 +198,7 @@ public class HR_Coordinator extends User{
                 scrollListJobs.setItems(listJobs);
                 scrollListJobs.setPrefSize(160.00,120.00);
                 int j = -1;
-                for (JobPosting jobPosting : jobManager.viewClosedJobs()) {  //was ViewJobs before
+                for (JobPosting jobPosting : systemAdmin.getJobManager().viewClosedJobs()) {  //was ViewJobs before
                     listJobs.add(jobPosting.getPosition());
                 }
                 ViewJobsGrid.add(scrollListJobs, 2, j + 1);
@@ -219,7 +219,7 @@ public class HR_Coordinator extends User{
                 viewApps.setOnAction((ActionEvent seeApps) -> {
                     int i = 0;
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();
-                    String[] listOfApp = jobManager.getJob(choice).viewAllApplicants().split(",");  //was .viewApplicants() before
+                    String[] listOfApp = systemAdmin.getJobManager().getJob(choice).viewAllApplicants().split(",");  //was .viewApplicants() before
                     if (listOfApp.length != 0 && !isNullOrEmpty(listOfApp[0])) {
                         //GridPane appViewer = new GridPane();
                         //ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
@@ -254,8 +254,8 @@ public class HR_Coordinator extends User{
                 distributeApps.setOnAction((ActionEvent disApps) -> {
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();
                     //String[] listOfApp = jobManager.getJob(choice).viewAllApplicants().split(",");
-                    JobPosting tempJob = jobManager.getJob(choice);
-                    tempJob.getHiringProcessor().sendListToInterview(userManager);
+                    JobPosting tempJob = systemAdmin.getJobManager().getJob(choice);
+                    tempJob.getHiringProcessor().sendListToInterview(systemAdmin.getUserManager());
                 });
             });
 
@@ -264,7 +264,7 @@ public class HR_Coordinator extends User{
                 Scene createViewAppsPage = new Scene(viewApps, 600, 600);
                 stage.setScene(createViewAppsPage);
                 ComboBox dropApp = new ComboBox();
-                for (User user : userManager.viewUsers()) {
+                for (User user : systemAdmin.getUserManager().viewUsers()) {
                     if (user instanceof Applicant) {
                         dropApp.getItems().add(user.getUsername());
                     }
@@ -288,7 +288,7 @@ public class HR_Coordinator extends User{
                 returnViewApp.setOnAction((ActionEvent exitPage) -> stage.setScene(HRBasePage));
 
                 viewButton.setOnAction((ActionEvent seeApps) -> {
-                    appInfo.setText(((Applicant)(userManager.getUser((String) dropApp.getValue()))).getInfo());
+                    appInfo.setText(((Applicant)(systemAdmin.getUserManager().getUser((String) dropApp.getValue()))).getInfo());
                     //appInfo.setText(((Applicant)userManager.getUser((String)dropApp.getValue())).getJobs());
 
                 });

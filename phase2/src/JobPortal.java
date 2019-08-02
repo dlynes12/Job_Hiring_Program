@@ -21,8 +21,6 @@ public class JobPortal extends Application {
 
 
         SystemAdmin systemAdmin = new SystemAdmin();
-        UserAccess userManager = new UserAccess();
-        JobAccess jobManager = new JobAccess();
         Group loginScene = new Group();
         Storage store = new Storage();
         List<String> list;
