@@ -3,7 +3,7 @@ import javafx.scene.control.Alert;
 import java.sql.Time;
 import java.util.HashMap;
 
-public class SystemAdmin {
+public class SystemAdmin implements java.io.Serializable{
 
     private JobAccess jobManager;
     private UserAccess userManager;

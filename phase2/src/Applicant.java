@@ -15,7 +15,7 @@ import java.util.Date;
 
 public class Applicant extends User  {
     private HashMap<JobPosting, String> jobsApplied = new HashMap<>();
-    private Storage store = new Storage();
+    transient Storage store = new Storage();
 
     public Applicant(String username, String password) {
         super(username, password);
