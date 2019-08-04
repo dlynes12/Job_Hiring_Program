@@ -40,8 +40,13 @@ public class JobPortal extends Application {
         alertLogin.setHeaderText("Do not leave any of the fields empty.");
         alertLogin.setContentText("Please Try Again");
 
+        Alert alertDate = new Alert(Alert.AlertType.WARNING);
+        alertDate.setTitle("Invalid date input");
+        alertDate.setHeaderText("Do not leave any of the fields empty.");
+        alertDate.setContentText("Please Try Again");
+
         Alert alertCreate = new Alert(Alert.AlertType.WARNING);
-        alertCreate.setTitle("Invalid input or user already exists.");
+        alertCreate.setTitle("Invalid input or user already exists");
         alertCreate.setHeaderText("Do not leave any of the fields empty.");
         alertCreate.setContentText("Please Try Again");
 
@@ -199,11 +204,11 @@ public class JobPortal extends Application {
                         }catch(IOException ex){
                             System.out.println(ex.getMessage());
                         }
-                    }else{alertLogin.showAndWait();}
+                    }//else{alertLogin.showAndWait();}
                 }catch (NullPointerException e1){
                     alertLogin.showAndWait();
                 }
-            }
+            }else {alertDate.showAndWait();}
 
         });
     }
