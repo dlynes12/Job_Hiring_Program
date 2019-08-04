@@ -40,6 +40,12 @@ public class JobPortal extends Application {
         alertLogin.setHeaderText("Do not leave any of the fields empty.");
         alertLogin.setContentText("Please Try Again");
 
+        Alert alertLogin2 = new Alert(Alert.AlertType.WARNING);
+        alertLogin2.setTitle("Password/Username Not Found");
+        alertLogin2.setHeaderText("Incorrect Password");
+        alertLogin2.setContentText("Please Try Again");
+
+
         Alert alertDate = new Alert(Alert.AlertType.WARNING);
         alertDate.setTitle("Invalid date input");
         alertDate.setHeaderText("Do not leave any of the fields empty.");
@@ -204,7 +210,7 @@ public class JobPortal extends Application {
                         }catch(IOException ex){
                             System.out.println(ex.getMessage());
                         }
-                    }//else{alertLogin.showAndWait();}
+                    }else{alertLogin2.showAndWait();}
                 }catch (NullPointerException e1){
                     alertLogin.showAndWait();
                 }
