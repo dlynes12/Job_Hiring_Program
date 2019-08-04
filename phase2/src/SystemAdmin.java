@@ -1,3 +1,5 @@
+import javafx.scene.control.Alert;
+
 import java.sql.Time;
 import java.util.HashMap;
 
@@ -28,5 +30,32 @@ public class SystemAdmin {
     }
 
     protected TimeKeeper getTimeKeeper() { return this.timeKeeper; }
+
+    public Alert getAlert(String alertType){
+         Alert alert = new Alert(Alert.AlertType.WARNING);
+         if(alertType.equals("login1")){
+             alert.setTitle("Password/Username Not Found");
+             alert.setHeaderText("Do not leave any of the fields empty.");
+             alert.setContentText("Please Try Again");
+         }
+         else if(alertType.equals("login2")){
+             alert.setTitle("Password/Username Not Found");
+             alert.setHeaderText("Incorrect Password");
+             alert.setContentText("Please Try Again");
+         }
+         else if(alertType.equals("date")){
+             alert.setTitle("Invalid date input");
+             alert.setHeaderText("Do not leave any of the fields empty.");
+             alert.setContentText("Please Try Again");
+
+         }
+         else if(alertType.equals("create")){
+             alert.setTitle("Invalid input or user already exists");
+             alert.setHeaderText("Do not leave any of the fields empty.");
+             alert.setContentText("Please Try Again");
+         }
+         return alert;
+    }
+
 
 }

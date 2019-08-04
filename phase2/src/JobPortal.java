@@ -35,26 +35,26 @@ public class JobPortal extends Application {
         }catch(ClassNotFoundException|IOException ex){
             System.out.println(ex.getMessage());
         }
-        Alert alertLogin = new Alert(Alert.AlertType.WARNING);
-        alertLogin.setTitle("Password/Username Not Found");
-        alertLogin.setHeaderText("Do not leave any of the fields empty.");
-        alertLogin.setContentText("Please Try Again");
-
-        Alert alertLogin2 = new Alert(Alert.AlertType.WARNING);
-        alertLogin2.setTitle("Password/Username Not Found");
-        alertLogin2.setHeaderText("Incorrect Password");
-        alertLogin2.setContentText("Please Try Again");
-
-
-        Alert alertDate = new Alert(Alert.AlertType.WARNING);
-        alertDate.setTitle("Invalid date input");
-        alertDate.setHeaderText("Do not leave any of the fields empty.");
-        alertDate.setContentText("Please Try Again");
-
-        Alert alertCreate = new Alert(Alert.AlertType.WARNING);
-        alertCreate.setTitle("Invalid input or user already exists");
-        alertCreate.setHeaderText("Do not leave any of the fields empty.");
-        alertCreate.setContentText("Please Try Again");
+//        Alert alertLogin1 = new Alert(Alert.AlertType.WARNING);
+//        alertLogin1.setTitle("Password/Username Not Found");
+//        alertLogin1.setHeaderText("Do not leave any of the fields empty.");
+//        alertLogin1.setContentText("Please Try Again");
+//
+//        Alert alertLogin2 = new Alert(Alert.AlertType.WARNING);
+//        alertLogin2.setTitle("Password/Username Not Found");
+//        alertLogin2.setHeaderText("Incorrect Password");
+//        alertLogin2.setContentText("Please Try Again");
+//
+//
+//        Alert alertDate = new Alert(Alert.AlertType.WARNING);
+//        alertDate.setTitle("Invalid date input");
+//        alertDate.setHeaderText("Do not leave any of the fields empty.");
+//        alertDate.setContentText("Please Try Again");
+//
+//        Alert alertCreate = new Alert(Alert.AlertType.WARNING);
+//        alertCreate.setTitle("Invalid input or user already exists");
+//        alertCreate.setHeaderText("Do not leave any of the fields empty.");
+//        alertCreate.setContentText("Please Try Again");
 
         stage.setTitle("Job Application Portal");
         Scene loginPage = new Scene(loginScene, 600, 200);
@@ -148,7 +148,7 @@ public class JobPortal extends Application {
                     if (systemAdmin.getUserManager().addUser(tempApp)){
                         stage.setScene(loginPage);
                     }else {
-                        alertCreate.showAndWait();
+                        systemAdmin.getAlert("create").showAndWait();
                     }
                 } else if (radioSet.getSelectedToggle() == radioHR) {
                     HR_Coordinator tempHR = new HR_Coordinator(newUserField.getText(), newPassField.getText());
@@ -156,7 +156,7 @@ public class JobPortal extends Application {
                     //if (userManager.addUser(tempHR)) {
                         stage.setScene(loginPage);
                     }else {
-                        alertCreate.showAndWait();
+                        systemAdmin.getAlert("create").showAndWait();
                     }
                 } else if (radioSet.getSelectedToggle() == radioInt) {
                     Interviewer tempInt = new Interviewer(newUserField.getText(), newPassField.getText());
@@ -166,10 +166,10 @@ public class JobPortal extends Application {
                         //userManager.addInterviewer(tempInt);
                         stage.setScene(loginPage);
                     }else {
-                        alertCreate.showAndWait();
+                        systemAdmin.getAlert("create").showAndWait();
                     }
                 }else {
-                    alertCreate.showAndWait();
+                    systemAdmin.getAlert("create").showAndWait();
                 }
                 try{
                     //store.writeUserList(userManager.users);
@@ -210,11 +210,11 @@ public class JobPortal extends Application {
                         }catch(IOException ex){
                             System.out.println(ex.getMessage());
                         }
-                    }else{alertLogin2.showAndWait();}
+                    }else{systemAdmin.getAlert("login2").showAndWait();}
                 }catch (NullPointerException e1){
-                    alertLogin.showAndWait();
+                    systemAdmin.getAlert("login1").showAndWait();
                 }
-            }else {alertDate.showAndWait();}
+            }else {systemAdmin.getAlert("date").showAndWait();}
 
         });
     }
