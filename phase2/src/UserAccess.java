@@ -1,15 +1,19 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
-public class UserAccess {
+public class UserAccess implements java.io.Serializable {
     public ArrayList<User> users = new ArrayList();
     private ArrayList<Interviewer> employedInterviewers = new ArrayList<>();
+    Storage store = new Storage();
 
     // LOGIN FUNCTIONS----------------------------------------------------------------------
     boolean addUser(User user) {
         boolean added = false;
         if (checkInput(user.getUsername(), user.getPassword())){
             for (User account: users){
-                if ( account.getUsername().equals(user.getUsername())){added = true;}
+                if ( account.getUsername().equals(user.getUsername())){
+                    added = true;
+                }
             }
             if (!added){this.users.add(user); return true;}
             else {return false;}
@@ -35,14 +39,12 @@ public class UserAccess {
         return null;
     }
 
-    public ArrayList<Interviewer> getListInterviewers(){ /// buggy doesnt work
-//        ArrayList<Interviewer> ListInt = new ArrayList<>();
-//        for (User user: users){
-//            if (user.getClass().isInstance(Interviewer.class)){  /// Interviewers ae being returned as type User so code isn't running
-//                ListInt.add(((Interviewer) user));
-//            }
-//        }
+    public ArrayList<Interviewer> getListInterviewers(){
         return employedInterviewers;
+    }
+
+    public void setEmployedInterviewers(ArrayList<Interviewer> employedInterviewers) {
+        this.employedInterviewers = employedInterviewers;
     }
 
     public boolean addInterviewer(Interviewer interviewer){
@@ -50,8 +52,9 @@ public class UserAccess {
         for (Interviewer account: employedInterviewers){
             if ( account.getUsername().equals(interviewer.getUsername())){add = false;}
         }
-        if (add){this.employedInterviewers.add(interviewer);}
-//        st.writeFile("userData.txt", );
+        if (add){
+            this.employedInterviewers.add(interviewer);
+        }
         return add;
     }
 
