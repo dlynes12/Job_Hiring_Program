@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 // One HR Person hires for their own section of the company
-public class HR_Coordinator extends User{
+public class HR_Coordinator extends User {
 
 
     HR_Coordinator(String Username, String Password){

@@ -1,7 +1,8 @@
 import java.time.Instant;
 import java.util.Date;
+import java.io.Serializable;
 
-public abstract class User implements java.io.Serializable{
+public abstract class User implements Serializable{
     private String username;
     private String password;
     private Date dateCreated = new Date();

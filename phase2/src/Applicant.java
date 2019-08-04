@@ -13,7 +13,7 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Date;
 
-public class Applicant extends User {
+public class Applicant extends User  {
     private HashMap<JobPosting, String> jobsApplied = new HashMap<>();
     private Storage store = new Storage();
 
