@@ -35,7 +35,7 @@ public class SystemAdmin {
          Alert alert = new Alert(Alert.AlertType.WARNING);
          if(alertType.equals("login1")){
              alert.setTitle("Password/Username Not Found");
-             alert.setHeaderText("Do not leave any of the fields empty.");
+             alert.setHeaderText("Username Not Found.");
              alert.setContentText("Please Try Again");
          }
          else if(alertType.equals("login2")){
