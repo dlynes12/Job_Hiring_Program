@@ -28,9 +28,11 @@ public class UserAccess {
     }
 
     public User login(String username, String password){
-        User temp = this.getUser(username);
-        if (!temp.getPassword().equals(password)){temp = null;}
-        return temp;
+        User user = this.getUser(username);
+        if(user.getPassword().equals(password)){
+            return user;
+        }
+        return null;
     }
 
     public ArrayList<Interviewer> getListInterviewers(){ /// buggy doesnt work

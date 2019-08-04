@@ -35,10 +35,15 @@ public class JobPortal extends Application {
         }catch(ClassNotFoundException|IOException ex){
             System.out.println(ex.getMessage());
         }
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Password/Username Not Found");
-        alert.setHeaderText("Do not leave any of the fields empty, and make sure that you input the correct password /username.");
-        alert.setContentText("Please Try Again");
+        Alert alertLogin = new Alert(Alert.AlertType.WARNING);
+        alertLogin.setTitle("Password/Username Not Found");
+        alertLogin.setHeaderText("Do not leave any of the fields empty.");
+        alertLogin.setContentText("Please Try Again");
+
+        Alert alertCreate = new Alert(Alert.AlertType.WARNING);
+        alertCreate.setTitle("Invalid input or user already exists.");
+        alertCreate.setHeaderText("Do not leave any of the fields empty.");
+        alertCreate.setContentText("Please Try Again");
 
         stage.setTitle("Job Application Portal");
         Scene loginPage = new Scene(loginScene, 600, 200);
@@ -83,7 +88,7 @@ public class JobPortal extends Application {
         //CREATE A USER PAGE
         new_user.setOnAction((ActionEvent AddUser) -> {
             Group createNewUser = new Group();
-            stage.setScene(new Scene(createNewUser, 600, 600));
+            stage.setScene(new Scene(createNewUser, 600, 200));
             Button create = new Button("Create");
             Label createUserLab = new Label("Choose a Username");
             Label createPassLab = new Label("Enter a Password");
@@ -132,7 +137,7 @@ public class JobPortal extends Application {
                     if (systemAdmin.getUserManager().addUser(tempApp)){
                         stage.setScene(loginPage);
                     }else {
-                        alert.showAndWait();
+                        alertCreate.showAndWait();
                     }
                 } else if (radioSet.getSelectedToggle() == radioHR) {
                     HR_Coordinator tempHR = new HR_Coordinator(newUserField.getText(), newPassField.getText());
@@ -140,7 +145,7 @@ public class JobPortal extends Application {
                     //if (userManager.addUser(tempHR)) {
                         stage.setScene(loginPage);
                     }else {
-                        alert.showAndWait();
+                        alertCreate.showAndWait();
                     }
                 } else if (radioSet.getSelectedToggle() == radioInt) {
                     Interviewer tempInt = new Interviewer(newUserField.getText(), newPassField.getText());
@@ -150,10 +155,10 @@ public class JobPortal extends Application {
                         //userManager.addInterviewer(tempInt);
                         stage.setScene(loginPage);
                     }else {
-                        alert.showAndWait();
+                        alertCreate.showAndWait();
                     }
                 }else {
-                    alert.showAndWait();
+                    alertCreate.showAndWait();
                 }
                 try{
                     //store.writeUserList(userManager.users);
@@ -194,9 +199,9 @@ public class JobPortal extends Application {
                         }catch(IOException ex){
                             System.out.println(ex.getMessage());
                         }
-                    }
+                    }else{alertLogin.showAndWait();}
                 }catch (NullPointerException e1){
-                    alert.showAndWait();
+                    alertLogin.showAndWait();
                 }
             }
 
