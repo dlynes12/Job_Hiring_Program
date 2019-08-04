@@ -26,7 +26,7 @@ public class JobPortal extends Application {
         List<String> list;
 
         try{
-              list = store.readUserList();
+              list = store.readList("Users");
               System.out.println(list);
               for(Object o: list){
                   systemAdmin.getUserManager().addUser((User)o);
@@ -173,7 +173,7 @@ public class JobPortal extends Application {
                 }
                 try{
                     //store.writeUserList(userManager.users);
-                    store.writeUserList(systemAdmin.getUserManager().users);
+                    store.writeList(systemAdmin.getUserManager().users, "Users");
                 }catch(IOException ex){
                     System.out.println(ex.getMessage());
                 }
