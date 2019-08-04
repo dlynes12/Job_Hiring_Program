@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,31 +26,35 @@ public class JobPortal extends Application {
         List<String> list;
 
         try{
-            list = store.readList("Users");
-            System.out.println(list);
-            for(Object o: list){
-                systemAdmin.getUserManager().addUser((User)o);
-            }
-
-            systemAdmin.getUserManager().setEmployedInterviewers((ArrayList<Interviewer>) store.readList("EmployedInterviewers"));
-
-            systemAdmin.getJobManager().setClosedJobs((ArrayList<JobPosting>) store.readList("ClosedJobs"));
-            systemAdmin.getJobManager().setJobPostings((ArrayList<JobPosting>) store.readList("JobPostings"));
-
-            systemAdmin.getIntManager().setApprovedApplicants((ArrayList<Applicant>) store.readList("ApprovedApplicants"));
-            systemAdmin.getIntManager().setCandidates((ArrayList<Applicant>) store.readList("Candidates"));
-            systemAdmin.getIntManager().setRejectedApplicants((ArrayList<Applicant>) store.readList("RejectedApplicants"));
-            systemAdmin.getIntManager().setRejectedFromRound((ArrayList<Applicant>) store.readList("RejectedFromRound"));
-            systemAdmin.getIntManager().setChosenInterviewers((ArrayList<Interviewer>) store.readList("ChosenInterviewers"));
-            systemAdmin.getIntManager().setHiringStage((ArrayList<String>) store.readList("HiringStage"));
-
-        }catch(ClassNotFoundException|IOException|NullPointerException ex){
+              list = store.readUserList();
+              System.out.println(list);
+              for(Object o: list){
+                  systemAdmin.getUserManager().addUser((User)o);
+                  //userManager.addUser((User)o);
+              }
+        }catch(ClassNotFoundException|IOException ex){
             System.out.println(ex.getMessage());
         }
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Password/Username Not Found");
-        alert.setHeaderText("Do not leave any of the fields empty, and make sure that you input the correct password /username.");
-        alert.setContentText("Please Try Again");
+        Alert alertLogin = new Alert(Alert.AlertType.WARNING);
+        alertLogin.setTitle("Password/Username Not Found");
+        alertLogin.setHeaderText("Do not leave any of the fields empty.");
+        alertLogin.setContentText("Please Try Again");
+
+        Alert alertLogin2 = new Alert(Alert.AlertType.WARNING);
+        alertLogin2.setTitle("Password/Username Not Found");
+        alertLogin2.setHeaderText("Incorrect Password");
+        alertLogin2.setContentText("Please Try Again");
+
+
+        Alert alertDate = new Alert(Alert.AlertType.WARNING);
+        alertDate.setTitle("Invalid date input");
+        alertDate.setHeaderText("Do not leave any of the fields empty.");
+        alertDate.setContentText("Please Try Again");
+
+        Alert alertCreate = new Alert(Alert.AlertType.WARNING);
+        alertCreate.setTitle("Invalid input or user already exists");
+        alertCreate.setHeaderText("Do not leave any of the fields empty.");
+        alertCreate.setContentText("Please Try Again");
 
         stage.setTitle("Job Application Portal");
         Scene loginPage = new Scene(loginScene, 600, 200);
@@ -96,7 +99,7 @@ public class JobPortal extends Application {
         //CREATE A USER PAGE
         new_user.setOnAction((ActionEvent AddUser) -> {
             Group createNewUser = new Group();
-            stage.setScene(new Scene(createNewUser, 600, 600));
+            stage.setScene(new Scene(createNewUser, 600, 200));
             Button create = new Button("Create");
             Label createUserLab = new Label("Choose a Username");
             Label createPassLab = new Label("Enter a Password");
@@ -145,7 +148,7 @@ public class JobPortal extends Application {
                     if (systemAdmin.getUserManager().addUser(tempApp)){
                         stage.setScene(loginPage);
                     }else {
-                        alert.showAndWait();
+                        alertCreate.showAndWait();
                     }
                 } else if (radioSet.getSelectedToggle() == radioHR) {
                     HR_Coordinator tempHR = new HR_Coordinator(newUserField.getText(), newPassField.getText());
@@ -153,7 +156,7 @@ public class JobPortal extends Application {
                     //if (userManager.addUser(tempHR)) {
                         stage.setScene(loginPage);
                     }else {
-                        alert.showAndWait();
+                        alertCreate.showAndWait();
                     }
                 } else if (radioSet.getSelectedToggle() == radioInt) {
                     Interviewer tempInt = new Interviewer(newUserField.getText(), newPassField.getText());
@@ -163,14 +166,14 @@ public class JobPortal extends Application {
                         //userManager.addInterviewer(tempInt);
                         stage.setScene(loginPage);
                     }else {
-                        alert.showAndWait();
+                        alertCreate.showAndWait();
                     }
                 }else {
-                    alert.showAndWait();
+                    alertCreate.showAndWait();
                 }
                 try{
                     //store.writeUserList(userManager.users);
-                    store.writeList(systemAdmin.getUserManager().users, "Users");
+                    store.writeUserList(systemAdmin.getUserManager().users);
                 }catch(IOException ex){
                     System.out.println(ex.getMessage());
                 }
@@ -201,39 +204,20 @@ public class JobPortal extends Application {
                         } else {
                             stage.setScene(loginPage);
                         }
-                    }
+
+                        try{
+                            store.writeToFile(loggedUser);
+                        }catch(IOException ex){
+                            System.out.println(ex.getMessage());
+                        }
+                    }else{alertLogin2.showAndWait();}
                 }catch (NullPointerException e1){
-                    alert.showAndWait();
+                    alertLogin.showAndWait();
                 }
-            }
+            }else {alertDate.showAndWait();}
 
         });
-        stage.setOnCloseRequest((WindowEvent e) -> {
-            try {
-                store.writeList(systemAdmin.getUserManager().getListInterviewers(), "EmployedInterviewers");
-                store.writeList(systemAdmin.getUserManager().users, "Users");
-
-                store.writeList(systemAdmin.getJobManager().viewClosedJobs(), "ClosedJobs");
-                store.writeList(systemAdmin.getJobManager().ViewJobs(), "JobPostings");
-
-                store.writeList(systemAdmin.getIntManager().getCandidates(), "Candidates");
-                store.writeList(systemAdmin.getIntManager().getRejectedApplicants(),"RejectedApplicants");
-                store.writeList(systemAdmin.getIntManager().getRejectedFromRound(),"RejectedFromRound");
-                store.writeList(systemAdmin.getIntManager().getRoundOfApplicants(), "RoundOfApplicants");
-                store.writeList(systemAdmin.getIntManager().getChosenInterviewers(), "ChosenInterviewers");
-                store.writeList(systemAdmin.getIntManager().getHiringStage(), "HiringStage");
-                store.writeList(systemAdmin.getIntManager().getApprovedApplicants(), "ApprovedApplicants");
-
-            } catch (IOException|NullPointerException ex) {
-                ex.printStackTrace();
-            }
-
-        });
-
-
-
     }
-
 
     // View + Controller
 

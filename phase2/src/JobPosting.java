@@ -11,12 +11,14 @@ public class JobPosting{
     private Date dateClosed;
     private String position;
     private String company;
+    private String tag;
     private InterviewManager HiringProcessor;
     private ArrayList<Interviewer> chosenInterviewers;
     private Boolean filled = false;
     private int interviewRounds;
     private ArrayList<Applicant> applicants = new ArrayList<>();
-    ArrayList<String> listOfStages = new ArrayList<>();
+    private ArrayList<String> listOfStages = new ArrayList<>();
+
 
     public JobPosting(Date datePosted, Date dateClosed, String position, int interviewRounds, String company, ArrayList<String> stagesOfInterv, ArrayList<Interviewer> activeInterviewers) {
         this.datePosted = datePosted;
@@ -49,6 +51,8 @@ public class JobPosting{
     public void setPosition(String position) {
         this.position = position;
     }
+
+    public String getTag(){return this.tag;}
 
 
 
