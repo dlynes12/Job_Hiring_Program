@@ -57,7 +57,7 @@ public class HR_Coordinator extends User {
             logout.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
 
             //Job Creation page -- where we create job postings
-            addJobs.setOnAction((ActionEvent addJob) -> {
+            addJobs.setOnAction((ActionEvent addJob) -> { /////////////////////////////////////////////////////////////////
                 Group createJobs = new Group();
                 Scene createJobsPage = new Scene(createJobs, 725, 600);
                 stage.setScene(createJobsPage);
@@ -77,10 +77,14 @@ public class HR_Coordinator extends User {
                 Button addInterviewer = new Button("Add Interviewer");
                 Button createNewPost = new Button("Create Job");
                 Button returnAddJ = new Button("Back");
+                RadioButton fullTime = new RadioButton("fullTime");
+                RadioButton partTime= new RadioButton("partTime");
                 GridPane cMessageGrid = new GridPane();
                 GridPane dateGrid = new GridPane();
                 GridPane positionGrid = new GridPane();
-
+                ToggleGroup radioSet = new ToggleGroup();
+                fullTime.setToggleGroup(radioSet);
+                partTime.setToggleGroup(radioSet);
 
 
                 ObservableList<String> listStages = FXCollections.observableArrayList();
@@ -111,6 +115,8 @@ public class HR_Coordinator extends User {
                 positionGrid.add(addInterviewer,3,8);
                 positionGrid.add(createNewPost, 1, 10);
                 positionGrid.add(returnAddJ, 1, 12);
+                positionGrid.add(fullTime,2,12);
+                positionGrid.add(partTime,3,12);
 
                 cMessageGrid.setHgap(20);
                 cMessageGrid.setVgap(5);
@@ -171,7 +177,18 @@ public class HR_Coordinator extends User {
                         for (String str: chosenInterviewers){
                             decidedListOfInt.add((Interviewer) systemAdmin.getUserManager().getUser(str));
                         }
+
                         systemAdmin.getJobManager().addJob(closeDate, position, 0, company, listIntStages, decidedListOfInt);//---------------------------------------------
+
+
+                        if(radioSet.getSelectedToggle() == fullTime){
+                            ((JobPosting)(systemAdmin.getJobManager().getJob(position))).setTag("fullTime");
+
+                        }else if(radioSet.getSelectedToggle() == partTime){
+                            ((JobPosting)(systemAdmin.getJobManager().getJob(position))).setTag("partTime");
+                        }
+
+
                         stage.setScene(HRBasePage);
                     }
                 });
