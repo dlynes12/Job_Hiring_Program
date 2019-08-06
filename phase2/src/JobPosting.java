@@ -25,6 +25,7 @@ public class JobPosting {
         this.dateClosed = dateClosed;
         this.chosenInterviewers = chosenInterviewers;
         this.numHires = numPositions;
+        this.listOfStages = job.getListOfStages();
     }
 
     public int getNumHires() {return numHires;}

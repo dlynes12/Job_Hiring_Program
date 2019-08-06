@@ -180,35 +180,34 @@ public class HR_Coordinator extends User {
                         Date closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                         String position = positionField.getText();
                         String company = companyField.getText();
-                        if (availJobField.getText().matches("^/d*$")){
-                            int numPositions = Integer.parseInt(availJobField.getText());
-                            ArrayList<String> stagesOfInterview = new ArrayList<>();
-                            for (String str : listStages) {
-                                stagesOfInterview.add(str);
-                            }
-
-                            ArrayList<Interviewer> chosenInterviewers = new ArrayList<>();
-                            for (String str : decidedInterviewers) {
-                                chosenInterviewers.add((Interviewer) systemAdmin.getUserManager().getUser(str));
-                            }
-
-                            Job job = new Job(position, company, "tag", 0, stagesOfInterview);
-
-                            if (radioSet.getSelectedToggle() == fullTime) {
-                                job.setTag("fullTime");
-                                systemAdmin.getJobManager().addJobPosting(job, closeDate, chosenInterviewers, numPositions);
-                                stage.setScene(HRBasePage);
-
-                            } else if (radioSet.getSelectedToggle() == partTime) {
-                                job.setTag("partTime");
-                                systemAdmin.getJobManager().addJobPosting(job, closeDate, chosenInterviewers, numPositions);
-                                stage.setScene(HRBasePage);
-                                //((JobPosting)(systemAdmin.getJobManager().getJobPosting(position))).getJob().setTag("partTime");
-                            } else {
-                                systemAdmin.getAlert("tag").showAndWait();
-                            }
+                        //if (availJobField.getText().trim().matches("^/d*$")){
+                        int numPositions = Integer.parseInt(availJobField.getText());
+                        ArrayList<String> stagesOfInterview = new ArrayList<>();
+                        for (String str : listStages) {
+                            stagesOfInterview.add(str);
                         }
-                    } else {
+
+                        ArrayList<Interviewer> chosenInterviewers = new ArrayList<>();
+                        for (String str : decidedInterviewers) {
+                            chosenInterviewers.add((Interviewer) systemAdmin.getUserManager().getUser(str));
+                        }
+
+                        Job job = new Job(position, company, "tag", 0, stagesOfInterview);
+
+                        if (radioSet.getSelectedToggle() == fullTime) {
+                            job.setTag("fullTime");
+                            systemAdmin.getJobManager().addJobPosting(job, closeDate, chosenInterviewers, numPositions);
+                            stage.setScene(HRBasePage);
+
+                        } else if (radioSet.getSelectedToggle() == partTime) {
+                            job.setTag("partTime");
+                            systemAdmin.getJobManager().addJobPosting(job, closeDate, chosenInterviewers, numPositions);
+                            stage.setScene(HRBasePage);
+                            //((JobPosting)(systemAdmin.getJobManager().getJobPosting(position))).getJob().setTag("partTime");
+                        } else {
+                            systemAdmin.getAlert("tag").showAndWait();
+                        }
+                    }else{
                         systemAdmin.getAlert("job").showAndWait();
                     }
                 });
