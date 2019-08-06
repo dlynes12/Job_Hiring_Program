@@ -38,7 +38,7 @@ public class HR_Coordinator extends User {
             Label welcomeLabel = new Label(welcomeMessage);
             Label actions = new Label("What do you want to do? Please select an option below:");
             Button addJobs = new Button("Add a job");
-            Button viewOpenJobs = new Button("Manage closed jobs"); // for a specific job, view the applicants
+            Button viewClosedJobs = new Button("Manage closed jobs"); // for a specific job, view the applicants
             Button viewAllApps = new Button("View all applicants"); // for a specific applicant, view the jobs they applied for
             Button logout = new Button("Logout");
             GridPane messageGrid = new GridPane();
@@ -47,7 +47,7 @@ public class HR_Coordinator extends User {
             messageGrid.add(welcomeLabel, 1, 0);
             messageGrid.add(actions, 1, 2);
             buttonGrid.add(addJobs, 1, 0);
-            buttonGrid.add(viewOpenJobs, 2, 0);
+            buttonGrid.add(viewClosedJobs, 2, 0);
             buttonGrid.add(viewAllApps, 1, 2);
             buttonGrid.add(logout, 2, 2);
 
@@ -210,7 +210,7 @@ public class HR_Coordinator extends User {
                 returnAddJ.setOnAction((ActionEvent exitPage) -> stage.setScene(HRBasePage));
             });
 
-            viewOpenJobs.setOnAction((ActionEvent viewJob) -> { // this the closed jobs
+            viewClosedJobs.setOnAction((ActionEvent viewJob) -> { // this the closed jobs
                 Group HRViewJobs = new Group();
                 Scene createJobsPage = new Scene(HRViewJobs, 600, 600);
                 stage.setScene(createJobsPage);
@@ -278,7 +278,9 @@ public class HR_Coordinator extends User {
                 distributeApps.setOnAction((ActionEvent disApps) -> {
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();
                     JobPosting tempJob = systemAdmin.getJobManager().getJobPosting(choice);
-                    tempJob.getHiringProcessor().sendListToInterview(systemAdmin.getUserManager());
+                    if (!tempJob.getHiringProcessor().isDistributed()){
+                        tempJob.getHiringProcessor().sendListToInterview(systemAdmin.getUserManager());
+                    }
                 });
                 advanceRoundButton.setOnAction((ActionEvent advRound) -> {
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();

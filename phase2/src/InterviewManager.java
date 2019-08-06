@@ -28,6 +28,7 @@ public class InterviewManager {
     private ArrayList<String> hiringStage = new ArrayList<>(); // list of all the stages in the hiring process
     private ArrayList<Interviewer> chosenInterviewers;
     private JobPosting jobPosting;
+    private boolean appsDistributed;
     int roundNum = 0;
 
     //todo: work on way for Applicants to see the progress of their application through InterviewManager
@@ -60,6 +61,7 @@ public class InterviewManager {
             a.updateStatus(jobPosting, hiringStage.get(roundNum));
         }
         this.chosenInterviewers = lstChosenInterviewers;
+        appsDistributed = false;
     }
 
     ArrayList<Applicant> getRoundOfApplicants() {
@@ -78,17 +80,19 @@ public class InterviewManager {
             //send the whole list to one interviewer
             for (Applicant applicant : approvedApplicants) {
                 this.chosenInterviewers.get(numInterviewer).addToList(applicant, position);
+                this.appsDistributed = true;
             }
         } else {
             for (Applicant applicant : approvedApplicants) {
-                if (numInterviewer == this.chosenInterviewers.size()) {
-                    numInterviewer = 0;
-                }
+                if (numInterviewer == this.chosenInterviewers.size()) {numInterviewer = 0;}
                 this.chosenInterviewers.get(numInterviewer).addToList(applicant, position);
+                this.appsDistributed = true;
                 numInterviewer += 1;
             }
         }
     }
+
+    public boolean isDistributed(){return this.appsDistributed;}
 
     void nextRound(Applicant applicant) { //method to recommend an applicant
         boolean inList = false;
@@ -138,6 +142,7 @@ public class InterviewManager {
         this.approvedApplicants = applicants;
         this.candidates = new ArrayList<>();
         this.rejectedFromRound = new ArrayList<>();
+        this.appsDistributed = false;
         roundNum += 1;
         for (Applicant a : candidates) {
             a.updateStatus(jobPosting, hiringStage.get(roundNum));
