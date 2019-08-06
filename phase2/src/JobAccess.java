@@ -83,6 +83,19 @@ public class JobAccess implements Observer {
         return remove;
     }
 
+    public ArrayList<String> sort(String s){
+        ArrayList<String> al = new ArrayList<>();
+        for (JobPosting j : this.jobPostings) {
+            if (s.equals("allJobs")) {
+                al.add(j.getJob().getPosition());
+
+            } else if (j.getJob().getTag().equals(s)) {
+                al.add(j.getJob().getPosition());
+            }
+        }
+        return al;
+    }
+
 //    public Job makeJob(){
 //
 //    }

@@ -1,3 +1,5 @@
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -9,12 +11,14 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Date;
 
 public class Applicant extends User {
     private HashMap<JobPosting, String> jobsApplied = new HashMap<>();
     transient Storage store = new Storage();
+
 
     public Applicant(String username, String password) {
         super(username, password);
@@ -150,20 +154,20 @@ public class Applicant extends User {
                 }
             });
             applyJob.setOnAction((ActionEvent apply) -> {
-                int i = 0;
                 Group jobPortalScene = new Group();
                 stage.setScene(new Scene(jobPortalScene, 600, 600));
                 Button returnApp = new Button("Back");
                 Button applyButton = new Button("Apply");
-                GridPane jobViewer = new GridPane();
-                ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
+                Button select = new Button("Select");
 
-                for (JobPosting jobPosting : systemAdmin.getJobManager().ViewJobs()) {
-                    RadioButton radioButton = new RadioButton(jobPosting.getJob().getPosition());
-                    radioButton.setToggleGroup(radioSet);
-                    jobViewer.add(radioButton, 0, i + 1);
-                    i++;
-                }
+                ComboBox filter = new ComboBox(FXCollections.observableArrayList("fullTime","partTime", "allJobs"));
+                ToggleGroup radioSet = new ToggleGroup();
+
+                GridPane jobViewer = new GridPane();
+                 // allows only one radio button to be selected at a time
+
+                jobViewer.add(select,12, 1);
+                jobViewer.add(filter, 10, 0);
                 jobViewer.add(applyButton, 4, 5);
                 jobViewer.add(returnApp, 4, 6);
                 jobViewer.setHgap(10);
@@ -171,15 +175,29 @@ public class Applicant extends User {
                 jobPortalScene.getChildren().add(jobViewer);
                 stage.show();
 
-                applyButton.setOnAction((ActionEvent event) -> {
-                    Applicant a = (Applicant) loggedUser;
-                    String selectedRadio = (((RadioButton) radioSet.getSelectedToggle()).getText());
-                    Button back = new Button("Back");
-                    a.applyToJob(systemAdmin.getJobManager().getJobPosting(selectedRadio));
+                ListView jobList = new ListView();
 
-                    back.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));
-                });
+
                 returnApp.setOnAction((ActionEvent ex) -> stage.setScene(applicantPage));
+
+                select.setOnAction((ActionEvent ex) -> {
+                    ListView<String> lst = new ListView<>();
+                    ArrayList<String> tempArray = systemAdmin.getJobManager().sort((String)filter.getValue());
+
+                    jobList.setItems(FXCollections.observableArrayList(tempArray));
+                    lst.setItems(FXCollections.observableArrayList(tempArray));
+                    jobViewer.add(lst,0,0);
+
+                    applyButton.setOnAction((ActionEvent event) -> {
+                        Applicant a = (Applicant) loggedUser;
+                        //String selectedRadio = (((RadioButton) radioSet.getSelectedToggle()).getText());
+
+                        Button back = new Button("Back");
+                        a.applyToJob(systemAdmin.getJobManager().getJobPosting((String)lst.getSelectionModel().getSelectedItem()));
+
+                        back.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));
+                    });
+                });
             });
             logout.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
             //Account History page
