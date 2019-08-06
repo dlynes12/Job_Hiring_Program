@@ -78,6 +78,7 @@ public class JobPortal extends Application {
         DatePicker datePicker = new DatePicker();
         TimeKeeper timeKeeper = new TimeKeeper();
         timeKeeper.addObserver(systemAdmin.getJobManager());
+        systemAdmin.setTimeKeeper(timeKeeper);
 
         gridPane.add(labelUsername, 2, 0);
         gridPane.add(labelPassword, 2, 2);

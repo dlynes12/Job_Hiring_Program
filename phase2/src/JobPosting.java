@@ -12,7 +12,7 @@ public class JobPosting{
     private String position;
     private String company;
     private String tag;
-    private InterviewManager HiringProcessor;
+    private InterviewManager hiringProcessor;
     private ArrayList<Interviewer> chosenInterviewers;
     private Boolean filled = false;
     private int interviewRounds;
@@ -109,19 +109,22 @@ public class JobPosting{
         return result;
     }
 
+    public void setListOfStages(ArrayList<String> listOfStages) {this.listOfStages = listOfStages;}
+
     boolean startInterviewProcess(){
         boolean start = false;
         if (!this.applicants.isEmpty()){
-            Date today = new Date();
-            Instant now = Instant.now();
-            today.from(now);
-            if (today.after(dateClosed)){
-                HiringProcessor = new InterviewManager(applicants, this, this.listOfStages, chosenInterviewers);
-                start = true;
+            hiringProcessor = new InterviewManager(applicants, this, this.listOfStages, chosenInterviewers);
+            for (String str: listOfStages){
+                hiringProcessor.addStage(str);
             }
+            start = true;
+
         }
         return start;
     }
 
-    InterviewManager getHiringProcessor() {return HiringProcessor;}
+    InterviewManager getHiringProcessor() {return hiringProcessor;}
+
+
 }

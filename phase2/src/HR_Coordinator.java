@@ -179,7 +179,11 @@ public class HR_Coordinator extends User {
                         }
 
                         systemAdmin.getJobManager().addJob(closeDate, position, 0, company, listIntStages, decidedListOfInt);//---------------------------------------------
-
+                        ArrayList<String> listInterviewStages = new ArrayList<>();
+                        for (String str: listStages){
+                            listInterviewStages.add(str);
+                        }
+                        systemAdmin.getJobManager().getJob(position).setListOfStages(listInterviewStages);
 
                         if(radioSet.getSelectedToggle() == fullTime){
                             ((JobPosting)(systemAdmin.getJobManager().getJob(position))).setTag("fullTime");
@@ -207,6 +211,7 @@ public class HR_Coordinator extends User {
                 }*/
                 Button viewApps = new Button("See applicants");
                 Button distributeApps = new Button("Distribute applicants");
+                Button advanceRoundButton = new Button("Advance Round");
                 Button returnViewJ = new Button("Back");
                 GridPane ViewJobsGrid = new GridPane();
 
@@ -219,11 +224,11 @@ public class HR_Coordinator extends User {
                     listJobs.add(jobPosting.getPosition());
                 }
                 ViewJobsGrid.add(scrollListJobs, 2, j + 1);
-
                 ViewJobsGrid.add(ChooseJob, 1, 0);
-                ViewJobsGrid.add(distributeApps, 3, 2);
-                ViewJobsGrid.add(viewApps, 3, 1);
-                ViewJobsGrid.add(returnViewJ, 3, 3);
+                ViewJobsGrid.add(viewApps, 1, 1);  // 3,1
+                ViewJobsGrid.add(distributeApps, 2, 1); // 3,2
+                ViewJobsGrid.add(advanceRoundButton,3,1); // 3,3
+                ViewJobsGrid.add(returnViewJ, 3, 2);
 
                 ViewJobsGrid.setHgap(20);
                 ViewJobsGrid.setVgap(5);
@@ -271,8 +276,17 @@ public class HR_Coordinator extends User {
                 distributeApps.setOnAction((ActionEvent disApps) -> {
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();
                     //String[] listOfApp = jobManager.getJob(choice).viewAllApplicants().split(",");
-                    JobPosting tempJob = systemAdmin.getJobManager().getJob(choice);
+                    JobPosting tempJob = systemAdmin.getJobManager().getClosedJob(choice);
                     tempJob.getHiringProcessor().sendListToInterview(systemAdmin.getUserManager());
+                });
+
+                advanceRoundButton.setOnAction((ActionEvent advRound) ->{
+                    String choice = scrollListJobs.getSelectionModel().getSelectedItem();
+                    JobPosting job = systemAdmin.getJobManager().getClosedJob(choice);
+                    ArrayList<Applicant> appsForNextRound = job.getHiringProcessor().getRecommendList();
+                    if (!appsForNextRound.isEmpty()){
+                        job.getHiringProcessor().getListFromHR(appsForNextRound);
+                    }
                 });
             });
 

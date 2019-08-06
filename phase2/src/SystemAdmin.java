@@ -29,6 +29,8 @@ public class SystemAdmin implements java.io.Serializable{
          this.hRCoordinators.put(company, hrCoordinator);
     }
 
+    public void setTimeKeeper(TimeKeeper timeKeeper) {this.timeKeeper = timeKeeper;}
+
     protected TimeKeeper getTimeKeeper() { return this.timeKeeper; }
 
     public Alert getAlert(String alertType){
