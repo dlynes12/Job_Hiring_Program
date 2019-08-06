@@ -47,6 +47,8 @@ public class InterviewManager {
         }
     }
 
+    public int numStages(){return hiringStage.size();}
+
     public void withdrawApp(Applicant applicant) {
         this.approvedApplicants.remove(applicant);
     }
@@ -69,7 +71,13 @@ public class InterviewManager {
     }
 
     int getRoundNum() {
-        return roundNum;
+        return roundNum+1;
+    }
+
+    public boolean isFinalRound(){
+        boolean result = false;
+        if (roundNum == hiringStage.size()-1){result = true;}
+        return result;
     }
 
     void sendListToInterview(UserAccess userAccess) { //method to distribute applicants to interviewers
@@ -94,16 +102,20 @@ public class InterviewManager {
 
     public boolean isDistributed(){return this.appsDistributed;}
 
-    void nextRound(Applicant applicant) { //method to recommend an applicant
+    void nextRound(Applicant applicant) { //method to recommend & hire an applicant
         boolean inList = false;
         for (Applicant user : this.candidates) {
             if (user.getUsername().equals(applicant.getUsername())) {
                 inList = true;
             }
         }
-        if (!inList) {
-            this.candidates.add(applicant);
+        if (!this.isFinalRound()){
+            if (!inList) {this.candidates.add(applicant);}
+        }else {
+            boolean isFilled = (jobPosting.getNumHires() == this.candidates.size());
+            if (!inList && !isFilled){this.candidates.add(applicant);}
         }
+
     }
 
     void reject(Applicant applicant) { //method to reject an applicant
@@ -139,13 +151,18 @@ public class InterviewManager {
     }
 
     void getListFromHR(ArrayList<Applicant> applicants) { // gets list of applicants from HR for the next round
-        this.approvedApplicants = applicants;
-        this.candidates = new ArrayList<>();
-        this.rejectedFromRound = new ArrayList<>();
-        this.appsDistributed = false;
-        roundNum += 1;
-        for (Applicant a : candidates) {
-            a.updateStatus(jobPosting, hiringStage.get(roundNum));
+        if (!this.isFinalRound()){
+            this.approvedApplicants = applicants;
+            this.candidates = new ArrayList<>();
+            this.rejectedFromRound = new ArrayList<>();
+            this.appsDistributed = false;
+            roundNum += 1;
+            for (Applicant a : candidates) {
+                a.updateStatus(jobPosting, hiringStage.get(roundNum));
+            }
+        }else{
+            for (Applicant applicant: applicants){applicant.updateStatus(jobPosting,"Hired");}
         }
+
     }// complete list of applicants is in JobPostings Class
 }

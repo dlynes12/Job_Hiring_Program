@@ -28,9 +28,9 @@ public class JobAccess implements Observer {
     }
 
     //Manage Open Jobs Function-------------------------------------------------------------------
-    boolean addJobPosting(Job job, Date dateClosed, ArrayList<Interviewer> chosenInterviewers) {
+    boolean addJobPosting(Job job, Date dateClosed, ArrayList<Interviewer> chosenInterviewers, int numHires) {
 
-        JobPosting jobposting = new JobPosting(job, today, dateClosed, chosenInterviewers);
+        JobPosting jobposting = new JobPosting(job, today, dateClosed, chosenInterviewers, numHires);
         boolean add = false;
         if (this.getJobPosting(job.getPosition()) == null && !job.getPosition().trim().isEmpty()) {
             this.jobPostings.add(jobposting);

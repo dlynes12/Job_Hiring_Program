@@ -5,7 +5,7 @@ import java.util.Date;
 public class JobPosting {
 
     //TODO we need to have an attribute of how many people we are hiring
-
+    private int numHires;
     private Job job;
     private Date datePosted;
     private Date dateClosed;
@@ -19,12 +19,15 @@ public class JobPosting {
 
     //TODO make sure the interview process accommodates Company class
 
-    public JobPosting(Job job, Date datePosted, Date dateClosed, ArrayList<Interviewer> chosenInterviewers) {
+    public JobPosting(Job job, Date datePosted, Date dateClosed, ArrayList<Interviewer> chosenInterviewers, int numPositions) {
         this.job = job;
         this.datePosted = datePosted;
         this.dateClosed = dateClosed;
         this.chosenInterviewers = chosenInterviewers;
+        this.numHires = numPositions;
     }
+
+    public int getNumHires() {return numHires;}
 
     public Job getJob() {
         return this.job;
