@@ -1,13 +1,14 @@
 import javafx.scene.control.Alert;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SystemAdmin implements java.io.Serializable{
 
     private JobAccess jobManager;
     private UserAccess userManager;
-    private HashMap<Company, HR_Coordinator> hRCoordinators;
+    private ArrayList<Company> companies;
     private TimeKeeper timeKeeper;
 
      public SystemAdmin(){
@@ -23,10 +24,14 @@ public class SystemAdmin implements java.io.Serializable{
          return this.userManager;
     }
 
-    protected HR_Coordinator getCompanyHR(Company company){ return this.hRCoordinators.get(company); }
+    protected HR_Coordinator getCompanyHR(Company company){
 
-    public void addCompanyHR(Company company, HR_Coordinator hrCoordinator){
-         this.hRCoordinators.put(company, hrCoordinator);
+         if(this.companies.contains(company)){
+             return company.getHrCoordinator();
+         }
+         else{
+             return null;
+         }
     }
 
     public void setTimeKeeper(TimeKeeper timeKeeper) {this.timeKeeper = timeKeeper;}

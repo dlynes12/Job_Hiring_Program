@@ -47,6 +47,8 @@ public class UserAccess implements java.io.Serializable {
         this.employedInterviewers = employedInterviewers;
     }
 
+    //TODO: make this accommodate for Company
+
     public boolean addInterviewer(Interviewer interviewer){
         boolean add = true;
         for (Interviewer account: employedInterviewers){

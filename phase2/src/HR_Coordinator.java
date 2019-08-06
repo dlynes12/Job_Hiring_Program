@@ -97,6 +97,7 @@ public class HR_Coordinator extends User {
                 ObservableList<String> decidedInterviewers = FXCollections.observableArrayList(); // for ViewList
                 ComboBox<String> interviewerDropdown = new ComboBox<>(); // not populating bc getListInterviewers() method in UserAccess not working
 
+                //TODO make this accommodate for Company
                 for (Interviewer interviewer: systemAdmin.getUserManager().getListInterviewers()){
                     //listInterviewers.add(interviewer.getUsername());
                     interviewerDropdown.getItems().add(interviewer.getUsername());

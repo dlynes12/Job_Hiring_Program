@@ -12,9 +12,15 @@ public class Company {
         this.companyName = companyName;
     }
 
+    public String getCompanyName(){
+        return this.companyName;
+    }
+
     public void setHrCoordinator(HR_Coordinator hrCoordinator){ this.hrCoordinator = hrCoordinator; }
 
     public void addInterviewer(Interviewer interviewer) { this.interviewers.add(interviewer); }
+
+
 
     public HR_Coordinator getHrCoordinator(){ return this.hrCoordinator; }
 }

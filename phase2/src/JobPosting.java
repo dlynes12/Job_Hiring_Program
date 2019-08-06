@@ -9,12 +9,15 @@ public class JobPosting{
     private Job job;
     private Date datePosted;
     private Date dateClosed;
+    private Company company;
     private ArrayList<Interviewer> chosenInterviewers;
 
     private InterviewManager hiringProcessor;
 
     private ArrayList<Applicant> applicants = new ArrayList<>();
     private ArrayList<String> listOfStages = new ArrayList<>();
+
+    //TODO make sure the interview process accommodates Company class
 
     public JobPosting(Job job, Date datePosted, Date dateClosed, ArrayList<Interviewer> chosenInterviewers) {
         this.job = job;
@@ -34,6 +37,8 @@ public class JobPosting{
 //    }
 
     public Job getJob(){return this.job;}
+
+    public Company getCompany() { return this.company; }
 
     public Date getDatePosted() { return this.datePosted; }
 
