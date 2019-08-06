@@ -65,7 +65,7 @@ public class InterviewManager {
 
     public void sendListToInterview(UserAccess userAccess){ //method to distribute applicants to interviewers
         int numInterviewer = 0;
-        String position = jobPosting.getPosition();
+        String position = jobPosting.getJob().getPosition();
         //ArrayList<Interviewer> intList = userAccess.getListInterviewers();
         if (this.chosenInterviewers.size() == 1) {
             //send the whole list to one interviewer

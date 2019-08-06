@@ -4,31 +4,36 @@ import java.util.Date;
 
 public class JobPosting{
 
-
     //TODO we need to have an attribute of how many people we are hiring
 
+    private Job job;
     private Date datePosted;
     private Date dateClosed;
-    private String position;
-    private String company;
-    private String tag;
-    private InterviewManager hiringProcessor;
     private ArrayList<Interviewer> chosenInterviewers;
-    private Boolean filled = false;
-    private int interviewRounds;
+
+    private InterviewManager hiringProcessor;
+
     private ArrayList<Applicant> applicants = new ArrayList<>();
     private ArrayList<String> listOfStages = new ArrayList<>();
 
-
-    public JobPosting(Date datePosted, Date dateClosed, String position, int interviewRounds, String company, ArrayList<String> stagesOfInterv, ArrayList<Interviewer> activeInterviewers) {
+    public JobPosting(Job job, Date datePosted, Date dateClosed, ArrayList<Interviewer> chosenInterviewers) {
+        this.job = job;
         this.datePosted = datePosted;
         this.dateClosed = dateClosed;
-        this.position = position;
-        this.interviewRounds = interviewRounds;
-        this.company = company;
-        this.listOfStages = stagesOfInterv;
-        this.chosenInterviewers = activeInterviewers;
+        this.chosenInterviewers = chosenInterviewers;
     }
+
+//    public JobPosting(Date datePosted, Date dateClosed, String position, int interviewRounds, String company, ArrayList<String> stagesOfInterv, ArrayList<Interviewer> activeInterviewers) {
+//        this.datePosted = datePosted;
+//        this.dateClosed = dateClosed;
+//        this.position = position;
+//        this.interviewRounds = interviewRounds;
+//        this.company = company;
+//        this.listOfStages = stagesOfInterv;
+//        this.chosenInterviewers = activeInterviewers;
+//    }
+
+    public Job getJob(){return this.job;}
 
     public Date getDatePosted() { return this.datePosted; }
 
@@ -41,25 +46,6 @@ public class JobPosting{
     }
 
     public void setDateClosed(Date dateClosed) { this.dateClosed = dateClosed; }
-
-    String getPosition() {
-        return this.position;
-    }
-
-    public Boolean isFilled() { return this.filled; }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public String getTag(){return this.tag;}
-    public void setTag(String tag){this.tag = tag;}
-
-
-
-//    public HiringPool getCandidatePool(){
-//        return this.candidatePool;
-//    }
 
     //HR needs to have access to this information as well.
     public void addApplicant (Applicant applicant){

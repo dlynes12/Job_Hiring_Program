@@ -34,8 +34,8 @@ public class Applicant extends User  {
     private String getJobs() {
         StringBuilder s = new StringBuilder();
         if (!this.jobsApplied.isEmpty()) {
-            for (JobPosting job : this.jobsApplied.keySet()) {
-                s.append(job.getPosition()).append("\n");
+            for (JobPosting jobPosting : this.jobsApplied.keySet()) {
+                s.append(jobPosting.getJob().getPosition()).append("\n");
             }
         } else {
             s.append("Applicant has not applied for a job");
@@ -49,11 +49,11 @@ public class Applicant extends User  {
             Date today = new Date();
             Instant now = Instant.now();
             today.from(now);
-            for (JobPosting job : this.jobsApplied.keySet()) {
-                if (today.after(job.getDateClosed())) {
-                    history.append(job.getPosition()).append(" - CLOSED: ").append(job.getDateClosed()).append("\n");
+            for (JobPosting jobPosting : this.jobsApplied.keySet()) {
+                if (today.after(jobPosting.getDateClosed())) {
+                    history.append(jobPosting.getJob().getPosition()).append(" - CLOSED: ").append(jobPosting.getDateClosed()).append("\n");
                 } else {
-                    history.append(job.getPosition()).append("- OPEN\n");
+                    history.append(jobPosting.getJob().getPosition()).append("- OPEN\n");
                 }
             }
         }
@@ -163,8 +163,8 @@ public class Applicant extends User  {
 
                 ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
                 //for (JobPosting jP : jobManager.ViewJobs()) {
-                for (JobPosting jP: systemAdmin.getJobManager().ViewJobs()) {
-                    RadioButton radioButton = new RadioButton(jP.getPosition());
+                for (JobPosting jobPosting: systemAdmin.getJobManager().ViewJobs()) {
+                    RadioButton radioButton = new RadioButton(jobPosting.getJob().getPosition());
                     radioButton.setToggleGroup(radioSet);
                     jobViewer.add(radioButton, 0, i + 1);
                     i++;
@@ -184,7 +184,7 @@ public class Applicant extends User  {
                     Button back = new Button("Back");
                     //jobManager.getJob(selectedRadio).addApplicant(a);
                     //a.applyToJob(jobManager.getJob(selectedRadio));
-                    a.applyToJob(systemAdmin.getJobManager().getJob(selectedRadio));
+                    a.applyToJob(systemAdmin.getJobManager().getJobPosting(selectedRadio));
 
                     back.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));
                 });
@@ -232,8 +232,8 @@ public class Applicant extends User  {
                 GridPane jobStatusPane = new GridPane();
                 ToggleGroup jobRadioSet = new ToggleGroup();
 
-                for (JobPosting job : this.jobsApplied.keySet()) {
-                    RadioButton jobRadioButton = new RadioButton(job.getPosition() + " - " + this.getJobStatus(job));
+                for (JobPosting jobPosting : this.jobsApplied.keySet()) {
+                    RadioButton jobRadioButton = new RadioButton(jobPosting.getJob().getPosition() + " - " + this.getJobStatus(jobPosting));
                     jobRadioButton.setToggleGroup(jobRadioSet);
                     jobStatusPane.add(jobRadioButton, 10, i + 1);
                     i++;
@@ -254,7 +254,7 @@ public class Applicant extends User  {
                     String[] textSplit = selectedToggleText.split(" - "); //splits the job name from it's status
                     String jobPosition = textSplit[0];
                     //JobPosting job = jobManager.getJob(jobPosition);
-                    JobPosting job = systemAdmin.getJobManager().getJob(jobPosition);
+                    JobPosting job = systemAdmin.getJobManager().getJobPosting(jobPosition);
                     this.withdrawApplication(job);
 
                 });

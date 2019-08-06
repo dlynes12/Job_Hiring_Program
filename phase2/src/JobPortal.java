@@ -35,26 +35,6 @@ public class JobPortal extends Application {
         }catch(ClassNotFoundException|IOException ex){
             System.out.println(ex.getMessage());
         }
-//        Alert alertLogin1 = new Alert(Alert.AlertType.WARNING);
-//        alertLogin1.setTitle("Password/Username Not Found");
-//        alertLogin1.setHeaderText("Do not leave any of the fields empty.");
-//        alertLogin1.setContentText("Please Try Again");
-//
-//        Alert alertLogin2 = new Alert(Alert.AlertType.WARNING);
-//        alertLogin2.setTitle("Password/Username Not Found");
-//        alertLogin2.setHeaderText("Incorrect Password");
-//        alertLogin2.setContentText("Please Try Again");
-//
-//
-//        Alert alertDate = new Alert(Alert.AlertType.WARNING);
-//        alertDate.setTitle("Invalid date input");
-//        alertDate.setHeaderText("Do not leave any of the fields empty.");
-//        alertDate.setContentText("Please Try Again");
-//
-//        Alert alertCreate = new Alert(Alert.AlertType.WARNING);
-//        alertCreate.setTitle("Invalid input or user already exists");
-//        alertCreate.setHeaderText("Do not leave any of the fields empty.");
-//        alertCreate.setContentText("Please Try Again");
 
         stage.setTitle("Job Application Portal");
         Scene loginPage = new Scene(loginScene, 600, 200);

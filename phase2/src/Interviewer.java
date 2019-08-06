@@ -76,13 +76,13 @@ public class Interviewer extends User {
             chooseJobPane.setVgap(5);
 
             for (JobPosting jobPosting : systemAdmin.getJobManager().ViewJobs()) {
-                dropdown.getItems().add(jobPosting.getPosition());
+                dropdown.getItems().add(jobPosting.getJob().getPosition());
             }
 
             getInterviewees.setOnAction((ActionEvent ev) -> {
                 // get the Applicant list for each job
                 String choice = (String) dropdown.getValue();
-                String[] listOfApp = systemAdmin.getJobManager().getJob(choice).viewApplicants(this).split(",");
+                String[] listOfApp = systemAdmin.getJobManager().getJobPosting(choice).viewApplicants(this).split(",");
                 if (listOfApp.length != 0 && !isNullOrEmpty(listOfApp[0])){
                     Label chooseApp = new Label("Choose an Applicant:");
                     interviewerSelectionPane.add(chooseApp, 1, 0);
@@ -98,11 +98,11 @@ public class Interviewer extends User {
                     approve.setOnAction((ActionEvent click) -> {
                         String selectedApplicant = scrollListApps.getSelectionModel().getSelectedItem();
                         Applicant appObj = (Applicant) systemAdmin.getUserManager().getUser(selectedApplicant);
-                        systemAdmin.getJobManager().getJob(choice).getHiringProcessor().nextRound(appObj);
-                        systemAdmin.getJobManager().getJob(choice).getHiringProcessor().getRoundOfApplicants().remove(appObj);
-                        if ((systemAdmin.getJobManager().getJob(choice).getHiringProcessor().candidates.size() < 2) &&
-                                (systemAdmin.getJobManager().getJob(choice).getHiringProcessor().approvedApplicants.size() < 2))
-                        {appObj.updateStatus(systemAdmin.getJobManager().getJob(choice),"Hired");
+                        systemAdmin.getJobManager().getJobPosting(choice).getHiringProcessor().nextRound(appObj);
+                        systemAdmin.getJobManager().getJobPosting(choice).getHiringProcessor().getRoundOfApplicants().remove(appObj);
+                        if ((systemAdmin.getJobManager().getJobPosting(choice).getHiringProcessor().candidates.size() < 2) &&
+                                (systemAdmin.getJobManager().getJobPosting(choice).getHiringProcessor().approvedApplicants.size() < 2))
+                        {appObj.updateStatus(systemAdmin.getJobManager().getJobPosting(choice),"Hired");
 
                         }
                         // we can delete the applicant from the applicantList after a person has been
@@ -112,7 +112,7 @@ public class Interviewer extends User {
                     decline.setOnAction((ActionEvent click) -> {
                         String selectedApplicant = scrollListApps.getSelectionModel().getSelectedItem();
                         Applicant appObj = (Applicant) systemAdmin.getUserManager().getUser(selectedApplicant);
-                        systemAdmin.getJobManager().getJob(choice).getHiringProcessor().reject(appObj);
+                        systemAdmin.getJobManager().getJobPosting(choice).getHiringProcessor().reject(appObj);
                     });
                 }
             });

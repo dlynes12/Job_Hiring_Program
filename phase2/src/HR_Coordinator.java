@@ -89,7 +89,7 @@ public class HR_Coordinator extends User {
 
                 ObservableList<String> listStages = FXCollections.observableArrayList();
 //                ObservableList<String> listInterviewers = FXCollections.observableArrayList(); //for dropdown
-                ObservableList<String> chosenInterviewers = FXCollections.observableArrayList(); // for ViewList
+                ObservableList<String> decidedInterviewers = FXCollections.observableArrayList(); // for ViewList
                 ComboBox<String> interviewerDropdown = new ComboBox<>(); // not populating bc getListInterviewers() method in UserAccess not working
 
                 for (Interviewer interviewer: systemAdmin.getUserManager().getListInterviewers()){
@@ -150,13 +150,13 @@ public class HR_Coordinator extends User {
                     String interviewerUsername = interviewerDropdown.getValue();
                     if (!isNullOrEmpty(interviewerUsername)){
                         boolean add = true;
-                        for (String str: chosenInterviewers){
+                        for (String str: decidedInterviewers){
                             if (str.equals(interviewerUsername)){add = false;}
                         }
                         if (add){
-                            chosenInterviewers.add(interviewerUsername);
+                            decidedInterviewers.add(interviewerUsername);
                             ListView<String> choiceInterviewers = new ListView<>();
-                            choiceInterviewers.setItems(chosenInterviewers);
+                            choiceInterviewers.setItems(decidedInterviewers);
                             choiceInterviewers.setPrefSize(100.00,70.00);
                             positionGrid.add(choiceInterviewers,1,9);
                         }
@@ -169,28 +169,25 @@ public class HR_Coordinator extends User {
                         Date closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                         String position = positionField.getText();
                         String company = companyField.getText();
-                        ArrayList<String> listIntStages = new ArrayList<>();
+                        ArrayList<String> stagesOfInterview = new ArrayList<>();
                         for (String str: listStages){
-                            listIntStages.add(str);
+                            stagesOfInterview.add(str);
                         }
-                        ArrayList<Interviewer> decidedListOfInt= new ArrayList<>();
-                        for (String str: chosenInterviewers){
-                            decidedListOfInt.add((Interviewer) systemAdmin.getUserManager().getUser(str));
+                        ArrayList<Interviewer> chosenInterviewers= new ArrayList<>();
+                        for (String str: decidedInterviewers){
+                            chosenInterviewers.add((Interviewer) systemAdmin.getUserManager().getUser(str));
                         }
 
-                        systemAdmin.getJobManager().addJob(closeDate, position, 0, company, listIntStages, decidedListOfInt);//---------------------------------------------
-                        ArrayList<String> listInterviewStages = new ArrayList<>();
-                        for (String str: listStages){
-                            listInterviewStages.add(str);
-                        }
-                        systemAdmin.getJobManager().getJob(position).setListOfStages(listInterviewStages);
+                        Job job = new Job(position,company,"tag",0, stagesOfInterview);
+                        systemAdmin.getJobManager().addJobPosting(job, closeDate, chosenInterviewers);//---------------------------------------------
 
-                        if(radioSet.getSelectedToggle() == fullTime){
-                            ((JobPosting)(systemAdmin.getJobManager().getJob(position))).setTag("fullTime");
 
-                        }else if(radioSet.getSelectedToggle() == partTime){
-                            ((JobPosting)(systemAdmin.getJobManager().getJob(position))).setTag("partTime");
-                        }
+//                        if(radioSet.getSelectedToggle() == fullTime){
+//                            ((JobPosting)(systemAdmin.getJobManager().getJob(position))).setTag("fullTime");
+//
+//                        }else if(radioSet.getSelectedToggle() == partTime){
+//                            ((JobPosting)(systemAdmin.getJobManager().getJob(position))).setTag("partTime");
+//                        }
 
 
                         stage.setScene(HRBasePage);
@@ -222,7 +219,7 @@ public class HR_Coordinator extends User {
                 scrollListJobs.setPrefSize(160.00,120.00);
                 int j = -1;
                 for (JobPosting jobPosting : systemAdmin.getJobManager().viewClosedJobs()) {  //was ViewJobs before
-                    listJobs.add(jobPosting.getPosition());
+                    listJobs.add(jobPosting.getJob().getPosition());
                 }
                 ViewJobsGrid.add(scrollListJobs, 2, j + 1);
                 ViewJobsGrid.add(ChooseJob, 1, 0);
@@ -243,7 +240,7 @@ public class HR_Coordinator extends User {
                 viewApps.setOnAction((ActionEvent seeApps) -> {
                     int i = 0;
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();
-                    String[] listOfApp = systemAdmin.getJobManager().getJob(choice).viewAllApplicants().split(",");  //was .viewApplicants() before
+                    String[] listOfApp = systemAdmin.getJobManager().getJobPosting(choice).viewAllApplicants().split(",");  //was .viewApplicants() before
                     if (listOfApp.length != 0 && !isNullOrEmpty(listOfApp[0])) {
                         //GridPane appViewer = new GridPane();
                         //ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
@@ -278,7 +275,7 @@ public class HR_Coordinator extends User {
                 distributeApps.setOnAction((ActionEvent disApps) -> {
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();
                     //String[] listOfApp = jobManager.getJob(choice).viewAllApplicants().split(",");
-                    JobPosting tempJob = systemAdmin.getJobManager().getClosedJob(choice);
+                    JobPosting tempJob = systemAdmin.getJobManager().getJobPosting(choice);
                     tempJob.getHiringProcessor().sendListToInterview(systemAdmin.getUserManager());
                 });
 
