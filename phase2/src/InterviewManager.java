@@ -61,6 +61,8 @@ public class InterviewManager {
 
     public ArrayList<Applicant> getRoundOfApplicants(){return this.approvedApplicants;}
 
+    public int getRoundNum() {return roundNum;}
+
     public void sendListToInterview(UserAccess userAccess){ //method to distribute applicants to interviewers
         int numInterviewer = 0;
         String position = jobPosting.getPosition();

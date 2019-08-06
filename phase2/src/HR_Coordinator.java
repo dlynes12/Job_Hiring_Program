@@ -212,6 +212,7 @@ public class HR_Coordinator extends User {
                 Button viewApps = new Button("See applicants");
                 Button distributeApps = new Button("Distribute applicants");
                 Button advanceRoundButton = new Button("Advance Round");
+                Button checkRoundButton = new Button("Check Round #");
                 Button returnViewJ = new Button("Back");
                 GridPane ViewJobsGrid = new GridPane();
 
@@ -228,6 +229,7 @@ public class HR_Coordinator extends User {
                 ViewJobsGrid.add(viewApps, 1, 1);  // 3,1
                 ViewJobsGrid.add(distributeApps, 2, 1); // 3,2
                 ViewJobsGrid.add(advanceRoundButton,3,1); // 3,3
+                ViewJobsGrid.add(checkRoundButton,1,2);
                 ViewJobsGrid.add(returnViewJ, 3, 2);
 
                 ViewJobsGrid.setHgap(20);
@@ -287,6 +289,14 @@ public class HR_Coordinator extends User {
                     if (!appsForNextRound.isEmpty()){
                         job.getHiringProcessor().getListFromHR(appsForNextRound);
                     }
+                });
+
+                checkRoundButton.setOnAction((ActionEvent checkRound) -> {
+                    String choice = scrollListJobs.getSelectionModel().getSelectedItem();
+                    JobPosting job = systemAdmin.getJobManager().getClosedJob(choice);
+                    int round = job.getHiringProcessor().getRoundNum();
+                    Label roundLabel = new Label("Round: " + Integer.toString(round));
+                    ViewJobsGrid.add(roundLabel,3,0);
                 });
             });
 
