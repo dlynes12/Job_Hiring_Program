@@ -15,11 +15,16 @@ import java.util.Date;
 // One HR Person hires for their own section of the company
 public class HR_Coordinator extends User {
 
+    private Company company;
+
 
     HR_Coordinator(String Username, String Password){
         super(Username,Password);
     }
 
+    public Company getCompany() { return this.company; }
+
+    public void setCompany(Company company) { this.company = company; }
 
     void HRGUISetUp(Stage stage, User loggedUser, SystemAdmin systemAdmin, Scene loginPage){
         if (loggedUser.getClass() == HR_Coordinator.class) {

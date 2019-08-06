@@ -11,6 +11,7 @@ import java.util.*;
 
 public class Interviewer extends User {
     private Map<Applicant,String> applicantsList = new HashMap<>();
+    private Company company;
 
     public Interviewer(String username, String password){
         super(username,password);
@@ -37,6 +38,10 @@ public class Interviewer extends User {
         }
         return listOfInterviewees;
     }
+
+    public void setCompany(Company company) { this.company = company;}
+
+    public Company getCompany() { return this.company; }
 
     //GUI CONTROLS FOR INTERVIEWS
 
