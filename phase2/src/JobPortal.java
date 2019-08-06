@@ -8,31 +8,28 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import java.io.*;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
 public class JobPortal extends Application {
-
     // SIGN-IN PAGE
     @Override
     public void start(Stage stage) throws Exception {
-
 
         SystemAdmin systemAdmin = new SystemAdmin();
         Group loginScene = new Group();
         Storage store = new Storage();
         List<String> list;
 
-        try{
-              list = store.readList("Users");
-              System.out.println(list);
-              for(Object o: list){
-                  systemAdmin.getUserManager().addUser((User)o);
-                  //userManager.addUser((User)o);
-              }
-        }catch(ClassNotFoundException|IOException ex){
+        try {
+            list = store.readList("Users");
+            System.out.println(list);
+            for (Object o : list) {
+                systemAdmin.getUserManager().addUser((User) o);
+                //userManager.addUser((User)o);
+            }
+        } catch (ClassNotFoundException | IOException ex) {
             System.out.println(ex.getMessage());
         }
 
@@ -62,7 +59,7 @@ public class JobPortal extends Application {
 
         gridPane.add(labelUsername, 2, 0);
         gridPane.add(labelPassword, 2, 2);
-        gridPane.add(labelDate,2 , 4);
+        gridPane.add(labelDate, 2, 4);
         gridPane.add(username, 4, 0);
         gridPane.add(password, 4, 2);
         gridPane.add(applicantButton, 2, 7);
@@ -70,9 +67,9 @@ public class JobPortal extends Application {
         gridPane.add(interviewerButton, 4, 7);
         gridPane.add(log_in, 7, 5);
         gridPane.add(new_user, 9, 5);
-        gridPane.add(datePicker,4,4);
+        gridPane.add(datePicker, 4, 4);
         gridPane.setHgap(10);
-       // Date closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+        // Date closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
         StackPane box = new StackPane();
         box.getChildren().addAll(gridPane);
         loginScene.getChildren().addAll(box);
@@ -125,77 +122,70 @@ public class JobPortal extends Application {
             create.setOnAction((ActionEvent ProcessUser) -> {
                 if (radioSet.getSelectedToggle() == radioApp) {
                     Applicant tempApp = new Applicant(newUserField.getText(), newPassField.getText());
-                    //if (userManager.addUser(tempApp)) {
-                    if (systemAdmin.getUserManager().addUser(tempApp)){
+                    if (systemAdmin.getUserManager().addUser(tempApp)) {
                         stage.setScene(loginPage);
-                    }else {
+                    } else {
                         systemAdmin.getAlert("create").showAndWait();
                     }
                 } else if (radioSet.getSelectedToggle() == radioHR) {
                     HR_Coordinator tempHR = new HR_Coordinator(newUserField.getText(), newPassField.getText());
-                    if (systemAdmin.getUserManager().addUser(tempHR)){
-                    //if (userManager.addUser(tempHR)) {
+                    if (systemAdmin.getUserManager().addUser(tempHR)) {
                         stage.setScene(loginPage);
-                    }else {
+                    } else {
                         systemAdmin.getAlert("create").showAndWait();
                     }
                 } else if (radioSet.getSelectedToggle() == radioInt) {
                     Interviewer tempInt = new Interviewer(newUserField.getText(), newPassField.getText());
-                    if (systemAdmin.getUserManager().addUser(tempInt)){
-                    //if (userManager.addUser(tempInt)) {
+                    if (systemAdmin.getUserManager().addUser(tempInt)) {
                         systemAdmin.getUserManager().addInterviewer(tempInt);
-                        //userManager.addInterviewer(tempInt);
                         stage.setScene(loginPage);
-                    }else {
+                    } else {
                         systemAdmin.getAlert("create").showAndWait();
                     }
-                }else {
+                } else {
                     systemAdmin.getAlert("create").showAndWait();
                 }
-                try{
-                    //store.writeUserList(userManager.users);
+                try {
                     store.writeList(systemAdmin.getUserManager().users, "Users");
-                }catch(IOException ex){
+                } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                 }
             });
         });
 
         log_in.setOnAction((ActionEvent e) -> {
-            if (datePicker.getValue() != null){
+            if (datePicker.getValue() != null) {
                 Date today = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                 systemAdmin.getJobManager().retrieveTime(today);
                 timeKeeper.updateTime(datePicker);
                 String UName = username.getText();
                 String Pass = password.getText();
                 try {
-                    //User loggedUser = userManager.login(UName, Pass); // the user that is actually logged in
                     User loggedUser = systemAdmin.getUserManager().login(UName, Pass);
                     if (loggedUser != null) {
                         if (loginRadio.getSelectedToggle() == applicantButton) {
                             ((Applicant) loggedUser).applicantGUISetUp(stage, loggedUser, systemAdmin, loginPage);
-                            //((Applicant) loggedUser).applicantGUISetUp(stage, loggedUser, jobManager, loginPage);
-
                         } else if (loginRadio.getSelectedToggle() == hRButton) {
                             ((HR_Coordinator) loggedUser).HRGUISetUp(stage, loggedUser, systemAdmin, loginPage);
-                            //((HR_Coordinator) loggedUser).HRGUISetUp(stage, loggedUser, jobManager, loginPage, userManager);
                         } else if (loginRadio.getSelectedToggle() == interviewerButton) {
-                            ((Interviewer) loggedUser).getInterviewPane(stage,loggedUser, systemAdmin, loginPage);
-                            //((Interviewer) loggedUser).getInterviewPane(stage, loggedUser, jobManager, loginPage, userManager);
+                            ((Interviewer) loggedUser).getInterviewPane(stage, loggedUser, systemAdmin, loginPage);
                         } else {
                             stage.setScene(loginPage);
                         }
-
-                        try{
+                        try {
                             store.writeToFile(loggedUser);
-                        }catch(IOException ex){
+                        } catch (IOException ex) {
                             System.out.println(ex.getMessage());
                         }
-                    }else{systemAdmin.getAlert("login2").showAndWait();}
-                }catch (NullPointerException e1){
+                    } else {
+                        systemAdmin.getAlert("login2").showAndWait();
+                    }
+                } catch (NullPointerException e1) {
                     systemAdmin.getAlert("login1").showAndWait();
                 }
-            }else {systemAdmin.getAlert("date").showAndWait();}
+            } else {
+                systemAdmin.getAlert("date").showAndWait();
+            }
 
         });
     }
@@ -206,5 +196,4 @@ public class JobPortal extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
 }

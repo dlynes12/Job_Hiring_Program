@@ -6,14 +6,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Date;
 
-public class Applicant extends User  {
+public class Applicant extends User {
     private HashMap<JobPosting, String> jobsApplied = new HashMap<>();
     transient Storage store = new Storage();
 
@@ -63,7 +62,6 @@ public class Applicant extends User  {
 //    public void getDocs(String username) throws IOException, ClassNotFoundException {
 //        store.readDocFile(username + "docs.bin");
 //    }
-
 //    public void setDocsHash(User u, Boolean a, Boolean b, String s) throws IOException {
 //        ArrayList<Boolean> docs = new ArrayList<>();
 //        docs.add(a);
@@ -91,7 +89,6 @@ public class Applicant extends User  {
         this.updateStatus(jobPosting, "Application withdrawn");
     }
 
-
     String getInfo() {
         return "Applicant Username: " + this.getUsername() + '\n' +
                 "\n Date Created: " + this.getDateCreated() + "\n" +
@@ -103,8 +100,8 @@ public class Applicant extends User  {
         return "{A," + this.getJobs() + "," + this.getUsername() + "," + this.getPassword() + "}";
     }
 
-    void applicantGUISetUp(Stage stage, User loggedUser, SystemAdmin systemAdmin, Scene loginPage){
-    //void applicantGUISetUp(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage) {
+    void applicantGUISetUp(Stage stage, User loggedUser, SystemAdmin systemAdmin, Scene loginPage) {
+        //void applicantGUISetUp(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage) {
         if (loggedUser.getClass() == Applicant.class) {
 
             Group applicantPortalScene = new Group();
@@ -152,7 +149,6 @@ public class Applicant extends User  {
                     e.printStackTrace();
                 }
             });
-
             applyJob.setOnAction((ActionEvent apply) -> {
                 int i = 0;
                 Group jobPortalScene = new Group();
@@ -160,16 +156,14 @@ public class Applicant extends User  {
                 Button returnApp = new Button("Back");
                 Button applyButton = new Button("Apply");
                 GridPane jobViewer = new GridPane();
-
                 ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
-                //for (JobPosting jP : jobManager.ViewJobs()) {
-                for (JobPosting jobPosting: systemAdmin.getJobManager().ViewJobs()) {
+
+                for (JobPosting jobPosting : systemAdmin.getJobManager().ViewJobs()) {
                     RadioButton radioButton = new RadioButton(jobPosting.getJob().getPosition());
                     radioButton.setToggleGroup(radioSet);
                     jobViewer.add(radioButton, 0, i + 1);
                     i++;
                 }
-
                 jobViewer.add(applyButton, 4, 5);
                 jobViewer.add(returnApp, 4, 6);
                 jobViewer.setHgap(10);
@@ -178,21 +172,15 @@ public class Applicant extends User  {
                 stage.show();
 
                 applyButton.setOnAction((ActionEvent event) -> {
-                    //System.out.println(radioSet.getSelectedToggle());
                     Applicant a = (Applicant) loggedUser;
                     String selectedRadio = (((RadioButton) radioSet.getSelectedToggle()).getText());
                     Button back = new Button("Back");
-                    //jobManager.getJob(selectedRadio).addApplicant(a);
-                    //a.applyToJob(jobManager.getJob(selectedRadio));
                     a.applyToJob(systemAdmin.getJobManager().getJobPosting(selectedRadio));
 
                     back.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));
                 });
-
                 returnApp.setOnAction((ActionEvent ex) -> stage.setScene(applicantPage));
-
             });
-
             logout.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
             //Account History page
             viewHistory.setOnAction((ActionEvent history) -> {
@@ -223,10 +211,8 @@ public class Applicant extends User  {
                 Group jobStatusViewerScene = new Group();
                 Scene jobStatusPage = new Scene(jobStatusViewerScene, 600, 600);
                 stage.setScene(jobStatusPage);
-
                 int i = 1;
                 Label jobStatusesLabel = new Label("Jobs Applied For:");
-                //Label allJobStatuses = new Label(((Applicant) loggedUser).getJobStatus());
                 Button returnJS = new Button("Back");
                 Button withdraw = new Button("Withdraw Application");
                 GridPane jobStatusPane = new GridPane();
@@ -238,7 +224,6 @@ public class Applicant extends User  {
                     jobStatusPane.add(jobRadioButton, 10, i + 1);
                     i++;
                 }
-
                 jobStatusPane.add(jobStatusesLabel, 10, 0);
                 jobStatusPane.add(withdraw, 10, 13);
                 jobStatusPane.add(returnJS, 10, 14);
@@ -248,25 +233,17 @@ public class Applicant extends User  {
                 jobStatusViewerScene.getChildren().addAll(jobStatusPane);
 
                 withdraw.setOnAction((ActionEvent withdrawApp) -> {
-
                     RadioButton selectedToggle = (RadioButton) jobRadioSet.getSelectedToggle();
                     String selectedToggleText = selectedToggle.getText();
                     String[] textSplit = selectedToggleText.split(" - "); //splits the job name from it's status
                     String jobPosition = textSplit[0];
-                    //JobPosting job = jobManager.getJob(jobPosition);
-                    JobPosting job = systemAdmin.getJobManager().getJobPosting(jobPosition);
-                    this.withdrawApplication(job);
-
+                    JobPosting jobPosting = systemAdmin.getJobManager().getJobPosting(jobPosition);
+                    this.withdrawApplication(jobPosting);
                 });
-
                 returnJS.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));
-
             });
-
             resumeUpload.getChildren().addAll(applicantSelectionPane);
             applicantPortalScene.getChildren().addAll(resumeUpload);
-        }// what happens if they are not an applicant but have a login;
-        //send message wrong user type?
-
+        }
     }
 }

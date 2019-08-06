@@ -2,7 +2,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class JobPosting{
+public class JobPosting {
 
     //TODO we need to have an attribute of how many people we are hiring
 
@@ -26,21 +26,17 @@ public class JobPosting{
         this.chosenInterviewers = chosenInterviewers;
     }
 
-//    public JobPosting(Date datePosted, Date dateClosed, String position, int interviewRounds, String company, ArrayList<String> stagesOfInterv, ArrayList<Interviewer> activeInterviewers) {
-//        this.datePosted = datePosted;
-//        this.dateClosed = dateClosed;
-//        this.position = position;
-//        this.interviewRounds = interviewRounds;
-//        this.company = company;
-//        this.listOfStages = stagesOfInterv;
-//        this.chosenInterviewers = activeInterviewers;
-//    }
+    public Job getJob() {
+        return this.job;
+    }
 
-    public Job getJob(){return this.job;}
+    public Company getCompany() {
+        return this.company;
+    }
 
-    public Company getCompany() { return this.company; }
-
-    public Date getDatePosted() { return this.datePosted; }
+    public Date getDatePosted() {
+        return this.datePosted;
+    }
 
     public void setDatePosted(Date datePosted) {
         this.datePosted = datePosted;
@@ -50,72 +46,83 @@ public class JobPosting{
         return this.dateClosed;
     }
 
-    public void setDateClosed(Date dateClosed) { this.dateClosed = dateClosed; }
+    public void setDateClosed(Date dateClosed) {
+        this.dateClosed = dateClosed;
+    }
 
     //HR needs to have access to this information as well.
-    public void addApplicant (Applicant applicant){
-        if(!this.applicants.contains(applicant)){
+    public void addApplicant(Applicant applicant) {
+        if (!this.applicants.contains(applicant)) {
             this.applicants.add(applicant);
-            //this.candidatePool.addToPool(applicant,0);
         }
     }
 
     //TODO: make this consider the date - applicants can only withdraw before the closing date.
-    public void removeApplicant(Applicant applicant){
-        if (this.applicants.contains(applicant)){
+    public void removeApplicant(Applicant applicant) {
+        if (this.applicants.contains(applicant)) {
             this.applicants.remove(applicant);
         }
     }
 
-    public String viewApplicants(Interviewer interviewer){ //view all Applicants still in the hiring process
+    public String viewApplicants(Interviewer interviewer) { //view all Applicants still in the hiring process
         StringBuilder listOfApplicants = new StringBuilder();
         String result;
         Date today = new Date();
         Instant now = Instant.now();
         today.from(now);
-        if (today.before(this.getDateClosed())){
-            for (Applicant applicant: this.applicants){  //list before was this.applicants
+        if (today.before(this.getDateClosed())) {
+            for (Applicant applicant : this.applicants) {  //list before was this.applicants
                 listOfApplicants.append(applicant.getUsername()).append(",");
             }
-            if (listOfApplicants.length() ==0){result = listOfApplicants.toString();}
-            else {result = listOfApplicants.substring(0, listOfApplicants.length()-1);} //takes off the last comma
-        }else{
-            for (Applicant applicant: interviewer.getInterviewees()){
+            if (listOfApplicants.length() == 0) {
+                result = listOfApplicants.toString();
+            } else {
+                result = listOfApplicants.substring(0, listOfApplicants.length() - 1);
+            } //takes off the last comma
+        } else {
+            for (Applicant applicant : interviewer.getInterviewees()) {
                 listOfApplicants.append(applicant.getUsername()).append(",");
             }
-            if (listOfApplicants.length() ==0){result = listOfApplicants.toString();}
-            else {result = listOfApplicants.substring(0, listOfApplicants.length()-1);} //takes off the last comma
+            if (listOfApplicants.length() == 0) {
+                result = listOfApplicants.toString();
+            } else {
+                result = listOfApplicants.substring(0, listOfApplicants.length() - 1);
+            } //takes off the last comma
         }
         return result;
     }
 
-    String viewAllApplicants(){
+    String viewAllApplicants() {
         StringBuilder listOfApplicants = new StringBuilder();
         String result;
-        for (Applicant applicant: this.applicants){  //list before was this.applicants
+        for (Applicant applicant : this.applicants) {  //list before was this.applicants
             listOfApplicants.append(applicant.getUsername()).append(",");
         }
-        if (listOfApplicants.length() ==0){result = listOfApplicants.toString();}
-        else {result = listOfApplicants.substring(0, listOfApplicants.length()-1);} //takes off the last comma
+        if (listOfApplicants.length() == 0) {
+            result = listOfApplicants.toString();
+        } else {
+            result = listOfApplicants.substring(0, listOfApplicants.length() - 1);
+        } //takes off the last comma
         return result;
     }
 
-    public void setListOfStages(ArrayList<String> listOfStages) {this.listOfStages = listOfStages;}
+    public void setListOfStages(ArrayList<String> listOfStages) {
+        this.listOfStages = listOfStages;
+    }
 
-    boolean startInterviewProcess(){
+    boolean startInterviewProcess() {
         boolean start = false;
-        if (!this.applicants.isEmpty()){
+        if (!this.applicants.isEmpty()) {
             hiringProcessor = new InterviewManager(applicants, this, this.listOfStages, chosenInterviewers);
-            for (String str: listOfStages){
+            for (String str : listOfStages) {
                 hiringProcessor.addStage(str);
             }
             start = true;
-
         }
         return start;
     }
 
-    InterviewManager getHiringProcessor() {return hiringProcessor;}
-
-
+    InterviewManager getHiringProcessor() {
+        return hiringProcessor;
+    }
 }

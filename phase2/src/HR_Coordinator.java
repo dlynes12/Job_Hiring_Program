@@ -7,7 +7,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import java.time.Instant;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,16 +16,19 @@ public class HR_Coordinator extends User {
 
     private Company company;
 
-
-    HR_Coordinator(String Username, String Password){
-        super(Username,Password);
+    HR_Coordinator(String Username, String Password) {
+        super(Username, Password);
     }
 
-    public Company getCompany() { return this.company; }
+    public Company getCompany() {
+        return this.company;
+    }
 
-    public void setCompany(Company company) { this.company = company; }
+    public void setCompany(Company company) {
+        this.company = company;
+    }
 
-    void HRGUISetUp(Stage stage, User loggedUser, SystemAdmin systemAdmin, Scene loginPage){
+    void HRGUISetUp(Stage stage, User loggedUser, SystemAdmin systemAdmin, Scene loginPage) {
         if (loggedUser.getClass() == HR_Coordinator.class) {
             Group HRPortalScene = new Group();
             Scene HRBasePage = new Scene(HRPortalScene, 450, 250);
@@ -62,7 +64,7 @@ public class HR_Coordinator extends User {
             logout.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
 
             //Job Creation page -- where we create job postings
-            addJobs.setOnAction((ActionEvent addJob) -> { /////////////////////////////////////////////////////////////////
+            addJobs.setOnAction((ActionEvent addJob) -> {
                 Group createJobs = new Group();
                 Scene createJobsPage = new Scene(createJobs, 725, 600);
                 stage.setScene(createJobsPage);
@@ -83,7 +85,7 @@ public class HR_Coordinator extends User {
                 Button createNewPost = new Button("Create Job");
                 Button returnAddJ = new Button("Back");
                 RadioButton fullTime = new RadioButton("fullTime");
-                RadioButton partTime= new RadioButton("partTime");
+                RadioButton partTime = new RadioButton("partTime");
                 GridPane cMessageGrid = new GridPane();
                 GridPane dateGrid = new GridPane();
                 GridPane positionGrid = new GridPane();
@@ -93,12 +95,11 @@ public class HR_Coordinator extends User {
 
 
                 ObservableList<String> listStages = FXCollections.observableArrayList();
-//                ObservableList<String> listInterviewers = FXCollections.observableArrayList(); //for dropdown
                 ObservableList<String> decidedInterviewers = FXCollections.observableArrayList(); // for ViewList
                 ComboBox<String> interviewerDropdown = new ComboBox<>(); // not populating bc getListInterviewers() method in UserAccess not working
 
                 //TODO make this accommodate for Company
-                for (Interviewer interviewer: systemAdmin.getUserManager().getListInterviewers()){
+                for (Interviewer interviewer : systemAdmin.getUserManager().getListInterviewers()) {
                     //listInterviewers.add(interviewer.getUsername());
                     interviewerDropdown.getItems().add(interviewer.getUsername());
                 }
@@ -111,18 +112,18 @@ public class HR_Coordinator extends User {
                 dateGrid.add(datePicker, 2, 0);
                 positionGrid.add(positionLabel, 1, 0);
                 positionGrid.add(positionField, 2, 0);
-                positionGrid.add(companyLabel,1,2);
-                positionGrid.add(companyField, 2,2);
-                positionGrid.add(intStageLabel,1,4);
-                positionGrid.add(intStageField,2,4);
-                positionGrid.add(addStageToProcess,3,4);
-                positionGrid.add(viewInterviewerLabel,1,8);/////////////
-                positionGrid.add(interviewerDropdown,2,8);
-                positionGrid.add(addInterviewer,3,8);
+                positionGrid.add(companyLabel, 1, 2);
+                positionGrid.add(companyField, 2, 2);
+                positionGrid.add(intStageLabel, 1, 4);
+                positionGrid.add(intStageField, 2, 4);
+                positionGrid.add(addStageToProcess, 3, 4);
+                positionGrid.add(viewInterviewerLabel, 1, 8);/////////////
+                positionGrid.add(interviewerDropdown, 2, 8);
+                positionGrid.add(addInterviewer, 3, 8);
                 positionGrid.add(createNewPost, 1, 10);
                 positionGrid.add(returnAddJ, 1, 12);
-                positionGrid.add(fullTime,2,12);
-                positionGrid.add(partTime,3,12);
+                positionGrid.add(fullTime, 2, 12);
+                positionGrid.add(partTime, 3, 12);
 
                 cMessageGrid.setHgap(20);
                 cMessageGrid.setVgap(5);
@@ -138,39 +139,39 @@ public class HR_Coordinator extends User {
 
                 createJobs.getChildren().addAll(CreateJobPlacement);
 
-
                 //TODO: should we number the stages to show the order they are in?
                 addStageToProcess.setOnAction((ActionEvent addStage) -> {
                     String strISF = intStageField.getText();
-                    if (!isNullOrEmpty(strISF)){
+                    if (!isNullOrEmpty(strISF)) {
                         listStages.add(strISF);
                         ListView<String> showStagesList = new ListView<>();
                         showStagesList.setItems(listStages);
-                        showStagesList.setPrefSize(100.00,70.00);
-                        positionGrid.add(showStagesList,1,6);
+                        showStagesList.setPrefSize(100.00, 70.00);
+                        positionGrid.add(showStagesList, 1, 6);
                         intStageField.clear();
                     }
                 });
 
-                addInterviewer.setOnAction((ActionEvent addIntToList) ->{
+                addInterviewer.setOnAction((ActionEvent addIntToList) -> {
                     String interviewerUsername = interviewerDropdown.getValue();
-                    if (!isNullOrEmpty(interviewerUsername)){
+                    if (!isNullOrEmpty(interviewerUsername)) {
                         boolean add = true;
-                        for (String str: decidedInterviewers){
-                            if (str.equals(interviewerUsername)){add = false;}
+                        for (String str : decidedInterviewers) {
+                            if (str.equals(interviewerUsername)) {
+                                add = false;
+                            }
                         }
-                        if (add){
+                        if (add) {
                             decidedInterviewers.add(interviewerUsername);
                             ListView<String> choiceInterviewers = new ListView<>();
                             choiceInterviewers.setItems(decidedInterviewers);
-                            choiceInterviewers.setPrefSize(100.00,70.00);
-                            positionGrid.add(choiceInterviewers,1,9);
+                            choiceInterviewers.setPrefSize(100.00, 70.00);
+                            positionGrid.add(choiceInterviewers, 1, 9);
                         }
                     }
-
                 });
 
-                createNewPost.setOnAction((ActionEvent CreateJob) -> {//////////////////////////////////////////////////////////////////////////////////////
+                createNewPost.setOnAction((ActionEvent CreateJob) -> {
                     if (!listStages.isEmpty()) {
                         Date closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                         String position = positionField.getText();
@@ -188,17 +189,19 @@ public class HR_Coordinator extends User {
 
                         Job job = new Job(position, company, "tag", 0, stagesOfInterview);
 
-                        if(radioSet.getSelectedToggle() == fullTime){
+                        if (radioSet.getSelectedToggle() == fullTime) {
                             job.setTag("fullTime");
                             systemAdmin.getJobManager().addJobPosting(job, closeDate, chosenInterviewers);
                             stage.setScene(HRBasePage);
 
-                        }else if(radioSet.getSelectedToggle() == partTime){
+                        } else if (radioSet.getSelectedToggle() == partTime) {
                             job.setTag("partTime");
                             systemAdmin.getJobManager().addJobPosting(job, closeDate, chosenInterviewers);
                             stage.setScene(HRBasePage);
                             //((JobPosting)(systemAdmin.getJobManager().getJobPosting(position))).getJob().setTag("partTime");
-                        } else {systemAdmin.getAlert("tag").showAndWait();}
+                        } else {
+                            systemAdmin.getAlert("tag").showAndWait();
+                        }
 
                     } else {
                         systemAdmin.getAlert("job").showAndWait();
@@ -224,9 +227,9 @@ public class HR_Coordinator extends User {
                 GridPane ViewJobsGrid = new GridPane();
 
                 ListView<String> scrollListJobs = new ListView<>();
-                ObservableList<String> listJobs= FXCollections.observableArrayList();
+                ObservableList<String> listJobs = FXCollections.observableArrayList();
                 scrollListJobs.setItems(listJobs);
-                scrollListJobs.setPrefSize(160.00,120.00);
+                scrollListJobs.setPrefSize(160.00, 120.00);
                 int j = -1;
                 for (JobPosting jobPosting : systemAdmin.getJobManager().viewClosedJobs()) {  //was ViewJobs before
                     listJobs.add(jobPosting.getJob().getPosition());
@@ -235,8 +238,8 @@ public class HR_Coordinator extends User {
                 ViewJobsGrid.add(ChooseJob, 1, 0);
                 ViewJobsGrid.add(viewApps, 1, 1);  // 3,1
                 ViewJobsGrid.add(distributeApps, 2, 1); // 3,2
-                ViewJobsGrid.add(advanceRoundButton,3,1); // 3,3
-                ViewJobsGrid.add(checkRoundButton,1,2);
+                ViewJobsGrid.add(advanceRoundButton, 3, 1); // 3,3
+                ViewJobsGrid.add(checkRoundButton, 1, 2);
                 ViewJobsGrid.add(returnViewJ, 3, 2);
 
                 ViewJobsGrid.setHgap(20);
@@ -252,23 +255,14 @@ public class HR_Coordinator extends User {
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();
                     String[] listOfApp = systemAdmin.getJobManager().getJobPosting(choice).viewAllApplicants().split(",");  //was .viewApplicants() before
                     if (listOfApp.length != 0 && !isNullOrEmpty(listOfApp[0])) {
-                        //GridPane appViewer = new GridPane();
-                        //ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
-                        //Label chooseApp = new Label("Choose an Applicant:");
-                        //ViewJobsGrid.add(chooseApp, 1, i);
                         ListView<String> scrollListApps = new ListView<>();
-                        ObservableList<String> listApps= FXCollections.observableArrayList();
+                        ObservableList<String> listApps = FXCollections.observableArrayList();
                         scrollListApps.setItems(listApps);
-                        scrollListApps.setPrefSize(160.00,120.00);
+                        scrollListApps.setPrefSize(160.00, 120.00);
                         for (String app : listOfApp) {
-                            //RadioButton radioButton = new RadioButton(app);
-                            //radioButton.setToggleGroup(radioSet);
-                            //appViewer.add(radioButton, 1, i + 1);
                             listApps.add(app);
-                            //i++;
                         }
                         ViewJobsGrid.add(scrollListApps, 2, i + 1);
-
 
                         /*Button viewButton = new Button("VIEW INFO");
                         appViewer.add(viewButton, 3, i + 1);
@@ -281,32 +275,27 @@ public class HR_Coordinator extends User {
                         });*/
                     }
                 });
-
                 distributeApps.setOnAction((ActionEvent disApps) -> {
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();
-                    //String[] listOfApp = jobManager.getJob(choice).viewAllApplicants().split(",");
                     JobPosting tempJob = systemAdmin.getJobManager().getJobPosting(choice);
                     tempJob.getHiringProcessor().sendListToInterview(systemAdmin.getUserManager());
                 });
-
-                advanceRoundButton.setOnAction((ActionEvent advRound) ->{
+                advanceRoundButton.setOnAction((ActionEvent advRound) -> {
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();
                     JobPosting job = systemAdmin.getJobManager().getClosedJob(choice);
                     ArrayList<Applicant> appsForNextRound = job.getHiringProcessor().getRecommendList();
-                    if (!appsForNextRound.isEmpty()){
+                    if (!appsForNextRound.isEmpty()) {
                         job.getHiringProcessor().getListFromHR(appsForNextRound);
                     }
                 });
-
                 checkRoundButton.setOnAction((ActionEvent checkRound) -> {
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();
                     JobPosting job = systemAdmin.getJobManager().getClosedJob(choice);
                     int round = job.getHiringProcessor().getRoundNum();
                     Label roundLabel = new Label("Round: " + Integer.toString(round));
-                    ViewJobsGrid.add(roundLabel,3,0);
+                    ViewJobsGrid.add(roundLabel, 3, 0);
                 });
             });
-
             viewAllApps.setOnAction((ActionEvent viewAllApplicants) -> {
                 Group viewApps = new Group();
                 Scene createViewAppsPage = new Scene(viewApps, 600, 600);
@@ -335,21 +324,15 @@ public class HR_Coordinator extends User {
 
                 returnViewApp.setOnAction((ActionEvent exitPage) -> stage.setScene(HRBasePage));
 
-                viewButton.setOnAction((ActionEvent seeApps) -> {
-                    appInfo.setText(((Applicant)(systemAdmin.getUserManager().getUser((String) dropApp.getValue()))).getInfo());
-                    //appInfo.setText(((Applicant)userManager.getUser((String)dropApp.getValue())).getJobs());
-
-                });
+                viewButton.setOnAction((ActionEvent seeApps) -> appInfo.setText(((Applicant)
+                        (systemAdmin.getUserManager().getUser((String) dropApp.getValue()))).getInfo()));
             });
-        }// what happens if they are not an HR Coordinator but have a login;
-        //send message wrong user type?
-        else {
+        } else {
             stage.setScene(loginPage);
         }
     }
 
-    public String toString(){
+    public String toString() {
         return "{H," + this.getUsername() + "," + this.getPassword() + "}";
-
     }
 }

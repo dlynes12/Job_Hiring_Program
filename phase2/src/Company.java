@@ -20,7 +20,5 @@ public class Company {
 
     public void addInterviewer(Interviewer interviewer) { this.interviewers.add(interviewer); }
 
-
-
-    public HR_Coordinator getHrCoordinator(){ return this.hrCoordinator; }
+    HR_Coordinator getHrCoordinator(){ return this.hrCoordinator; }
 }

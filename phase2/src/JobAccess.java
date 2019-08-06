@@ -2,7 +2,6 @@ import java.util.*;
 
 public class JobAccess implements Observer {
 
-
     Date today;
     private ArrayList<JobPosting> jobPostings = new ArrayList<>();
     private ArrayList<JobPosting> closedJobs = new ArrayList<>();
@@ -10,26 +9,26 @@ public class JobAccess implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         String expiredPositions = "";
-        for (JobPosting jobPosting: jobPostings){
-            if (jobPosting.getDateClosed().before(today)){
+        for (JobPosting jobPosting : jobPostings) {
+            if (jobPosting.getDateClosed().before(today)) {
                 expiredPositions = expiredPositions + jobPosting.getJob().getPosition() + ",";
             }
         }
-        if (!expiredPositions.equals("")){
-            String strJobs = expiredPositions.substring(0,expiredPositions.length()-1);
+        if (!expiredPositions.equals("")) {
+            String strJobs = expiredPositions.substring(0, expiredPositions.length() - 1);
             String[] strListJobs = strJobs.split(",");
-            for (String str: strListJobs){
+            for (String str : strListJobs) {
                 this.removeJobPosting(str);
             }
         }
     }
 
-    public void retrieveTime(Date date){
+    void retrieveTime(Date date) {
         today = date;
     }
 
     //Manage Open Jobs Function-------------------------------------------------------------------
-    public boolean addJobPosting(Job job, Date dateClosed, ArrayList<Interviewer> chosenInterviewers) {
+    boolean addJobPosting(Job job, Date dateClosed, ArrayList<Interviewer> chosenInterviewers) {
 
         JobPosting jobposting = new JobPosting(job, today, dateClosed, chosenInterviewers);
         boolean add = false;
@@ -50,7 +49,7 @@ public class JobAccess implements Observer {
         return add;
     }
 
-    public JobPosting getJobPosting(String jobTitle) {
+    JobPosting getJobPosting(String jobTitle) {
         JobPosting result = null;
         for (int i = 0; i < jobPostings.size(); i++) {
             if (jobPostings.get(i).getJob().getPosition().equals(jobTitle)) {
@@ -58,10 +57,9 @@ public class JobAccess implements Observer {
             }
         }
         return result;
-
     }
 
-    public JobPosting getClosedJob(String jobTitle) {
+    JobPosting getClosedJob(String jobTitle) {
         JobPosting result = null;
         for (int i = 0; i < closedJobs.size(); i++) {
             if (closedJobs.get(i).getJob().getPosition().equals(jobTitle)) {
@@ -71,7 +69,7 @@ public class JobAccess implements Observer {
         return result;
     }
 
-    public boolean removeJobPosting(String position) {
+    private boolean removeJobPosting(String position) {
         //check if the position is in our job postings
         //todo: automate the start of the hiring process
         //todo: find a way to display closed jobs
@@ -91,8 +89,11 @@ public class JobAccess implements Observer {
 //    public JobPosting makeJobposting(){
 //    }
 
+    ArrayList<JobPosting> ViewJobs() {
+        return jobPostings;
+    } // see all the job postings available
 
-    public ArrayList<JobPosting> ViewJobs() {return jobPostings;} // see all the job postings available
-
-    public ArrayList<JobPosting> viewClosedJobs(){return closedJobs;}
+    ArrayList<JobPosting> viewClosedJobs() {
+        return closedJobs;
+    }
 }

@@ -2,7 +2,7 @@ import java.time.Instant;
 import java.util.Date;
 import java.io.Serializable;
 
-public abstract class User implements Serializable{
+public abstract class User implements Serializable {
     private String username;
     private String password;
     private Date dateCreated = new Date();
@@ -22,9 +22,11 @@ public abstract class User implements Serializable{
         return this.password;
     }
 
-    public Date getDateCreated(){ return this.dateCreated; }
+    public Date getDateCreated() {
+        return this.dateCreated;
+    }
 
-    public static boolean isNullOrEmpty(String str) {
+    static boolean isNullOrEmpty(String str) {
         return str == null || str.isEmpty();
     }
 
