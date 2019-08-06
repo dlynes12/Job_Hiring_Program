@@ -170,36 +170,40 @@ public class HR_Coordinator extends User {
 
                 });
 
-                createNewPost.setOnAction((ActionEvent CreateJob) -> {
-                    if (!listStages.isEmpty()){
+                createNewPost.setOnAction((ActionEvent CreateJob) -> {//////////////////////////////////////////////////////////////////////////////////////
+                    if (!listStages.isEmpty()) {
                         Date closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                         String position = positionField.getText();
                         String company = companyField.getText();
+
                         ArrayList<String> stagesOfInterview = new ArrayList<>();
-                        for (String str: listStages){
+                        for (String str : listStages) {
                             stagesOfInterview.add(str);
                         }
-                        ArrayList<Interviewer> chosenInterviewers= new ArrayList<>();
-                        for (String str: decidedInterviewers){
+
+                        ArrayList<Interviewer> chosenInterviewers = new ArrayList<>();
+                        for (String str : decidedInterviewers) {
                             chosenInterviewers.add((Interviewer) systemAdmin.getUserManager().getUser(str));
                         }
 
-                        Job job = new Job(position,company,"tag",0, stagesOfInterview);
-                        systemAdmin.getJobManager().addJobPosting(job, closeDate, chosenInterviewers);//---------------------------------------------
+                        Job job = new Job(position, company, "tag", 0, stagesOfInterview);
 
+                        if(radioSet.getSelectedToggle() == fullTime){
+                            job.setTag("fullTime");
+                            systemAdmin.getJobManager().addJobPosting(job, closeDate, chosenInterviewers);
+                            stage.setScene(HRBasePage);
 
-//                        if(radioSet.getSelectedToggle() == fullTime){
-//                            ((JobPosting)(systemAdmin.getJobManager().getJob(position))).setTag("fullTime");
-//
-//                        }else if(radioSet.getSelectedToggle() == partTime){
-//                            ((JobPosting)(systemAdmin.getJobManager().getJob(position))).setTag("partTime");
-//                        }
+                        }else if(radioSet.getSelectedToggle() == partTime){
+                            job.setTag("partTime");
+                            systemAdmin.getJobManager().addJobPosting(job, closeDate, chosenInterviewers);
+                            stage.setScene(HRBasePage);
+                            //((JobPosting)(systemAdmin.getJobManager().getJobPosting(position))).getJob().setTag("partTime");
+                        } else {systemAdmin.getAlert("tag").showAndWait();}
 
-
-                        stage.setScene(HRBasePage);
+                    } else {
+                        systemAdmin.getAlert("job").showAndWait();
                     }
                 });
-
                 returnAddJ.setOnAction((ActionEvent exitPage) -> stage.setScene(HRBasePage));
             });
 

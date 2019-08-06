@@ -20,6 +20,8 @@ public class Job {
         return this.position;
     }
 
+    void setTag(String tag){this.tag = tag;}
+
     String getCompany() {
         return this.company;
     }

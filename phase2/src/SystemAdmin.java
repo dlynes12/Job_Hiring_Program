@@ -39,30 +39,37 @@ public class SystemAdmin implements java.io.Serializable{
     protected TimeKeeper getTimeKeeper() { return this.timeKeeper; }
 
     public Alert getAlert(String alertType){
-         Alert alert = new Alert(Alert.AlertType.WARNING);
-         if(alertType.equals("login1")){
-             alert.setTitle("Password/Username Not Found");
-             alert.setHeaderText("Username Not Found.");
-             alert.setContentText("Please Try Again");
-         }
-         else if(alertType.equals("login2")){
-             alert.setTitle("Password/Username Not Found");
-             alert.setHeaderText("Incorrect Password");
-             alert.setContentText("Please Try Again");
-         }
-         else if(alertType.equals("date")){
-             alert.setTitle("Invalid date input");
-             alert.setHeaderText("Do not leave any of the fields empty.");
-             alert.setContentText("Please Try Again");
-
-         }
-         else if(alertType.equals("create")){
-             alert.setTitle("Invalid input or user already exists");
-             alert.setHeaderText("Do not leave any of the fields empty.");
-             alert.setContentText("Please Try Again");
-         }
-         return alert;
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        if(alertType.equals("login1")){
+            alert.setTitle("Password/Username Not Found");
+            alert.setHeaderText("Username Not Found.");
+            alert.setContentText("Please Try Again");
+        }
+        else if(alertType.equals("login2")){
+            alert.setTitle("Password/Username Not Found");
+            alert.setHeaderText("Incorrect Password");
+            alert.setContentText("Please Try Again");
+        }
+        else if(alertType.equals("date")){
+            alert.setTitle("Invalid date input");
+            alert.setHeaderText("Do not leave any of the fields empty");
+            alert.setContentText("Please Try Again");
+        }
+        else if(alertType.equals("create")){
+            alert.setTitle("Invalid input or user already exists");
+            alert.setHeaderText("Do not leave any of the fields empty");
+            alert.setContentText("Please Try Again");
+        }
+        else if(alertType.equals("tag")){
+            alert.setTitle("No tag selected");
+            alert.setHeaderText("Select full-time or part-time");
+            alert.setContentText("Please Try Again");
+        }
+        else if(alertType.equals("job")){
+            alert.setTitle("Invalid input");
+            alert.setHeaderText("Do not leave any of the fields empty");
+            alert.setContentText("Please Try Again");
+        }
+        return alert;
     }
-
-
 }
