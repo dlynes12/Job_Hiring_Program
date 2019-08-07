@@ -25,6 +25,7 @@ public class InterviewManager {
     ArrayList<Applicant> candidates = new ArrayList<>(); // people who are waiting to be moved to the next round
     private ArrayList<Applicant> rejectedFromRound = new ArrayList<>();
     private ArrayList<Applicant> rejectedApplicants = new ArrayList<>();
+
     private ArrayList<String> hiringStage = new ArrayList<>(); // list of all the stages in the hiring process
     private ArrayList<Interviewer> chosenInterviewers;
     private JobPosting jobPosting;
@@ -113,7 +114,10 @@ public class InterviewManager {
             if (!inList) {this.candidates.add(applicant);}
         }else {
             boolean isFilled = (jobPosting.getNumHires() == this.candidates.size());
-            if (!inList && !isFilled){this.candidates.add(applicant);}
+            if (!inList && !isFilled){
+                this.candidates.add(applicant);
+                System.out.println("applicant has been approved");
+            }
         }
 
     }
@@ -160,6 +164,7 @@ public class InterviewManager {
             for (Applicant a : candidates) {
                 a.updateStatus(jobPosting, hiringStage.get(roundNum));
             }
+            for (Interviewer interviewer: chosenInterviewers){interviewer.clearInterviewees(jobPosting.getJob().getPosition());}
         }else{
             for (Applicant applicant: applicants){applicant.updateStatus(jobPosting,"Hired");}
         }

@@ -10,7 +10,7 @@ import javafx.scene.layout.GridPane;
 import java.util.*;
 
 public class Interviewer extends User {
-    private Map<Applicant, String> applicantsList = new HashMap<>();
+    private Map<String, ArrayList<Applicant>> applicantsList = new HashMap<>();
     private Company company;
 
     public Interviewer(String username, String password) {
@@ -28,15 +28,23 @@ public class Interviewer extends User {
     //TODO when someone gets hired, please change the 'filled' boolean for the jobPosting to TRUE
 
     void addToList(Applicant applicant, String position) {
-        applicantsList.put(applicant, position);
+        ArrayList<Applicant> updateList = applicantsList.get(position);
+        updateList.add(applicant);
+        applicantsList.put(position,updateList);
     }
 
-    ArrayList<Applicant> getInterviewees() {
-        ArrayList<Applicant> listOfInterviewees = new ArrayList<>();
-        for (Applicant a : applicantsList.keySet()) {
-            listOfInterviewees.add(a);
-        }
-        return listOfInterviewees;
+    ArrayList<Applicant> getInterviewees(String position) {
+//        ArrayList<Applicant> listOfInterviewees = new ArrayList<>();
+//        for (Applicant a : applicantsList.keySet()) {
+//            listOfInterviewees.add(a);
+//        }
+        ArrayList<Applicant> result = this.applicantsList.get(position);
+        return result;
+    }
+
+    public void clearInterviewees(String position){
+        ArrayList<Applicant> clearedList= new ArrayList<>();
+        applicantsList.put(position,clearedList);
     }
 
     public void setCompany(Company company) {
@@ -89,7 +97,7 @@ public class Interviewer extends User {
 
             getInterviewees.setOnAction((ActionEvent ev) -> { // get the Applicant list for each job
                 String choice = (String) dropdown.getValue();
-                String[] listOfApp = systemAdmin.getJobManager().getClosedJob(choice).viewApplicants(this).split(",");
+                String[] listOfApp = systemAdmin.getJobManager().getClosedJob(choice).viewApplicants(this,choice).split(",");
                 if (listOfApp.length != 0 && !isNullOrEmpty(listOfApp[0])) {
                     Label chooseApp = new Label("Choose an Applicant:");
                     interviewerSelectionPane.add(chooseApp, 1, 0);

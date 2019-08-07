@@ -4,7 +4,7 @@ import java.util.HashMap;
 public class UserAccess implements java.io.Serializable {
     public ArrayList<User> users = new ArrayList();
     private ArrayList<Interviewer> employedInterviewers = new ArrayList<>();
-    private HashMap<Company, ArrayList<Interviewer>> interviewers = new HashMap<>();
+    private ArrayList<Interviewer> interviewers = new ArrayList<>();
     private HashMap<Company, ArrayList<HR_Coordinator>> hRcoordinatots = new HashMap<>();
     Storage store = new Storage();
 
@@ -46,8 +46,8 @@ public class UserAccess implements java.io.Serializable {
         return null;
     }
 
-    ArrayList<Interviewer> getListInterviewers(Company company) {
-        return this.interviewers.get(company);
+    ArrayList<Interviewer> getListInterviewers() {
+        return this.employedInterviewers;
     }
 
     public void setEmployedInterviewers(ArrayList<Interviewer> employedInterviewers) {

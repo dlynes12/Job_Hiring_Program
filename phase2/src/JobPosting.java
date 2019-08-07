@@ -69,10 +69,10 @@ public class JobPosting {
     }
 
     // todo: fix the list of applicants the interviewer sees
-    public String viewApplicants(Interviewer interviewer) { //view all Applicants still in the hiring process
+    public String viewApplicants(Interviewer interviewer, String position) { //view all Applicants still in the hiring process
         StringBuilder listOfApplicants = new StringBuilder();
         String result;
-        for (Applicant applicant : interviewer.getInterviewees()) {
+        for (Applicant applicant : interviewer.getInterviewees(position)) {
             listOfApplicants.append(applicant.getUsername()).append(",");
         }
         if (listOfApplicants.length() == 0) {
