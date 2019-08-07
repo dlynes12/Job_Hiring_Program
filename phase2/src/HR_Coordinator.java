@@ -101,7 +101,8 @@ public class HR_Coordinator extends User {
                 ComboBox<String> interviewerDropdown = new ComboBox<>(); // not populating bc getListInterviewers() method in UserAccess not working
 
                 //TODO make this accommodate for Company
-                for (Interviewer interviewer : systemAdmin.getUserManager().getListInterviewers()) {
+                //HR.getCompany returns the company they belong to
+                for (Interviewer interviewer : systemAdmin.getUserManager().getListInterviewers(this.getCompany())) {
                     //listInterviewers.add(interviewer.getUsername());
                     interviewerDropdown.getItems().add(interviewer.getUsername());
                 }
@@ -143,7 +144,7 @@ public class HR_Coordinator extends User {
 
                 createJobs.getChildren().addAll(CreateJobPlacement);
 
-                //TODO: should we number the stages to show the order they are in?
+                //should we number the stages to show the order they are in?
                 addStageToProcess.setOnAction((ActionEvent addStage) -> {
                     String strISF = intStageField.getText();
                     if (!isNullOrEmpty(strISF)) {
