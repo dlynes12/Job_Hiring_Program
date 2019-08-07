@@ -189,13 +189,15 @@ public class Applicant extends User {
                     jobViewer.add(lst,0,0);
 
                     applyButton.setOnAction((ActionEvent event) -> {
-                        Applicant a = (Applicant) loggedUser;
+                        if ((String)lst.getSelectionModel().getSelectedItem()== null){
+                            systemAdmin.getAlert("Select part or full time").showAndWait(); }
+                        else {Applicant a = (Applicant) loggedUser;
                         //String selectedRadio = (((RadioButton) radioSet.getSelectedToggle()).getText());
 
                         Button back = new Button("Back");
                         a.applyToJob(systemAdmin.getJobManager().getJobPosting((String)lst.getSelectionModel().getSelectedItem()));
 
-                        back.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));
+                        back.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));}
                     });
                 });
             });
