@@ -30,6 +30,10 @@ public class SystemAdmin implements java.io.Serializable {
         }
     }
 
+    protected ArrayList<Company> getListOfCompanies(){
+        return this.companies;
+    }
+
     void setTimeKeeper(TimeKeeper timeKeeper) {
         this.timeKeeper = timeKeeper;
     }
