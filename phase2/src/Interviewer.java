@@ -109,14 +109,13 @@ public class Interviewer extends User {
                         }
                         else{
                         Applicant appObj = (Applicant) systemAdmin.getUserManager().getUser(selectedApplicant);
-                        systemAdmin.getJobManager().getJobPosting(choice).getHiringProcessor().nextRound(appObj);
-                        systemAdmin.getJobManager().getJobPosting(choice).getHiringProcessor().getRoundOfApplicants().remove(appObj);
-                        if ((systemAdmin.getJobManager().getJobPosting(choice).getHiringProcessor().candidates.size() < 2) &&
-                                (systemAdmin.getJobManager().getJobPosting(choice).getHiringProcessor().approvedApplicants.size() < 2)) {
-                            appObj.updateStatus(systemAdmin.getJobManager().getJobPosting(choice), "Hired");
-
-
-                        }}
+                        systemAdmin.getJobManager().getClosedJob(choice).getHiringProcessor().nextRound(appObj);
+                        }
+//                        systemAdmin.getJobManager().getJobPosting(choice).getHiringProcessor().getRoundOfApplicants().remove(appObj);
+//                        if ((systemAdmin.getJobManager().getClosedJob(choice).getHiringProcessor().candidates.size() < 2) &&
+//                                (systemAdmin.getJobManager().getJobPosting(choice).getHiringProcessor().approvedApplicants.size() < 2)) {
+//                            appObj.updateStatus(systemAdmin.getJobManager().getJobPosting(choice), "Hired");
+//
                         // we can delete the applicant from the applicantList after a person has been
                         // recommended or declined; then check if the applicantList is empty to advance
                         // the round
@@ -124,7 +123,7 @@ public class Interviewer extends User {
                     decline.setOnAction((ActionEvent click) -> {
                         String selectedApplicant = scrollListApps.getSelectionModel().getSelectedItem();
                         Applicant appObj = (Applicant) systemAdmin.getUserManager().getUser(selectedApplicant);
-                        systemAdmin.getJobManager().getJobPosting(choice).getHiringProcessor().reject(appObj);
+                        systemAdmin.getJobManager().getClosedJob(choice).getHiringProcessor().reject(appObj);
                     });
                 }
             });

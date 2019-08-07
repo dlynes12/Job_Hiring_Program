@@ -11,7 +11,7 @@ public class UserAccess implements java.io.Serializable {
     // LOGIN FUNCTIONS----------------------------------------------------------------------
     boolean addUser(User user) {
         boolean added = false;
-        if (checkInput(user.getUsername(), user.getPassword())) {
+        if (validInput(user.getUsername()) && validInput(user.getPassword())) {
             for (User account : users) {
                 if (account.getUsername().equals(user.getUsername())) {
                     added = true;
@@ -69,8 +69,12 @@ public class UserAccess implements java.io.Serializable {
         return add;
     }
 
-    private Boolean checkInput(String username, String password) {
-        return username.matches(".*[\\S]+.*") && password.matches(".*[\\S]+.*");
+//    private Boolean checkInput(String username, String password) {
+//        return username.matches(".*[\\S]+.*") && password.matches(".*[\\S]+.*");
+//    }
+
+    private boolean validInput(String input){
+        return input.matches(".*[\\S]+.*");
     }
 
 //    public String listUses(ArrayList<User> a){
