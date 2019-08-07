@@ -83,13 +83,13 @@ public class Interviewer extends User {
             chooseJobPane.setHgap(20);
             chooseJobPane.setVgap(5);
 
-            for (JobPosting jobPosting : systemAdmin.getJobManager().ViewJobs()) {
+            for (JobPosting jobPosting : systemAdmin.getJobManager().viewClosedJobs()){
                 dropdown.getItems().add(jobPosting.getJob().getPosition());
             }
 
             getInterviewees.setOnAction((ActionEvent ev) -> { // get the Applicant list for each job
                 String choice = (String) dropdown.getValue();
-                String[] listOfApp = systemAdmin.getJobManager().getJobPosting(choice).viewApplicants(this).split(",");
+                String[] listOfApp = systemAdmin.getJobManager().getClosedJob(choice).viewApplicants(this).split(",");
                 if (listOfApp.length != 0 && !isNullOrEmpty(listOfApp[0])) {
                     Label chooseApp = new Label("Choose an Applicant:");
                     interviewerSelectionPane.add(chooseApp, 1, 0);
@@ -104,7 +104,8 @@ public class Interviewer extends User {
 
                     approve.setOnAction((ActionEvent click) -> {
                         String selectedApplicant = scrollListApps.getSelectionModel().getSelectedItem();
-                        if (selectedApplicant.isEmpty()){                        systemAdmin.getAlert("create").showAndWait();
+                        if (selectedApplicant.isEmpty()){
+                            systemAdmin.getAlert("create").showAndWait();
                         }
                         else{
                         Applicant appObj = (Applicant) systemAdmin.getUserManager().getUser(selectedApplicant);

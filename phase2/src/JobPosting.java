@@ -68,31 +68,18 @@ public class JobPosting {
         }
     }
 
+    // todo: fix the list of applicants the interviewer sees
     public String viewApplicants(Interviewer interviewer) { //view all Applicants still in the hiring process
         StringBuilder listOfApplicants = new StringBuilder();
         String result;
-        Date today = new Date();
-        Instant now = Instant.now();
-        today.from(now);
-        if (today.before(this.getDateClosed())) {
-            for (Applicant applicant : this.applicants) {  //list before was this.applicants
-                listOfApplicants.append(applicant.getUsername()).append(",");
-            }
-            if (listOfApplicants.length() == 0) {
-                result = listOfApplicants.toString();
-            } else {
-                result = listOfApplicants.substring(0, listOfApplicants.length() - 1);
-            } //takes off the last comma
-        } else {
-            for (Applicant applicant : interviewer.getInterviewees()) {
-                listOfApplicants.append(applicant.getUsername()).append(",");
-            }
-            if (listOfApplicants.length() == 0) {
-                result = listOfApplicants.toString();
-            } else {
-                result = listOfApplicants.substring(0, listOfApplicants.length() - 1);
-            } //takes off the last comma
+        for (Applicant applicant : interviewer.getInterviewees()) {
+            listOfApplicants.append(applicant.getUsername()).append(",");
         }
+        if (listOfApplicants.length() == 0) {
+            result = listOfApplicants.toString();
+        } else {
+            result = listOfApplicants.substring(0, listOfApplicants.length() - 1);
+        } //takes off the last comma
         return result;
     }
 

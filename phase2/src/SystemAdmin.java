@@ -30,6 +30,10 @@ public class SystemAdmin implements java.io.Serializable {
         }
     }
 
+    protected ArrayList<Company> getListOfCompanies(){
+        return this.companies;
+    }
+
     void setTimeKeeper(TimeKeeper timeKeeper) {
         this.timeKeeper = timeKeeper;
     }
@@ -63,6 +67,14 @@ public class SystemAdmin implements java.io.Serializable {
         } else if (alertType.equals("job")) {
             alert.setTitle("Invalid input");
             alert.setHeaderText("Do not leave any of the fields empty");
+            alert.setContentText("Please Try Again");
+        } else if (alertType.equals("apply")) {
+            alert.setTitle("Unexpected Input");
+            alert.setHeaderText("Job not Selected");
+            alert.setContentText("Please Try Again");
+        }else if (alertType.equals("integer")) {
+            alert.setTitle("Invalid Input");
+            alert.setHeaderText("Enter number of applicants");
             alert.setContentText("Please Try Again");
         }
         return alert;

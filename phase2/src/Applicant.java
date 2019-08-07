@@ -1,5 +1,4 @@
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -18,7 +17,6 @@ import java.util.Date;
 public class Applicant extends User {
     private HashMap<JobPosting, String> jobsApplied = new HashMap<>();
     transient Storage store = new Storage();
-
 
     public Applicant(String username, String password) {
         super(username, password);
@@ -63,9 +61,9 @@ public class Applicant extends User {
         return history.toString();
     }
 
-//    public void getDocs(String username) throws IOException, ClassNotFoundException {
-//        store.readDocFile(username + "docs.bin");
-//    }
+    public void getDocs(String username) throws IOException, ClassNotFoundException {
+        store.readDocFile(username + "docs.bin");
+    }
 //    public void setDocsHash(User u, Boolean a, Boolean b, String s) throws IOException {
 //        ArrayList<Boolean> docs = new ArrayList<>();
 //        docs.add(a);
@@ -159,12 +157,10 @@ public class Applicant extends User {
                 Button returnApp = new Button("Back");
                 Button applyButton = new Button("Apply");
                 Button select = new Button("Select");
+                GridPane jobViewer = new GridPane();
+                ListView jobList = new ListView();
 
                 ComboBox filter = new ComboBox(FXCollections.observableArrayList("fullTime","partTime", "allJobs"));
-                ToggleGroup radioSet = new ToggleGroup();
-
-                GridPane jobViewer = new GridPane();
-                 // allows only one radio button to be selected at a time
 
                 jobViewer.add(select,12, 1);
                 jobViewer.add(filter, 10, 0);
@@ -175,10 +171,9 @@ public class Applicant extends User {
                 jobPortalScene.getChildren().add(jobViewer);
                 stage.show();
 
-                ListView jobList = new ListView();
-
-
                 returnApp.setOnAction((ActionEvent ex) -> stage.setScene(applicantPage));
+
+                applyButton.setOnAction((ActionEvent ex) -> systemAdmin.getAlert("tag").showAndWait());
 
                 select.setOnAction((ActionEvent ex) -> {
                     ListView<String> lst = new ListView<>();
@@ -189,15 +184,15 @@ public class Applicant extends User {
                     jobViewer.add(lst,0,0);
 
                     applyButton.setOnAction((ActionEvent event) -> {
-                        if ((String)lst.getSelectionModel().getSelectedItem()== null){
-                            systemAdmin.getAlert("Select part or full time").showAndWait(); }
-                        else {Applicant a = (Applicant) loggedUser;
-                        //String selectedRadio = (((RadioButton) radioSet.getSelectedToggle()).getText());
+                        try {
+                            Applicant a = (Applicant) loggedUser;
+                            Button back = new Button("Back");
+                            a.applyToJob(systemAdmin.getJobManager().getJobPosting((String) lst.getSelectionModel().getSelectedItem()));
 
-                        Button back = new Button("Back");
-                        a.applyToJob(systemAdmin.getJobManager().getJobPosting((String)lst.getSelectionModel().getSelectedItem()));
-
-                        back.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));}
+                            back.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));
+                        }catch(NullPointerException e2){
+                            systemAdmin.getAlert("apply").showAndWait();
+                        }
                     });
                 });
             });
