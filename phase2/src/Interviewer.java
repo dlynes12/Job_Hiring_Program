@@ -104,6 +104,9 @@ public class Interviewer extends User {
 
                     approve.setOnAction((ActionEvent click) -> {
                         String selectedApplicant = scrollListApps.getSelectionModel().getSelectedItem();
+                        if (selectedApplicant.isEmpty()){                        systemAdmin.getAlert("create").showAndWait();
+                        }
+                        else{
                         Applicant appObj = (Applicant) systemAdmin.getUserManager().getUser(selectedApplicant);
                         systemAdmin.getJobManager().getJobPosting(choice).getHiringProcessor().nextRound(appObj);
                         systemAdmin.getJobManager().getJobPosting(choice).getHiringProcessor().getRoundOfApplicants().remove(appObj);
@@ -111,7 +114,7 @@ public class Interviewer extends User {
                                 (systemAdmin.getJobManager().getJobPosting(choice).getHiringProcessor().approvedApplicants.size() < 2)) {
                             appObj.updateStatus(systemAdmin.getJobManager().getJobPosting(choice), "Hired");
 
-                        }
+                        }}
                         // we can delete the applicant from the applicantList after a person has been
                         // recommended or declined; then check if the applicantList is empty to advance
                         // the round
