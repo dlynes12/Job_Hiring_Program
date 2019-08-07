@@ -28,13 +28,12 @@ public class JobAccess implements Observer {
     }
 
     //Manage Open Jobs Function-------------------------------------------------------------------
-    boolean addJobPosting(Job job, Date dateClosed, ArrayList<Interviewer> chosenInterviewers, int numHires) {
-
+    void addJobPosting(Job job, Date dateClosed, ArrayList<Interviewer> chosenInterviewers, int numHires) {
         JobPosting jobposting = new JobPosting(job, today, dateClosed, chosenInterviewers, numHires);
-        boolean add = false;
+        boolean added = false;
         if (this.getJobPosting(job.getPosition()) == null && !job.getPosition().trim().isEmpty()) {
             this.jobPostings.add(jobposting);
-            add = true;
+            added = true;
             //automatically close the job once it has closed
 //            Timer jobTimer = new Timer();
 //            TimerTask closeJob = new TimerTask() {
@@ -45,8 +44,7 @@ public class JobAccess implements Observer {
 //            };
 //            jobTimer.schedule(closeJob, dateClosed);
         }
-        System.out.println("Job created:" + add);
-        return add;
+        System.out.println("Job created:" + added);
     }
 
     JobPosting getJobPosting(String jobTitle) {
@@ -83,7 +81,7 @@ public class JobAccess implements Observer {
         return remove;
     }
 
-    public ArrayList<String> sort(String s){
+    ArrayList<String> sort(String s) {
         ArrayList<String> al = new ArrayList<>();
         for (JobPosting j : this.jobPostings) {
             if (s.equals("allJobs")) {
@@ -95,12 +93,6 @@ public class JobAccess implements Observer {
         }
         return al;
     }
-
-//    public Job makeJob(){
-//
-//    }
-//    public JobPosting makeJobposting(){
-//    }
 
     ArrayList<JobPosting> ViewJobs() {
         return jobPostings;
