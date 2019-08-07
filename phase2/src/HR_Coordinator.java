@@ -257,7 +257,7 @@ public class HR_Coordinator extends User {
                 viewApps.setOnAction((ActionEvent seeApps) -> {
                     int i = 0;
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();
-                    String[] listOfApp = systemAdmin.getJobManager().getJobPosting(choice).viewAllApplicants().split(",");  //was .viewApplicants() before
+                    String[] listOfApp = systemAdmin.getJobManager().getClosedJob(choice).viewAllApplicants().split(",");  //was .viewApplicants() before
                     if (listOfApp.length != 0 && !isNullOrEmpty(listOfApp[0])) {
                         ListView<String> scrollListApps = new ListView<>();
                         ObservableList<String> listApps = FXCollections.observableArrayList();
@@ -279,9 +279,11 @@ public class HR_Coordinator extends User {
                         });*/
                     }
                 });
+                //todo: line 286 has a nullPointer error
+                //put a break-line and debug
                 distributeApps.setOnAction((ActionEvent disApps) -> {
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();
-                    JobPosting tempJob = systemAdmin.getJobManager().getJobPosting(choice);
+                    JobPosting tempJob = systemAdmin.getJobManager().getClosedJob(choice);
                     if (!tempJob.getHiringProcessor().isDistributed()){
                         tempJob.getHiringProcessor().sendListToInterview(systemAdmin.getUserManager());
                     }
