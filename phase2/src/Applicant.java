@@ -63,9 +63,9 @@ public class Applicant extends User {
         return history.toString();
     }
 
-//    public void getDocs(String username) throws IOException, ClassNotFoundException {
-//        store.readDocFile(username + "docs.bin");
-//    }
+    public void getDocs(String username) throws IOException, ClassNotFoundException {
+        store.readDocFile(username + "docs.bin");
+    }
 //    public void setDocsHash(User u, Boolean a, Boolean b, String s) throws IOException {
 //        ArrayList<Boolean> docs = new ArrayList<>();
 //        docs.add(a);
@@ -180,6 +180,9 @@ public class Applicant extends User {
 
                 returnApp.setOnAction((ActionEvent ex) -> stage.setScene(applicantPage));
 
+                applyButton.setOnAction((ActionEvent ex) -> {
+                    systemAdmin.getAlert("tag").showAndWait();
+                });
                 select.setOnAction((ActionEvent ex) -> {
                     ListView<String> lst = new ListView<>();
                     ArrayList<String> tempArray = systemAdmin.getJobManager().sort((String)filter.getValue());
@@ -189,15 +192,16 @@ public class Applicant extends User {
                     jobViewer.add(lst,0,0);
 
                     applyButton.setOnAction((ActionEvent event) -> {
-                        if ((String)lst.getSelectionModel().getSelectedItem()== null){
-                            systemAdmin.getAlert("Select part or full time").showAndWait(); }
-                        else {Applicant a = (Applicant) loggedUser;
-                        //String selectedRadio = (((RadioButton) radioSet.getSelectedToggle()).getText());
+                        try {
+                            Applicant a = (Applicant) loggedUser;
+                            Button back = new Button("Back");
+                            a.applyToJob(systemAdmin.getJobManager().getJobPosting(lst.getSelectionModel().getSelectedItem()));
 
-                        Button back = new Button("Back");
-                        a.applyToJob(systemAdmin.getJobManager().getJobPosting((String)lst.getSelectionModel().getSelectedItem()));
+                            back.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));
+                        }catch(NullPointerException e2){
+                            systemAdmin.getAlert("apply").showAndWait();
+                        }
 
-                        back.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));}
                     });
                 });
             });
