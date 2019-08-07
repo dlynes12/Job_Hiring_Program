@@ -7,8 +7,7 @@ public class Company {
     private ArrayList<Interviewer> interviewers;
     private String companyName;
 
-    public Company(String companyName, HR_Coordinator hrCoordinator){
-        this.hrCoordinator = hrCoordinator;
+    public Company(String companyName){
         this.companyName = companyName;
     }
 
