@@ -102,7 +102,7 @@ public class HR_Coordinator extends User {
 
                 //TODO make this accommodate for Company
                 //HR.getCompany returns the company they belong to
-                for (Interviewer interviewer : systemAdmin.getUserManager().getListInterviewers(this.getCompany())) {
+                for (Interviewer interviewer : systemAdmin.getUserManager().getListInterviewers()) {
                     //listInterviewers.add(interviewer.getUsername());
                     interviewerDropdown.getItems().add(interviewer.getUsername());
                 }
