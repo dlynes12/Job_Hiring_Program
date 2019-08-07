@@ -49,8 +49,8 @@ public class SystemAdmin implements java.io.Serializable {
             alert.setHeaderText("Incorrect Password");
             alert.setContentText("Please Try Again");
         } else if (alertType.equals("date")) {
-            alert.setTitle("Invalid date input");
-            alert.setHeaderText("Do not leave any of the fields empty");
+            alert.setTitle("Invalid input");
+            alert.setHeaderText("Invalid date input");
             alert.setContentText("Please Try Again");
         } else if (alertType.equals("create")) {
             alert.setTitle("Invalid input or user already exists");

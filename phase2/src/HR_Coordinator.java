@@ -245,7 +245,7 @@ public class HR_Coordinator extends User {
                 ViewJobsGrid.add(scrollListJobs, 2, j + 1);
                 ViewJobsGrid.add(ChooseJob, 1, 0);
                 ViewJobsGrid.add(viewApps, 1, 1);  // 3,1
-                ViewJobsGrid.add(distributeApps, 2, 1); // 3,2
+                ViewJobsGrid.add(distributeApps, 1, 2); // 3,2
                 ViewJobsGrid.add(advanceRoundButton, 3, 1); // 3,3
                 ViewJobsGrid.add(returnViewJ, 3, 2);
 
@@ -290,7 +290,7 @@ public class HR_Coordinator extends User {
                     if (!tempJob.getHiringProcessor().isDistributed()){
                         tempJob.getHiringProcessor().sendListToInterview(systemAdmin.getUserManager());
                     }
-                    if (tempJob.getHiringProcessor().isFinalRound()){ViewJobsGrid.add(viewHiresButton, 1, 2);}
+                    if (tempJob.getHiringProcessor().isFinalRound()){ViewJobsGrid.add(viewHiresButton, 1, 3);}
                 });
                 advanceRoundButton.setOnAction((ActionEvent advRound) -> {
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();
@@ -298,6 +298,7 @@ public class HR_Coordinator extends User {
                     ArrayList<Applicant> appsForNextRound = job.getHiringProcessor().getRecommendList();
                     if (!appsForNextRound.isEmpty()) {
                         job.getHiringProcessor().getListFromHR(appsForNextRound);
+                        job.getHiringProcessor().sendListToInterview(systemAdmin.getUserManager());/////////////////////////////////////////////////////////////////////////
                     }
                     int round = job.getHiringProcessor().getRoundNum();
                     int totRounds = job.getHiringProcessor().numStages();
