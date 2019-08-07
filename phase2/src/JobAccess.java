@@ -31,18 +31,9 @@ public class JobAccess implements Observer {
     void addJobPosting(Job job, Date dateClosed, ArrayList<Interviewer> chosenInterviewers, int numHires) {
         JobPosting jobposting = new JobPosting(job, today, dateClosed, chosenInterviewers, numHires);
         boolean added = false;
-        if (this.getJobPosting(job.getPosition()) == null && !job.getPosition().trim().isEmpty()) {
+        if (this.getJobPosting(job.getPosition()) == null && validInput(job.getPosition())) {
             this.jobPostings.add(jobposting);
             added = true;
-            //automatically close the job once it has closed
-//            Timer jobTimer = new Timer();
-//            TimerTask closeJob = new TimerTask() {
-//                @Override
-//                public void run() {
-//                    removeJob(position);
-//                }
-//            };
-//            jobTimer.schedule(closeJob, dateClosed);
         }
         System.out.println("Job created:" + added);
     }
@@ -92,6 +83,10 @@ public class JobAccess implements Observer {
             }
         }
         return al;
+    }
+
+    private boolean validInput(String input){
+        return input.matches(".*[\\S]+.*");
     }
 
     ArrayList<JobPosting> ViewJobs() {
