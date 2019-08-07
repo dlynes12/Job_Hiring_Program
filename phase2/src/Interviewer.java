@@ -114,6 +114,7 @@ public class Interviewer extends User {
                                 (systemAdmin.getJobManager().getJobPosting(choice).getHiringProcessor().approvedApplicants.size() < 2)) {
                             appObj.updateStatus(systemAdmin.getJobManager().getJobPosting(choice), "Hired");
 
+
                         }}
                         // we can delete the applicant from the applicantList after a person has been
                         // recommended or declined; then check if the applicantList is empty to advance

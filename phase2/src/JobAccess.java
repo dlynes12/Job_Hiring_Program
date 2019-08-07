@@ -49,6 +49,13 @@ public class JobAccess implements Observer {
         return add;
     }
 
+    void closeJob(JobPosting job){
+        closedJobs.add(job);
+        jobPostings.remove(job);
+
+
+    }
+
     JobPosting getJobPosting(String jobTitle) {
         JobPosting result = null;
         for (int i = 0; i < jobPostings.size(); i++) {
