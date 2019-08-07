@@ -187,7 +187,7 @@ public class Applicant extends User {
                         try {
                             Applicant a = (Applicant) loggedUser;
                             Button back = new Button("Back");
-                            a.applyToJob(systemAdmin.getJobManager().getJobPosting(lst.getSelectionModel().getSelectedItem()));
+                            a.applyToJob(systemAdmin.getJobManager().getJobPosting((String) lst.getSelectionModel().getSelectedItem()));
 
                             back.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));
                         }catch(NullPointerException e2){

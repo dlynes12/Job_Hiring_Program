@@ -104,7 +104,8 @@ public class Interviewer extends User {
 
                     approve.setOnAction((ActionEvent click) -> {
                         String selectedApplicant = scrollListApps.getSelectionModel().getSelectedItem();
-                        if (selectedApplicant.isEmpty()){                        systemAdmin.getAlert("create").showAndWait();
+                        if (selectedApplicant.isEmpty()){
+                            systemAdmin.getAlert("create").showAndWait();
                         }
                         else{
                         Applicant appObj = (Applicant) systemAdmin.getUserManager().getUser(selectedApplicant);

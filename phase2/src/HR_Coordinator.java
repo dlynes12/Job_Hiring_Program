@@ -181,7 +181,10 @@ public class HR_Coordinator extends User {
                         String position = positionField.getText();
                         String company = companyField.getText();
                         //if (availJobField.getText().trim().matches("^/d*$")){
+                        try{int numPositions = Integer.parseInt(availJobField.getText());}
+                        catch (NumberFormatException x){systemAdmin.getAlert("integer").showAndWait();}
                         int numPositions = Integer.parseInt(availJobField.getText());
+
                         ArrayList<String> stagesOfInterview = new ArrayList<>();
                         for (String str : listStages) {
                             stagesOfInterview.add(str);

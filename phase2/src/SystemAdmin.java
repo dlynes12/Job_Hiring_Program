@@ -58,7 +58,7 @@ public class SystemAdmin implements java.io.Serializable {
             alert.setContentText("Please Try Again");
         } else if (alertType.equals("tag")) {
             alert.setTitle("No tag selected");
-            alert.setHeaderText("Select select a Tag");
+            alert.setHeaderText("Select full-time or part-time");
             alert.setContentText("Please Try Again");
         } else if (alertType.equals("job")) {
             alert.setTitle("Invalid input");
@@ -67,6 +67,10 @@ public class SystemAdmin implements java.io.Serializable {
         } else if (alertType.equals("apply")) {
             alert.setTitle("Unexpected Input");
             alert.setHeaderText("Job not Selected");
+            alert.setContentText("Please Try Again");
+        }else if (alertType.equals("integer")) {
+            alert.setTitle("Invalid Input");
+            alert.setHeaderText("Enter number of applicants");
             alert.setContentText("Please Try Again");
         }
         return alert;
