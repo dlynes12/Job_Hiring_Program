@@ -1,4 +1,3 @@
-import org.omg.CORBA.CODESET_INCOMPATIBLE;
 
 import java.util.*;
 
@@ -28,25 +27,6 @@ public class JobAccess implements Observer {
 
     }
 
-//    @Override
-//    public void update(Observable o, Object arg) {
-//        String expiredPositions = "";
-//        //I need to iterate through each company, and then iterate through the list of their jobPostings
-//        for (Company company : this.jobPostings.keySet()){
-//            for (JobPosting jP : this.jobPostings.get(company)){
-//                if (jP.getDateClosed().before(today)){
-//                    expiredPositions = expiredPositions + jP.getJob().getPosition() + ",";
-//                }
-//            }
-//            if (!expiredPositions.equals("")) {
-//                String strJobs = expiredPositions.substring(0, expiredPositions.length() - 1);
-//                String[] strListJobs = strJobs.split(",");
-//                for (String str : strListJobs){
-//                    this.removeJobPosting(str, company);
-//                }
-//            }
-//        }
-//    }
 
     void retrieveTime(Date date) {
         today = date;
@@ -92,12 +72,6 @@ public class JobAccess implements Observer {
 
     JobPosting getJobPosting(String jobTitle, Company company) {
         JobPosting result = null;
-//        for (int i = 0; i < jobPostings.size(); i++) {
-//            if (jobPostings.get(i).getJob().getPosition().equals(jobTitle)) {
-//                result = jobPostings.get(i);
-//            }
-//        }
-
 
         for (JobPosting jP : this.jobPostings.get(company)){
             if (jP.getJob().getPosition().equals(jobTitle)){
@@ -109,10 +83,7 @@ public class JobAccess implements Observer {
 
     JobPosting getClosedJob(String jobTitle, Company company) {
         JobPosting result = null;
-//        for (int i = 0; i < closedJobs.size(); i++) {
-//            if (closedJobs.get(i).getJob().getPosition().equals(jobTitle)) {
-//                result = closedJobs.get(i);
-//            }
+
         for (JobPosting closedJP : this.closedJobs.get(company)){
             if(closedJP.getJob().getPosition().equals(jobTitle)){
                 result = closedJP;
@@ -127,25 +98,14 @@ public class JobAccess implements Observer {
             closedJobs.get(company).add(job);
             jobPostings.get(company).remove(job);
         }
-//        else{
-//            ArrayList<JobPosting> newList = new ArrayList<>();
-//            newList.add(job);
-//            this.closedJobs.put(company, newList);
-//            jobPostings.get(company).remove(job);
-//        }
     }
 
     private boolean removeJobPosting(String position, Company company) {
         boolean remove = false;
         if (this.getJobPosting(position, company) != null) {
-              //this.closedJobs.get(company).add(this.getJobPosting(position, company));
               JobPosting jp = this.getJobPosting(position, company);
               this.closeJob(jp, company);
-              //this.jobPostings.get(company).remove(this.getJobPosting(position, company));
               this.getClosedJob(position, company).startInterviewProcess();
-//            this.closedJobs.add(this.getJobPosting(position));
-//            this.jobPostings.remove(this.getJobPosting(position));
-//            this.getClosedJob(position).startInterviewProcess();
             remove = true;
         }
         return remove;
@@ -181,7 +141,6 @@ public class JobAccess implements Observer {
     }
 
     ArrayList<JobPosting> viewClosedJobs(Company company) {
-        //return closedJobs;
         return this.closedJobs.get(company);
     }
 }

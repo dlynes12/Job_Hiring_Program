@@ -13,7 +13,7 @@ public class TimeKeeper extends Observable {
     public void updateTime(DatePicker datePicker, Collection<ArrayList<JobPosting>> jobPostings) {
         today = datePicker;
         checkCloseDates(jobPostings);
-        setChanged(); // marks that the object has changed
+        setChanged();
         notifyObservers();
 
     }

@@ -122,3 +122,7 @@ Hiring Process:
     You will only be able to hire the number of positions available for the job.
 12) In the final round only HR will be able to see who has been hired in the
     "Manage Closed Jobs" section, after choosing a job and clicking "View Hires"
+
+
+HR can view hires in Manage Closed Jobs section only after the final round has finished by
+Pressing advance rounds

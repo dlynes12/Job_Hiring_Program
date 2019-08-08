@@ -206,7 +206,6 @@ public class HR_Coordinator extends User {
                     } else if (!listStages.isEmpty() && !availJobField.getText().isEmpty()) {
                         Date closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                         String position = positionField.getText();
-                        //String company = companyField.getText();
                         try {
                             int numJobsPerLoc = Integer.parseInt(availJobField.getText());
                             int numPositions = listLocations.size()*numJobsPerLoc;//Integer.parseInt(availJobField.getText());
@@ -226,14 +225,12 @@ public class HR_Coordinator extends User {
                             if (radioSet.getSelectedToggle() == fullTime) {
                                 job.setTag("fullTime");
                                 systemAdmin.getJobManager().addJobPosting(job, closeDate, chosenInterviewers, numPositions);
-//                                JobPosting jobPosting = systemAdmin.getJobManager().getJobPosting(job.getPosition(), job.getCompany());
-//                                jobPosting.setCompany(loggedCompany);
+
                                 stage.setScene(HRBasePage);
                             } else if (radioSet.getSelectedToggle() == partTime) {
                                 job.setTag("partTime");
                                 systemAdmin.getJobManager().addJobPosting(job, closeDate, chosenInterviewers, numPositions);
-//                                JobPosting jobPosting = systemAdmin.getJobManager().getJobPosting(job.getPosition(), job.getCompany());
-//                                jobPosting.setCompany(loggedCompany);
+
                                 stage.setScene(HRBasePage);
                             } else {
                                 systemAdmin.getAlert("tag").showAndWait();
