@@ -29,7 +29,6 @@ public class JobPortal extends Application {
             System.out.println(list);
             for (Object o : list) {
                 systemAdmin.getUserManager().addUser((User) o);
-                //userManager.addUser((User)o);
             }
         } catch (ClassNotFoundException | IOException ex) {
             System.out.println(ex.getMessage());

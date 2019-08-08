@@ -2,7 +2,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class JobPosting {
+public class JobPosting implements java.io.Serializable {
 
     //TODO we need to have an attribute of how many people we are hiring
     private int numHires;

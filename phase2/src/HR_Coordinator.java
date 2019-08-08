@@ -170,7 +170,10 @@ public class HR_Coordinator extends User {
                 });
 
                 createNewPost.setOnAction((ActionEvent CreateJob) -> {
-                    if (!listStages.isEmpty()) {
+                    if(interviewerDropdown.getValue() == null){
+                        systemAdmin.getAlert("job").showAndWait();
+
+                    }else if (!listStages.isEmpty()) {
                         Date closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                         String position = positionField.getText();
                         String company = companyField.getText();
@@ -208,6 +211,7 @@ public class HR_Coordinator extends User {
                     }else{
                         systemAdmin.getAlert("job").showAndWait();
                     }
+
                 });
                 returnAddJ.setOnAction((ActionEvent exitPage) -> stage.setScene(HRBasePage));
             });

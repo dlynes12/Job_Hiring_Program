@@ -7,15 +7,17 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import java.io.File;
-import java.io.IOException;
+
+import java.io.*;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Date;
 
 public class Applicant extends User {
+
     private HashMap<JobPosting, String> jobsApplied = new HashMap<>();
+    public File docs;
     transient Storage store = new Storage();
 
     public Applicant(String username, String password) {
@@ -61,8 +63,14 @@ public class Applicant extends User {
         return history.toString();
     }
 
-    public void getDocs(String username) throws IOException, ClassNotFoundException {
-        store.readDocFile(username + "docs.bin");
+    public File getDocs() {
+        System.out.println("Got DOCS");
+        return docs;
+    }
+
+    public void setDocs(File docs) {
+        System.out.println("Docs Set");
+        this.docs = docs;
     }
 //    public void setDocsHash(User u, Boolean a, Boolean b, String s) throws IOException {
 //        ArrayList<Boolean> docs = new ArrayList<>();
@@ -139,12 +147,26 @@ public class Applicant extends User {
                 fileChooser.setTitle("Open Resume File");
                 fileChooser.setInitialFileName(loggedUser.getUsername());
                 File file = fileChooser.showOpenDialog(stage);
-                System.out.println(file);
+                ((Applicant)loggedUser).setDocs(file);
+                getResume.setOnAction((ActionEvent eve) -> {
+                    try {
+                        System.out.println(loggedUser);
+                        store.saveDocs(loggedUser);
+                    } catch (IOException|NullPointerException e) {
+                        e.printStackTrace();
+                    }
+                });
+
             });
             getResume.setOnAction((ActionEvent eve) -> {
-                String resumeText = resume.getText();
+                try{
+                    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(((Applicant)loggedUser).getDocs())));
+                    out.println(resume.getText());
+                } catch (IOException|NullPointerException ioe) {
+                    ioe.printStackTrace();
+                }
                 try {
-                    store.writeDocFile(loggedUser, resumeText);
+                    store.saveDocs(loggedUser);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

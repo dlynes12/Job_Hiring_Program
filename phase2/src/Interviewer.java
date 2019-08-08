@@ -98,7 +98,7 @@ public class Interviewer extends User {
             chooseJobPane.setHgap(20);
             chooseJobPane.setVgap(5);
 
-            for (JobPosting jobPosting : systemAdmin.getJobManager().viewClosedJobs()){
+            for (JobPosting jobPosting : systemAdmin.getJobManager().ViewJobs()){
                 dropdown.getItems().add(jobPosting.getJob().getPosition());
             }
 
