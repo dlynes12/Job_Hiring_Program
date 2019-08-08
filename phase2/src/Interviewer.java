@@ -98,8 +98,8 @@ public class Interviewer extends User {
             chooseJobPane.setHgap(20);
             chooseJobPane.setVgap(5);
 
-            for (JobPosting jobPosting : systemAdmin.getJobManager().ViewJobs()){
-                dropdown.getItems().add(jobPosting.getJob().getPosition());
+            for (String jobPosting : applicantsList.keySet()){ // systemAdmin.getJobManager().ViewJobs()
+                dropdown.getItems().add(jobPosting); //dropdown.getItems().add(jobPosting.getJob().getPosition()
             }
 
             getInterviewees.setOnAction((ActionEvent ev) -> { // get the Applicant list for each job

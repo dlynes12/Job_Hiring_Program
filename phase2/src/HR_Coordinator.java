@@ -237,7 +237,7 @@ public class HR_Coordinator extends User {
                 ObservableList<String> listJobs = FXCollections.observableArrayList();
                 scrollListJobs.setItems(listJobs);
                 scrollListJobs.setPrefSize(160.00, 120.00);
-                int j = -1;
+
                 for (JobPosting jobPosting : systemAdmin.getJobManager().viewClosedJobs()) {  //was ViewJobs before
                     listJobs.add(jobPosting.getJob().getPosition());
                 }
@@ -257,7 +257,6 @@ public class HR_Coordinator extends User {
                 returnViewJ.setOnAction((ActionEvent exitPage) -> stage.setScene(HRBasePage));
 
                 viewApps.setOnAction((ActionEvent seeApps) -> {
-                    int i = 0;
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();
                     String[] listOfApp = systemAdmin.getJobManager().getClosedJob(choice).viewAllApplicants().split(",");  //was .viewApplicants() before
                     if (listOfApp.length != 0 && !isNullOrEmpty(listOfApp[0])) {
@@ -308,6 +307,7 @@ public class HR_Coordinator extends User {
                     if (job.getHiringProcessor().isFinalRound()){ViewJobsGrid.add(viewHiresButton, 1, 3);}
                 });
                 viewHiresButton.setOnAction((ActionEvent checkRound) -> {
+                    Label hiresLabel = new Label("Hires:");
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();
                     JobPosting job = systemAdmin.getJobManager().getClosedJob(choice);
                     ListView listHires = new ListView();
@@ -317,6 +317,7 @@ public class HR_Coordinator extends User {
                     for (Applicant app : job.getHiringProcessor().getRecommendList()) {
                         listObsHires.add(app.getUsername());
                     }
+                    ViewJobsGrid.add(hiresLabel,1,4);
                     ViewJobsGrid.add(listHires, 2, 4);
                 });
             });
