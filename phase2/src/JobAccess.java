@@ -98,6 +98,7 @@ public class JobAccess implements Observer {
 //            }
 //        }
 
+
         for (JobPosting jP : this.jobPostings.get(company)){
             if (jP.getJob().getPosition().equals(jobTitle)){
                 result = jP;
@@ -119,6 +120,12 @@ public class JobAccess implements Observer {
         }
 
         return result;
+    }
+    void closeJob(JobPosting job, Company company){
+        closedJobs.get(company).add(job);
+        jobPostings.remove(job);
+
+
     }
 
     private boolean removeJobPosting(String position, Company company) {
