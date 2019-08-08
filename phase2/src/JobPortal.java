@@ -230,7 +230,7 @@ public class JobPortal extends Application {
                 Group compUserLoginGroup = new Group();
                 Scene compUserLoginScene = new Scene(compUserLoginGroup, 600, 600);
                 stage.setScene(compUserLoginScene);
-                stage.setTitle("Job Portal - Company Log In");
+                stage.setTitle("Job Portal - " + loggedCompany.getCompanyName());
 
                 Label compUsernameLabel = new Label("Username:");
                 Label compPasswordLabel = new Label("Password:");
@@ -345,12 +345,14 @@ public class JobPortal extends Application {
                         String Pass = compPasswordTextField.getText();
                         try {
                             User loggedUser = systemAdmin.getUserManager().login(UName, Pass);// the user that is actually logged in
-                            if (loggedUser != null) {
-                                if (loginRadio.getSelectedToggle() == hrRadioButton) {
-                                    ((HR_Coordinator) loggedUser).HRGUISetUp(stage, loggedUser, systemAdmin, compUserLoginScene);
+                            if (loggedUser != null) { //TODO: create alert if user is logging in with the wrong company
+                                if (loginRadio.getSelectedToggle() == hrRadioButton &&
+                                        ((HR_Coordinator)loggedUser).getCompany().equals(loggedCompany)) {
+                                    ((HR_Coordinator) loggedUser).HRGUISetUp(stage, loggedUser, loggedCompany, systemAdmin, compUserLoginScene);
                                     //((Applicant) loggedUser).applicantGUISetUp(stage, loggedUser, jobManager, loginPage);
-                                } else if (loginRadio.getSelectedToggle() == intRadioButton) {
-                                    ((Interviewer) loggedUser).interviewerGUISetUp(stage, loggedUser, systemAdmin, compUserLoginScene);
+                                } else if (loginRadio.getSelectedToggle() == intRadioButton &&
+                                        ((Interviewer)loggedUser).getCompany().equals(loggedCompany)) {
+                                    ((Interviewer)loggedUser).interviewerGUISetUp(stage, loggedUser, loggedCompany, systemAdmin, compUserLoginScene);
                                 } else {
                                     stage.setScene(compUserLoginScene);
                                 }

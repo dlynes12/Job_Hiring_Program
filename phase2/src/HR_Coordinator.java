@@ -27,7 +27,7 @@ public class HR_Coordinator extends User {
         this.company = company;
     }
 
-    void HRGUISetUp(Stage stage, User loggedUser, SystemAdmin systemAdmin, Scene loginPage) {
+    void HRGUISetUp(Stage stage, User loggedUser, Company loggedCompany, SystemAdmin systemAdmin, Scene loginPage) {
         if (loggedUser.getClass() == HR_Coordinator.class) {
             Group HRPortalScene = new Group();
             Scene HRBasePage = new Scene(HRPortalScene, 450, 250);

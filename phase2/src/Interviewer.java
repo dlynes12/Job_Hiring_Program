@@ -47,7 +47,7 @@ public class Interviewer extends User {
         return this.company;
     }
 
-    void interviewerGUISetUp(Stage stage, User loggedUser, SystemAdmin systemAdmin, Scene loginPage) {
+    void interviewerGUISetUp(Stage stage, User loggedUser, Company loggedCompany, SystemAdmin systemAdmin, Scene loginPage) {
         if (loggedUser.getClass() == Interviewer.class) {
             Group intPortalScene = new Group();
             Scene scene = new Scene(intPortalScene, 600, 600);
