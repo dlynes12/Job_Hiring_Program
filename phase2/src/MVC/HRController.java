@@ -212,16 +212,10 @@ public class HRController implements Initializable {
         Parent creation = FXMLLoader.load(getClass().getResource("MainUI.fxml"));
         Scene tableViewScene = new Scene(creation);
 
-        // Instead of retrieving the stage by the event's source, you can do it by one of your FXML component.
         Stage window = (Stage) btnLogout.getScene().getWindow();
         window.close();
         window.setScene(tableViewScene);
         window.show();
-
-        //((Stage) btnExit.getScene().getWindow()).close();
-        //Stage stage = (Stage) exit.getScene().getWindow();
-        // do what you have to do
-        //stage.close();
     }
 
 }

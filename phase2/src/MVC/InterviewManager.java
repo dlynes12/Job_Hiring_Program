@@ -130,7 +130,7 @@ public class InterviewManager {
         applicant.updateStatus(this.jobPosting, "Rejected");
     }
 
-    private boolean advanceRound() { // never actually called except by getRecommendList()
+    private boolean advanceRound() { // never called except by getRecommendList()
         boolean advance = false;
         int numApproved = 0;
         int numDeclined = 0;

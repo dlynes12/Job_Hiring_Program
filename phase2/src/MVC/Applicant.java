@@ -67,14 +67,6 @@ public class Applicant extends User {
     public void getDocs(String username) throws IOException, ClassNotFoundException {
         store.readDocFile(username + "docs.bin");
     }
-//    public void setDocsHash(User u, Boolean a, Boolean b, String s) throws IOException {
-//        ArrayList<Boolean> docs = new ArrayList<>();
-//        docs.add(a);
-//        docs.add(b);
-//        userDocs.put(u.getUsername(),docs);
-//
-//        store.writeDocFile(u,s);
-//    }
 
     private void applyToJob(JobPosting jobPosting) {
         this.jobsApplied.put(jobPosting, "Submitted Resume/CV");

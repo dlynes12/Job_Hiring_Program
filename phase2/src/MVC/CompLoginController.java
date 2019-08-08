@@ -53,19 +53,13 @@ public class CompLoginController {
 
     @FXML
     public void loadCreation(ActionEvent event) throws Exception {
-        //System.out.println("Button Clicked!");
         Parent creation = FXMLLoader.load(getClass().getResource("CompCreationUI.fxml"));
         Scene tableViewScene = new Scene(creation);
 
-        // Instead of retrieving the stage by the event's source, you can do it by one of your FXML component.
         Stage window = (Stage) btnRegister.getScene().getWindow();
         window.hide();
         window.setScene(tableViewScene);
         window.show();
-        /*Parent root = creation.load();
-        Scene creationPage = new Scene();
-        stage.setScene(new Scene(creation.load()));
-        stage.show();*/
     }
 
     @FXML
