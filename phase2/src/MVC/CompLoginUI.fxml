@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--<?import javafx.geometry.Insets?>-->
+<!--<?import javafx.scene.layout.GridPane?>-->
+<!--<?import javafx.scene.control.Button?>-->
+<!--<?import javafx.scene.control.Label?>-->
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="500.0" style="-fx-background-color: #3D4956;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CompLoginController">
+    <children>
+        <Label layoutX="109.0" layoutY="62.0" text="Username:" textFill="#eda678" />
+        <Label layoutX="110.0" layoutY="103.0" text="Password:" textFill="#eda678" />
+        <Button fx:id="btnRegister" layoutX="198.0" layoutY="186.0" onAction="#loadCreation" prefHeight="27.0" prefWidth="91.0" style="-fx-background-color: #EDA678; -fx-background-radius: 5em; -fx-border-radius: 5em;" text="Register" textFill="WHITE" />
+        <Button fx:id="btnLogin" layoutX="300.0" layoutY="187.0" onAction="#login" prefHeight="27.0" prefWidth="91.0" style="-fx-background-color: #EDA678; -fx-background-radius: 5em; -fx-border-radius: 5em;" text="Login" textFill="WHITE" />
+        <PasswordField fx:id="txtPass" layoutX="210.0" layoutY="97.0" prefHeight="27.0" prefWidth="180.0" style="-fx-background-color: #343d47#343d47; -fx-border-color: #EDA678; -fx-border-width: 0 0 2 0; -fx-text-inner-color: #EDA678;" />
+        <TextField fx:id="txtUsername" layoutX="210.0" layoutY="56.0" prefHeight="27.0" prefWidth="180.0" style="-fx-border-color: #EDA678; -fx-background-color: #343d47#343d47; -fx-border-width: 0 0 2 0; -fx-text-inner-color: #EDA678;" />
+        <DatePicker fx:id="dpLogin" layoutX="210.0" layoutY="138.0" prefHeight="27.0" prefWidth="180.0" style="-fx-control-inner-background: #343d47;" />
+        <Label layoutX="110.0" layoutY="143.0" text="Today's date:" textFill="#eda678" />
+      <Button fx:id="btnBack" layoutX="19.0" layoutY="227.0" onAction="#loadMain" prefHeight="27.0" prefWidth="91.0" style="-fx-background-color: #3D4956; -fx-background-radius: 5em; -fx-border-radius: 5em; -fx-border-color: #EDA678;" text="Back" textFill="WHITE" />
+    </children>
+</Pane>

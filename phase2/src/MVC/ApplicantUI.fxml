@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #3D4956;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ApplicantController">
+   <children>
+      <VBox layoutX="449.0" prefHeight="400.0" prefWidth="151.0">
+         <children>
+            <Button fx:id="btnSubmit" mnemonicParsing="false" onAction="#submitResume" prefHeight="80.0" prefWidth="179.0" style="-fx-background-color: #EDA678;" text="Submit Resume" />
+            <Button fx:id="btnApplyToJobs" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#applyToJob" prefHeight="81.0" prefWidth="179.0" style="-fx-background-color: #EDA678;" text="Apply to Jobs" />
+            <Button fx:id="btnJobStat" layoutX="10.0" layoutY="82.0" mnemonicParsing="false" onAction="#viewJobStatus" prefHeight="81.0" prefWidth="179.0" style="-fx-background-color: #EDA678;" text="Job Status" />
+            <Button fx:id="btnAccountHist" layoutX="10.0" layoutY="154.0" mnemonicParsing="false" onAction="#accountHistory" prefHeight="81.0" prefWidth="179.0" style="-fx-background-color: #EDA678;" text="Account History" />
+            <Button fx:id="btnLogout" layoutX="10.0" layoutY="226.0" mnemonicParsing="false" onAction="#logout" prefHeight="81.0" prefWidth="179.0" style="-fx-background-color: #EDA678;" text="Logout" />
+         </children>
+      </VBox>
+      <StackPane prefHeight="400.0" prefWidth="449.0">
+         <children>
+            <AnchorPane fx:id="pnSubmitResume" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Button layoutX="132.0" layoutY="158.0" mnemonicParsing="false" style="-fx-background-color: #EDA678;" text="Open your resume from file" />
+                  <Button layoutX="169.0" layoutY="215.0" mnemonicParsing="false" style="-fx-background-color: #EDA678;" text="Submit resume" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="pnApply" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+               <children>
+                  <ListView fx:id="lstJobs" layoutX="96.0" layoutY="100.0" prefHeight="200.0" prefWidth="273.0" style="-fx-background-color: #343d47;" />
+                  <Button fx:id="btnApply" layoutX="179.0" layoutY="314.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="91.0" style="-fx-background-color: #EDA678;" text="Apply" />
+                  <RadioButton fx:id="rdPartTime" layoutX="253.0" layoutY="66.0" mnemonicParsing="false" text="Part-time" textFill="#eda678">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="tgFilter" />
+                     </toggleGroup></RadioButton>
+                  <RadioButton fx:id="rdFullTime" layoutX="161.0" layoutY="66.0" mnemonicParsing="false" text="Full-time" textFill="#eda678" toggleGroup="$tgFilter" />
+                  <RadioButton fx:id="rdAll" layoutX="96.0" layoutY="66.0" mnemonicParsing="false" text="All" textFill="#eda678" toggleGroup="$tgFilter" />
+                  <Label fx:id="lblFilter" layoutX="96.0" layoutY="39.0" text="Filter by:" textFill="#eda678" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="pnJobStatus" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+               <children>
+                  <Label fx:id="lblJobsApplied" layoutX="168.0" layoutY="103.0" prefHeight="27.0" prefWidth="114.0" text="Jobs applied for:" textFill="WHITE" />
+                  <ListView fx:id="lstJobsApplied" layoutX="126.0" layoutY="130.0" prefHeight="127.0" prefWidth="198.0" style="-fx-background-color: #343d47;" />
+                  <Button fx:id="btnWithdraw" layoutX="151.0" layoutY="270.0" mnemonicParsing="false" style="-fx-background-color: #EDA678;" text="Withdraw application" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="pnAcntHist" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+               <children>
+                  <Label fx:id="lblAcntHist" layoutX="46.0" layoutY="96.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="212.0" prefWidth="360.0" textFill="#eda678" />
+               </children>
+            </AnchorPane>
+         </children>
+      </StackPane>
+   </children>
+</AnchorPane>

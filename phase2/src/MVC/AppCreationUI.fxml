@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="500.0" style="-fx-background-color: #3D4956;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AppCreationController">
+   <children>
+      <Button fx:id="btnCreate" layoutX="352.0" layoutY="180.0" mnemonicParsing="false" onAction="#create" prefHeight="27.0" prefWidth="81.0" style="-fx-background-color: #EDA678; -fx-border-radius: 5em; -fx-background-radius: 5em;" text="Create" textFill="WHITE" />
+      <Button fx:id="btnExit" layoutX="253.0" layoutY="179.0" mnemonicParsing="false" onAction="#exit" prefHeight="27.0" prefWidth="81.0" style="-fx-background-color: transparent; -fx-border-radius: 5em; -fx-background-radius: 5em; -fx-border-color: #EDA678;" text="Exit" textFill="WHITE" />
+      <TextField fx:id="txtUsername" layoutX="253.0" layoutY="75.0" prefHeight="27.0" prefWidth="180.0" style="-fx-border-color: #EDA678; -fx-background-color: #343D47; -fx-border-width: 0 0 2 0; -fx-text-inner-color: #EDA678;" />
+      <Label layoutX="80.0" layoutY="81.0" text="Choose a username:" textFill="#eda678" />
+      <Label layoutX="81.0" layoutY="122.0" text="Choose a password:" textFill="#eda678" />
+      <TextField fx:id="txtPass" layoutX="253.0" layoutY="116.0" prefHeight="27.0" prefWidth="180.0" style="-fx-border-color: #EDA678; -fx-background-color: #343D47; -fx-border-width: 0 0 2 0; -fx-text-inner-color: #EDA678;" />
+   </children>
+</Pane>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #3D4956;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IntController">
+   <children>
+      <VBox layoutX="432.0" prefHeight="404.0" prefWidth="168.0">
+         <children>
+            <Button fx:id="btnLogout" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#logout" prefHeight="69.0" prefWidth="173.0" style="-fx-background-color: #EDA678;" text="Logout" />
+         </children>
+      </VBox>
+      <Button fx:id="btnInterviewees" layoutX="162.0" layoutY="274.0" mnemonicParsing="false" style="-fx-background-color: #EDA678;" text="Get Interviewees" />
+      <Button fx:id="btnApprove" layoutX="144.0" layoutY="325.0" mnemonicParsing="false" style="-fx-background-color: #EDA678;" text="Approve" />
+      <Button fx:id="btnDecline" layoutX="235.0" layoutY="325.0" mnemonicParsing="false" style="-fx-background-color: #EDA678;" text="Decline" />
+      <ListView fx:id="lstJobs" layoutX="123.0" layoutY="53.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #343d47;" />
+   </children>
+</AnchorPane>
