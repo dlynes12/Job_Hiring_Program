@@ -5,9 +5,7 @@ import java.util.*;
 public class JobAccess implements Observer {
 
     Date today;
-    //private ArrayList<JobPosting> jobPostings = new ArrayList<>();
     HashMap<Company, ArrayList<JobPosting>> jobPostings = new HashMap<>();
-    //private ArrayList<JobPosting> closedJobs = new ArrayList<>();
     private HashMap<Company, ArrayList<JobPosting>> closedJobs = new HashMap<>();
 
 //    @Override
@@ -41,7 +39,6 @@ public class JobAccess implements Observer {
                 String strJobs = expiredPositions.substring(0, expiredPositions.length() - 1);
                 String[] strListJobs = strJobs.split(",");
                 for (String str : strListJobs){
-                    //TODO: update
                     this.removeJobPosting(str, company);
                 }
             }
@@ -122,10 +119,16 @@ public class JobAccess implements Observer {
         return result;
     }
     void closeJob(JobPosting job, Company company){
-        closedJobs.get(company).add(job);
-        jobPostings.remove(job);
 
-
+        if(this.companyCheck(company.getCompanyName())){
+            closedJobs.get(company).add(job);
+            jobPostings.get(company).remove(job);
+        }
+        else{
+            ArrayList<JobPosting> newList = new ArrayList<>();
+            newList.add(job);
+            this.closedJobs.put(company, newList);
+        }
     }
 
     private boolean removeJobPosting(String position, Company company) {
@@ -141,18 +144,6 @@ public class JobAccess implements Observer {
         }
         return remove;
     }
-
-//    ArrayList<String> sort(String s) {
-//        ArrayList<String> al = new ArrayList<>();
-//        for (JobPosting j : this.jobPostings) {
-//            if (s.equals("allJobs")) {
-//                al.add(j.getJob().getPosition());
-//            } else if (j.getJob().getTag().equals(s)) {
-//                al.add(j.getJob().getPosition());
-//            }
-//        }
-//        return al;
-//    }
 
     ArrayList<String>  sort(String s){
         ArrayList<String> al = new ArrayList<>();
