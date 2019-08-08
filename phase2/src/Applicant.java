@@ -204,7 +204,7 @@ public class Applicant extends User {
                             //TODO: accommodate for company
 
                             String jpTemp = lst.getSelectionModel().getSelectedItem();
-                            String[] jpSplit = jpTemp.split(",");
+                            String[] jpSplit = jpTemp.split(" - Company: ");
                             String position = jpSplit[0];
                             Company comp = systemAdmin.getCompany(jpSplit[1]);
 

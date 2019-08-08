@@ -159,9 +159,9 @@ public class JobAccess implements Observer {
         for (Company company : this.jobPostings.keySet()){
             for (JobPosting j : this.jobPostings.get(company)){
                 if (s.equals("allJobs")) {
-                    al.add(j.getJob().getPosition() + "," + j.getJob().getCompany());
+                    al.add(j.getJob().getPosition() + " - Company: " + j.getJob().getCompany().getCompanyName());
                 } else if (j.getJob().getTag().equals(s)){
-                    al.add(j.getJob().getPosition() + "," + j.getJob().getCompany());
+                    al.add(j.getJob().getPosition() + " - Company: " + j.getJob().getCompany().getCompanyName());
                 }
             }
         }
