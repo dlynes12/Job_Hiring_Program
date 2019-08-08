@@ -201,7 +201,15 @@ public class Applicant extends User {
                         try {
                             Applicant a = (Applicant) loggedUser;
                             Button back = new Button("Back");
-                            a.applyToJob(systemAdmin.getJobManager().getJobPosting(lst.getSelectionModel().getSelectedItem()));
+                            //TODO: accommodate for company
+
+                            String jpTemp = lst.getSelectionModel().getSelectedItem();
+                            String[] jpSplit = jpTemp.split(",");
+                            String position = jpSplit[0];
+                            Company comp = systemAdmin.getCompany(jpSplit[1]);
+
+                            //a.applyToJob(systemAdmin.getJobManager().getJobPosting(lst.getSelectionModel().getSelectedItem()));
+                            a.applyToJob(systemAdmin.getJobManager().getJobPosting(position, comp));
 
                             back.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));
                         } catch (NullPointerException e2) {
@@ -242,7 +250,9 @@ public class Applicant extends User {
                 ToggleGroup jobRadioSet = new ToggleGroup();
 
                 for (JobPosting jobPosting : this.jobsApplied.keySet()) {
-                    RadioButton jobRadioButton = new RadioButton(jobPosting.getJob().getPosition() + " - " + this.getJobStatus(jobPosting));
+                    //RadioButton jobRadioButton = new RadioButton(jobPosting.getJob().getPosition() + " - " + this.getJobStatus(jobPosting));
+                    RadioButton jobRadioButton = new RadioButton(jobPosting.getJob().getPosition() + "," +
+                            jobPosting.getJob().getCompany().getCompanyName() + "," + this.getJobStatus(jobPosting));
                     jobRadioButton.setToggleGroup(jobRadioSet);
                     jobStatusPane.add(jobRadioButton, 10, i + 1);
                     i++;
@@ -258,14 +268,16 @@ public class Applicant extends User {
                 withdraw.setOnAction((ActionEvent withdrawApp) -> {
                     RadioButton selectedToggle = (RadioButton) jobRadioSet.getSelectedToggle();
                     String selectedToggleText = selectedToggle.getText();
-                    String[] textSplit = selectedToggleText.split(" - "); //splits the job name from it's status
+                    String[] textSplit = selectedToggleText.split(","); //splits the job name from it's status
+                    // [jobPosition, jobCompany, status]
                     String jobPosition = textSplit[0];
+                    Company comp = systemAdmin.getCompany(textSplit[1]);
                     try{
-                        JobPosting jobPosting = systemAdmin.getJobManager().getJobPosting(jobPosition);
+                        JobPosting jobPosting = systemAdmin.getJobManager().getJobPosting(jobPosition, comp);
                         this.withdrawApplication(jobPosting);
                     }
                     catch (Exception closedJobException){
-                        JobPosting jobPosting = systemAdmin.getJobManager().getClosedJob(jobPosition);
+                        JobPosting jobPosting = systemAdmin.getJobManager().getClosedJob(jobPosition, comp);
                         jobPosting.getHiringProcessor().withdrawApp(this);
                     }
 

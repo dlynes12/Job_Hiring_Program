@@ -16,9 +16,7 @@ public class Company implements Serializable {
         return this.companyName;
     }
 
-    public void setHrCoordinator(HR_Coordinator hrCoordinator){ this.hrCoordinator = hrCoordinator; }
 
-    public void addInterviewer(Interviewer interviewer) { this.interviewers.add(interviewer); }
 
     HR_Coordinator getHrCoordinator(){ return this.hrCoordinator; }
 }

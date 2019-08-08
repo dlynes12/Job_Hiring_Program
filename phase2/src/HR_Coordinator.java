@@ -189,19 +189,19 @@ public class HR_Coordinator extends User {
                                 chosenInterviewers.add((Interviewer) systemAdmin.getUserManager().getUser(str));
                             }
 
-                            Job job = new Job(position, "tag", 0, stagesOfInterview);
+                            Job job = new Job(position, loggedCompany, "tag", 0, stagesOfInterview);
 
                             if (radioSet.getSelectedToggle() == fullTime) {
                                 job.setTag("fullTime");
                                 systemAdmin.getJobManager().addJobPosting(job, closeDate, chosenInterviewers, numPositions);
-                                JobPosting jobPosting = systemAdmin.getJobManager().getJobPosting(job.getPosition());
-                                jobPosting.setCompany(loggedCompany);
+//                                JobPosting jobPosting = systemAdmin.getJobManager().getJobPosting(job.getPosition(), job.getCompany());
+//                                jobPosting.setCompany(loggedCompany);
                                 stage.setScene(HRBasePage);
                             } else if (radioSet.getSelectedToggle() == partTime) {
                                 job.setTag("partTime");
                                 systemAdmin.getJobManager().addJobPosting(job, closeDate, chosenInterviewers, numPositions);
-                                JobPosting jobPosting = systemAdmin.getJobManager().getJobPosting(job.getPosition());
-                                jobPosting.setCompany(loggedCompany);
+//                                JobPosting jobPosting = systemAdmin.getJobManager().getJobPosting(job.getPosition(), job.getCompany());
+//                                jobPosting.setCompany(loggedCompany);
                                 stage.setScene(HRBasePage);
                             } else {
                                 systemAdmin.getAlert("tag").showAndWait();
@@ -232,7 +232,7 @@ public class HR_Coordinator extends User {
                 ObservableList<String> listJobs = FXCollections.observableArrayList();
                 scrollListJobs.setItems(listJobs);
                 scrollListJobs.setPrefSize(160.00, 120.00);
-                for (JobPosting jobPosting : systemAdmin.getJobManager().viewClosedJobs()) {
+                for (JobPosting jobPosting : systemAdmin.getJobManager().viewClosedJobs(loggedCompany)) {
                     listJobs.add(jobPosting.getJob().getPosition());
                 }
                 ViewJobsGrid.add(scrollListJobs, 2, 0);
@@ -252,7 +252,7 @@ public class HR_Coordinator extends User {
                 viewApps.setOnAction((ActionEvent seeApps) -> {
                     int i = 0;
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();
-                    String[] listOfApp = systemAdmin.getJobManager().getClosedJob(choice).viewAllApplicants().split(",");  //was .viewApplicants() before
+                    String[] listOfApp = systemAdmin.getJobManager().getClosedJob(choice, loggedCompany).viewAllApplicants().split(",");  //was .viewApplicants() before
                     if (listOfApp.length != 0 && !isNullOrEmpty(listOfApp[0])) {
                         Label viewAppsLabel = new Label("Applicants:");
                         ListView<String> scrollListApps = new ListView<>();
@@ -278,7 +278,7 @@ public class HR_Coordinator extends User {
                 });
                 distributeApps.setOnAction((ActionEvent disApps) -> {
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();
-                    JobPosting tempJob = systemAdmin.getJobManager().getClosedJob(choice);
+                    JobPosting tempJob = systemAdmin.getJobManager().getClosedJob(choice, loggedCompany);
                     if (!tempJob.getHiringProcessor().isDistributed()) {
                         tempJob.getHiringProcessor().sendListToInterview();
                     }
@@ -288,7 +288,7 @@ public class HR_Coordinator extends User {
                 });
                 advanceRoundButton.setOnAction((ActionEvent advRound) -> {
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();
-                    JobPosting job = systemAdmin.getJobManager().getClosedJob(choice);
+                    JobPosting job = systemAdmin.getJobManager().getClosedJob(choice, loggedCompany);
                     ArrayList<Applicant> appsForNextRound = job.getHiringProcessor().getRecommendList();
                     if (!appsForNextRound.isEmpty()) {
                         job.getHiringProcessor().getListFromHR(appsForNextRound);
@@ -303,7 +303,7 @@ public class HR_Coordinator extends User {
                 viewHiresButton.setOnAction((ActionEvent checkRound) -> {
                     Label hiresLabel = new Label("Hires:");
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();
-                    JobPosting job = systemAdmin.getJobManager().getClosedJob(choice);
+                    JobPosting job = systemAdmin.getJobManager().getClosedJob(choice, loggedCompany);
                     ListView listHires = new ListView();
                     ObservableList<String> listObsHires = FXCollections.observableArrayList();
                     listHires.setItems(listObsHires);

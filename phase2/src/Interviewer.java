@@ -83,7 +83,7 @@ public class Interviewer extends User {
 
             getInterviewees.setOnAction((ActionEvent ev) -> {
                 String choice = (String) dropdown.getValue();
-                String[] listOfApp = systemAdmin.getJobManager().getClosedJob(choice).viewApplicants(this, choice).split(",");
+                String[] listOfApp = systemAdmin.getJobManager().getClosedJob(choice, loggedCompany).viewApplicants(this, choice).split(",");
                 if (listOfApp.length != 0 && !isNullOrEmpty(listOfApp[0])) {
                     Label chooseApp = new Label("Choose an Applicant:");
                     interviewerSelectionPane.add(chooseApp, 1, 0);
@@ -102,13 +102,13 @@ public class Interviewer extends User {
                             systemAdmin.getAlert("create").showAndWait();
                         } else {
                             Applicant appObj = (Applicant) systemAdmin.getUserManager().getUser(selectedApplicant);
-                            systemAdmin.getJobManager().getClosedJob(choice).getHiringProcessor().nextRound(appObj);
+                            systemAdmin.getJobManager().getClosedJob(choice, loggedCompany).getHiringProcessor().nextRound(appObj);
                         }
                     });
                     decline.setOnAction((ActionEvent click) -> {
                         String selectedApplicant = scrollListApps.getSelectionModel().getSelectedItem();
                         Applicant appObj = (Applicant) systemAdmin.getUserManager().getUser(selectedApplicant);
-                        systemAdmin.getJobManager().getClosedJob(choice).getHiringProcessor().reject(appObj);
+                        systemAdmin.getJobManager().getClosedJob(choice, loggedCompany).getHiringProcessor().reject(appObj);
                     });
                 }
             });
