@@ -66,7 +66,7 @@ public class HR_Coordinator extends User {
                 DatePicker datePicker = new DatePicker();
                 Label closingMessage = new Label("Closing Date:");
                 Label positionLabel = new Label("What position are we creating?");
-                Label companyLabel = new Label("What company is this for?");
+                //Label companyLabel = new Label("What company is this for?");
                 Label availJobsLabel = new Label("How many people are we hiring?");
                 Label intStageLabel = new Label("Please add a stage to the interview process:");
                 Label viewInterviewerLabel = new Label("Select Interviewers to interview people for this job:"); // view all the stages that have been added
@@ -93,8 +93,7 @@ public class HR_Coordinator extends User {
                 ComboBox<String> interviewerDropdown = new ComboBox<>();
 
                 //TODO make this accommodate for Company
-                //HR.getCompany returns the company they belong to
-                for (Interviewer interviewer : systemAdmin.getUserManager().getListInterviewers()) {
+                for (Interviewer interviewer : systemAdmin.getUserManager().getListInterviewers(loggedCompany)) {
                     interviewerDropdown.getItems().add(interviewer.getUsername());
                 }
 
@@ -111,7 +110,7 @@ public class HR_Coordinator extends User {
                 dateGrid.add(datePicker, 2, 0);
                 positionGrid.add(positionLabel, 1, 0);
                 positionGrid.add(positionField, 2, 0);
-                positionGrid.add(companyLabel, 1, 2);
+                //positionGrid.add(companyLabel, 1, 2);
                 positionGrid.add(companyField, 2, 2);
                 positionGrid.add(availJobsLabel, 1, 4);
                 positionGrid.add(availJobField, 2, 4);
@@ -176,7 +175,7 @@ public class HR_Coordinator extends User {
                     } else if (!listStages.isEmpty()) {
                         Date closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                         String position = positionField.getText();
-                        String company = companyField.getText();
+                        //String company = companyField.getText();
                         try {
                             int numPositions = Integer.parseInt(availJobField.getText());
 
@@ -190,15 +189,19 @@ public class HR_Coordinator extends User {
                                 chosenInterviewers.add((Interviewer) systemAdmin.getUserManager().getUser(str));
                             }
 
-                            Job job = new Job(position, company, "tag", 0, stagesOfInterview);
+                            Job job = new Job(position, "tag", 0, stagesOfInterview);
 
                             if (radioSet.getSelectedToggle() == fullTime) {
                                 job.setTag("fullTime");
                                 systemAdmin.getJobManager().addJobPosting(job, closeDate, chosenInterviewers, numPositions);
+                                JobPosting jobPosting = systemAdmin.getJobManager().getJobPosting(job.getPosition());
+                                jobPosting.setCompany(loggedCompany);
                                 stage.setScene(HRBasePage);
                             } else if (radioSet.getSelectedToggle() == partTime) {
                                 job.setTag("partTime");
                                 systemAdmin.getJobManager().addJobPosting(job, closeDate, chosenInterviewers, numPositions);
+                                JobPosting jobPosting = systemAdmin.getJobManager().getJobPosting(job.getPosition());
+                                jobPosting.setCompany(loggedCompany);
                                 stage.setScene(HRBasePage);
                             } else {
                                 systemAdmin.getAlert("tag").showAndWait();

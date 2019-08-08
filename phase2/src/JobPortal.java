@@ -349,7 +349,6 @@ public class JobPortal extends Application {
                                 if (loginRadio.getSelectedToggle() == hrRadioButton &&
                                         ((HR_Coordinator)loggedUser).getCompany().equals(loggedCompany)) {
                                     ((HR_Coordinator) loggedUser).HRGUISetUp(stage, loggedUser, loggedCompany, systemAdmin, compUserLoginScene);
-                                    //((Applicant) loggedUser).applicantGUISetUp(stage, loggedUser, jobManager, loginPage);
                                 } else if (loginRadio.getSelectedToggle() == intRadioButton &&
                                         ((Interviewer)loggedUser).getCompany().equals(loggedCompany)) {
                                     ((Interviewer)loggedUser).interviewerGUISetUp(stage, loggedUser, loggedCompany, systemAdmin, compUserLoginScene);

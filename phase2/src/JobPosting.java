@@ -34,6 +34,11 @@ public class JobPosting implements java.io.Serializable {
         return this.job;
     }
 
+    public void setCompany(Company company){
+        this.company = company;
+        System.out.println(this.getJob().getPosition() + ", " + this.getCompany().getCompanyName());
+    }
+
     public Company getCompany() {
         return this.company;
     }

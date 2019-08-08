@@ -46,8 +46,12 @@ public class UserAccess implements java.io.Serializable {
         return null;
     }
 
-    ArrayList<Interviewer> getListInterviewers() {
-        return this.employedInterviewers;
+//    ArrayList<Interviewer> getListInterviewers() {
+//        return this.employedInterviewers;
+//    }
+
+    ArrayList<Interviewer> getListInterviewers(Company company){
+        return this.interviewers.get(company);
     }
 
     //TODO: make this accommodate for Company

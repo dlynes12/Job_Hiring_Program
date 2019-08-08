@@ -3,14 +3,12 @@ import java.util.ArrayList;
 public class Job {
 
     private String position;
-    private String company;
     private String tag;
     private int interviewRounds;
     private ArrayList<String> stagesOfInterview;
 
-    public Job(String position, String company, String tag, int interviewRounds, ArrayList<String> stagesOfInterview) {
+    public Job(String position, String tag, int interviewRounds, ArrayList<String> stagesOfInterview) {
         this.position = position;
-        this.company = company;
         this.tag = tag;
         this.interviewRounds = interviewRounds;
         this.stagesOfInterview = stagesOfInterview;
@@ -22,10 +20,6 @@ public class Job {
 
     void setTag(String tag) {
         this.tag = tag;
-    }
-
-    String getCompany() {
-        return this.company;
     }
 
     String getTag() {
