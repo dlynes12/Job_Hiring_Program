@@ -67,14 +67,15 @@ public class HR_Coordinator extends User {
                 Label closingMessage = new Label("Closing Date:");
                 Label positionLabel = new Label("What position are we creating?");
                 //Label companyLabel = new Label("What company is this for?");
-                Label availJobsLabel = new Label("How many people are we hiring?");
+                Label availJobsLabel = new Label("How what locations are we hiring for?");
                 Label intStageLabel = new Label("Please add a stage to the interview process:");
                 Label viewInterviewerLabel = new Label("Select Interviewers to interview people for this job:"); // view all the stages that have been added
                 TextField positionField = new TextField();
                 //TextField companyField = new TextField();
-                TextField availJobField = new TextField();
+                //TextField availJobField = new TextField();
                 TextField intStageField = new TextField();
                 intStageField.setPromptText("i.e. Phone Interview");
+                Button addLocation = new Button("Add Location");
                 Button addStageToProcess = new Button("Add Stage");
                 Button addInterviewer = new Button("Add Interviewer");
                 Button createNewPost = new Button("Create Job");
@@ -88,9 +89,15 @@ public class HR_Coordinator extends User {
                 fullTime.setToggleGroup(radioSet);
                 partTime.setToggleGroup(radioSet);
 
+                ObservableList<String> listLocations = FXCollections.observableArrayList();
                 ObservableList<String> listStages = FXCollections.observableArrayList();
                 ObservableList<String> decidedInterviewers = FXCollections.observableArrayList();
                 ComboBox<String> interviewerDropdown = new ComboBox<>();
+                ComboBox<String> locationDropdown = new ComboBox<>();
+
+                for (String string: loggedCompany.getLocations()){
+                    locationDropdown.getItems().add(string);
+                }
 
                 //TODO make this accommodate for Company
                 for (Interviewer interviewer : systemAdmin.getUserManager().getListInterviewers(loggedCompany)) {
@@ -105,6 +112,8 @@ public class HR_Coordinator extends User {
 
                 interviewerDropdown.setMaxWidth(200.00);
                 interviewerDropdown.setMinWidth(200.00);
+                locationDropdown.setMaxWidth(200.00);
+                locationDropdown.setMinWidth(200.00);
                 cMessageGrid.add(closingMessage, 1, 0);
                 dateGrid.add(closingMessage, 1, 0);
                 dateGrid.add(datePicker, 2, 0);
@@ -113,7 +122,8 @@ public class HR_Coordinator extends User {
                 //positionGrid.add(companyLabel, 1, 2);
                 //positionGrid.add(companyField, 2, 2);
                 positionGrid.add(availJobsLabel, 1, 4);
-                positionGrid.add(availJobField, 2, 4);
+                positionGrid.add(locationDropdown, 2, 4);//availJobField
+                positionGrid.add(addLocation,3,4);
                 positionGrid.add(intStageLabel, 1, 6);
                 positionGrid.add(intStageField, 2, 6);
                 positionGrid.add(addStageToProcess, 3, 6);
@@ -135,6 +145,25 @@ public class HR_Coordinator extends User {
                 CreateJobPlacement.setBottom(positionGrid);
 
                 createJobs.getChildren().addAll(CreateJobPlacement);
+
+                addLocation.setOnAction((ActionEvent addLoc) ->{
+                    String str = locationDropdown.getValue();
+                    if (!isNullOrEmpty(str)){
+                        boolean add = true;
+                        for (String string : listLocations) {
+                            if (string.equals(str)) {
+                                add = false;
+                            }
+                        }
+                        if (add) {
+                            listLocations.add(str);
+                            ListView<String> choiceLocations = new ListView<>();
+                            choiceLocations.setItems(listLocations);
+                            choiceLocations.setPrefSize(100.00, 70.00);
+                            positionGrid.add(choiceLocations, 1, 5);
+                        }
+                    }
+                });
 
                 addStageToProcess.setOnAction((ActionEvent addStage) -> {
                     String strISF = intStageField.getText();
@@ -177,7 +206,7 @@ public class HR_Coordinator extends User {
                         String position = positionField.getText();
                         //String company = companyField.getText();
                         try {
-                            int numPositions = Integer.parseInt(availJobField.getText());
+                            int numPositions = listLocations.size();//Integer.parseInt(availJobField.getText());
 
                             ArrayList<String> stagesOfInterview = new ArrayList<>();
                             for (String str : listStages) {

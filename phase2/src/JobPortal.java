@@ -1,4 +1,6 @@
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -9,6 +11,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import java.io.*;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -188,30 +191,55 @@ public class JobPortal extends Application {
             createCompanyButton.setOnAction((ActionEvent createCompanyEvent) -> {
 
                 Group registerCompanyGroup = new Group();
-                Scene registerCompanyScene = new Scene(registerCompanyGroup, 300, 300);
+                Scene registerCompanyScene = new Scene(registerCompanyGroup, 300, 400);
                 stage.setScene(registerCompanyScene);
                 stage.setTitle("Job Portal - Company Registration");
 
                 Label compNameLabel = new Label("Company name:");
                 TextField compNameTextField = new TextField();
+                Label companyLocLabel = new Label("Location:");
+                TextField companyLocField = new TextField();
+                companyLocField.setPromptText("Enter 1  location at a time");
+                Button addLocButton = new Button("Add Location");
                 Button registerButton = new Button("Register");
                 Button registrationExit = new Button("Exit");
                 GridPane companyRegisterPane = new GridPane();
 
+                ObservableList<String> listLocations = FXCollections.observableArrayList();
+
                 companyRegisterPane.add(compNameLabel, 2, 1);
                 companyRegisterPane.add(compNameTextField, 2, 2);
-                companyRegisterPane.add(registerButton, 2, 3);
-                companyRegisterPane.add(registrationExit, 2, 4);
+                companyRegisterPane.add(companyLocLabel,2,4);
+                companyRegisterPane.add(companyLocField,2,5);
+                companyRegisterPane.add(addLocButton,2,6);
+                companyRegisterPane.add(registerButton, 2, 8);
+                companyRegisterPane.add(registrationExit, 2, 9);
                 companyRegisterPane.setHgap(20);
                 companyRegisterPane.setVgap(10);
 
                 registerCompanyGroup.getChildren().addAll(companyRegisterPane);
 
-                registerButton.setOnAction((ActionEvent registerCompEvent) -> {
-                    Company company = new Company(compNameTextField.getText(),systemAdmin);
-                    systemAdmin.addCompany(company);
-                    stage.setScene(accessMenuPage);
+                addLocButton.setOnAction((ActionEvent addLoc) -> {
+                    String str = companyLocField.getText();
+                    if ((str != null) && !str.trim().isEmpty()){
+                        if (!listLocations.contains(str)){
+                            listLocations.add(str);
+                        }
+                        ListView<String> showLocList = new ListView<>();
+                        showLocList.setItems(listLocations);
+                        showLocList.setPrefSize(100.00, 70.00);
+                        companyRegisterPane.add(showLocList,2,7);
+                    }
+                });
 
+                registerButton.setOnAction((ActionEvent registerCompEvent) -> {
+                    if (!listLocations.isEmpty()){
+                        ArrayList<String> locationsList = new ArrayList<>();
+                        for(String str: listLocations){locationsList.add(str);}
+                        Company company = new Company(compNameTextField.getText(), locationsList, systemAdmin);
+                        systemAdmin.addCompany(company);
+                        stage.setScene(accessMenuPage);
+                    }
                 });
 
                 registrationExit.setOnAction((ActionEvent registerExitEvent) -> {
