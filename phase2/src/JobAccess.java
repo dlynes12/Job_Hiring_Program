@@ -6,7 +6,7 @@ public class JobAccess implements Observer {
 
     Date today;
     //private ArrayList<JobPosting> jobPostings = new ArrayList<>();
-    private HashMap<Company, ArrayList<JobPosting>> jobPostings = new HashMap<>();
+    HashMap<Company, ArrayList<JobPosting>> jobPostings = new HashMap<>();
     //private ArrayList<JobPosting> closedJobs = new ArrayList<>();
     private HashMap<Company, ArrayList<JobPosting>> closedJobs = new HashMap<>();
 
