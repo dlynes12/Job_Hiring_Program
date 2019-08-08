@@ -3,37 +3,31 @@ import java.util.ArrayList;
 public class Job {
 
     private String position;
-    private String company;
     private String tag;
+    private Company company;
     private int interviewRounds;
     private ArrayList<String> stagesOfInterview;
 
-    public Job(String position, String company, String tag, int interviewRounds, ArrayList<String> stagesOfInterview) {
+    public Job(String position, Company company, String tag, int interviewRounds, ArrayList<String> stagesOfInterview) {
         this.position = position;
-        this.company = company;
         this.tag = tag;
         this.interviewRounds = interviewRounds;
         this.stagesOfInterview = stagesOfInterview;
+        this.company = company;
     }
 
     String getPosition() {
         return this.position;
     }
 
+    Company getCompany(){ return this.company; }
+
     void setTag(String tag) {
         this.tag = tag;
     }
 
-    String getCompany() {
-        return this.company;
-    }
-
     String getTag() {
         return this.tag;
-    }
-
-    int getInterviewRounds() {
-        return this.interviewRounds;
     }
 
     ArrayList<String> getListOfStages() {

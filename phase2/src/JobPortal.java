@@ -13,30 +13,22 @@ import java.util.Date;
 import java.util.List;
 
 public class JobPortal extends Application {
-    // SIGN-IN PAGE
+
     @Override
     public void start(Stage stage) throws Exception {
-
-
         SystemAdmin systemAdmin = new SystemAdmin();
         Group accessMenuScene = new Group();
-        //Group loginScene = new Group();
         Storage store = new Storage();
         List<String> list;
-
         try {
             list = store.readList("Users");
             System.out.println(list);
             for (Object o : list) {
                 systemAdmin.getUserManager().addUser((User) o);
-                //userManager.addUser((User)o);
             }
         } catch (ClassNotFoundException | IOException ex) {
             System.out.println(ex.getMessage());
         }
-
-        //TODO create a menu for access type, applicant a access or company access;
-
         stage.setTitle("Job Portal");
         Scene accessMenuPage = new Scene(accessMenuScene, 500, 200);
         stage.setScene(accessMenuPage);
@@ -50,7 +42,6 @@ public class JobPortal extends Application {
         GridPane accessMenuGridPane = new GridPane();
         timeKeeper.addObserver(systemAdmin.getJobManager());
         systemAdmin.setTimeKeeper(timeKeeper);
-
         accessMenuGridPane.add(accessTypeLabel, 2, 0);
         accessMenuGridPane.add(applicantAccessButton, 2, 1);
         accessMenuGridPane.add(companyAccessButton, 3, 1);
@@ -58,7 +49,6 @@ public class JobPortal extends Application {
         accessMenuGridPane.add(datePicker, 2, 3);
         accessMenuGridPane.setHgap(10);
         accessMenuGridPane.setVgap(10);
-
         StackPane box1 = new StackPane();
         box1.getChildren().addAll(accessMenuGridPane);
         accessMenuScene.getChildren().addAll(box1);
@@ -69,7 +59,6 @@ public class JobPortal extends Application {
             Scene applicantLoginScene = new Scene(applicantLoginGroup, 400, 400);
             stage.setScene(applicantLoginScene);
             stage.setTitle("Job Portal - Applicant Access");
-
             Label applicantUsernameLabel = new Label("Username:");
             Label applicantPasswordLabel = new Label("Password:");
             TextField appUsernameTextField = new TextField();
@@ -78,7 +67,6 @@ public class JobPortal extends Application {
             Button createApplicantButton = new Button("Create new user");
             Button exitAppLoginButton = new Button("EXIT");
             GridPane applicantLoginPane = new GridPane();
-
             applicantLoginPane.add(applicantUsernameLabel, 2, 1);
             applicantLoginPane.add(appUsernameTextField, 2, 2);
             applicantLoginPane.add(applicantPasswordLabel, 2, 3);
@@ -92,17 +80,13 @@ public class JobPortal extends Application {
 
             applicantLoginGroup.getChildren().addAll(applicantLoginPane);
 
-            exitAppLoginButton.setOnAction((ActionEvent exitAppLoginEvent) -> {
-                stage.setScene(accessMenuPage);
-            });
+            exitAppLoginButton.setOnAction((ActionEvent exitAppLoginEvent) -> stage.setScene(accessMenuPage));
 
-            //APPLICANT CREATION PAGE
             createApplicantButton.setOnAction((ActionEvent createApplicantEvent) -> {
 
                 Group createApplicantGroup = new Group();
                 Scene createApplicantScene = new Scene(createApplicantGroup, 400, 400);
                 stage.setScene(createApplicantScene);
-
                 Button createApplicant = new Button("Create");
                 Button exitAppCreate = new Button("EXIT");
                 Label newAppUserLabel = new Label("Choose a Username");
@@ -125,8 +109,8 @@ public class JobPortal extends Application {
                 exitAppCreate.setOnAction((ActionEvent exitAppCreateEvent) -> stage.setScene(applicantLoginScene));
 
                 createApplicant.setOnAction((ActionEvent processApplicant) -> {
-                    Applicant tempApp = new Applicant(newAppUserField.getText(), newAppPassField.getText());
-                    if (systemAdmin.getUserManager().addUser(tempApp)) {
+                    Applicant newApp = new Applicant(newAppUserField.getText(), newAppPassField.getText());
+                    if (systemAdmin.getUserManager().addUser(newApp)) {
                         stage.setScene(applicantLoginScene);
                     } else {
                         systemAdmin.getAlert("create").showAndWait();
@@ -150,8 +134,7 @@ public class JobPortal extends Application {
                     String UName = appUsernameTextField.getText();
                     String Pass = appPasswordTextField.getText();
                     try {
-                        // the user that is actually logged in
-                        User loggedUser = systemAdmin.getUserManager().login(UName, Pass);
+                        User loggedUser = systemAdmin.getUserManager().login(UName, Pass);// the user that is actually logged in
                         if (loggedUser != null) {
                             ((Applicant) loggedUser).applicantGUISetUp(stage, loggedUser, systemAdmin, applicantLoginScene);
                             try {
@@ -247,7 +230,7 @@ public class JobPortal extends Application {
                 Group compUserLoginGroup = new Group();
                 Scene compUserLoginScene = new Scene(compUserLoginGroup, 600, 600);
                 stage.setScene(compUserLoginScene);
-                stage.setTitle("Job Portal - Company Log In");
+                stage.setTitle("Job Portal - " + loggedCompany.getCompanyName());
 
                 Label compUsernameLabel = new Label("Username:");
                 Label compPasswordLabel = new Label("Password:");
@@ -292,7 +275,7 @@ public class JobPortal extends Application {
                     RadioButton radioHR = new RadioButton("HR Coordinator");
                     RadioButton radioInt = new RadioButton("Interviewer");
                     Button exit = new Button("EXIT");
-                    ToggleGroup radioSet = new ToggleGroup(); // allows only one radio button to be selected at a time
+                    ToggleGroup radioSet = new ToggleGroup();
                     radioHR.setToggleGroup(radioSet);
                     radioInt.setToggleGroup(radioSet);
                     GridPane userInfo = new GridPane();
@@ -323,25 +306,24 @@ public class JobPortal extends Application {
 
                     create.setOnAction((ActionEvent ProcessUser) -> {
                         if (radioSet.getSelectedToggle() == radioHR) {
-                            HR_Coordinator tempHR = new HR_Coordinator(newUserField.getText(), newPassField.getText());
-                            if (systemAdmin.getUserManager().addUser(tempHR)) {
-                                //if (userManager.addUser(tempHR)) {
+                            HR_Coordinator newHR = new HR_Coordinator(newUserField.getText(), newPassField.getText());
+                            newHR.setCompany(loggedCompany);
+                            if (systemAdmin.getUserManager().addUser(newHR)) {
+                                systemAdmin.getUserManager().addHRCoordinator(newHR);
                                 stage.setScene(companyLoginScene);
                             } else {
                                 systemAdmin.getAlert("create").showAndWait();
                             }
                         } else if (radioSet.getSelectedToggle() == radioInt) {
-                            Interviewer tempInt = new Interviewer(newUserField.getText(), newPassField.getText());
-                            if (systemAdmin.getUserManager().addUser(tempInt)) {
-                                //if (userManager.addUser(tempInt)) {
-                                systemAdmin.getUserManager().addInterviewer(tempInt);
-                                //userManager.addInterviewer(tempInt);
+                            Interviewer newInt = new Interviewer(newUserField.getText(), newPassField.getText());
+                            newInt.setCompany(loggedCompany);
+                            if (systemAdmin.getUserManager().addUser(newInt)) {
+                                systemAdmin.getUserManager().addInterviewer(newInt);
                                 stage.setScene(companyLoginScene);
                             } else {
                                 systemAdmin.getAlert("create").showAndWait();
                             }
-                        }
-                        else {
+                        } else {
                             systemAdmin.getAlert("create").showAndWait();
                         }
                         try {
@@ -362,15 +344,14 @@ public class JobPortal extends Application {
                         String UName = compUsernameTextField.getText();
                         String Pass = compPasswordTextField.getText();
                         try {
-                            //User loggedUser = userManager.login(UName, Pass); // the user that is actually logged in
-                            User loggedUser = systemAdmin.getUserManager().login(UName, Pass);
-                            if (loggedUser != null) {
-                                if (loginRadio.getSelectedToggle() == hrRadioButton) {
-                                    ((HR_Coordinator) loggedUser).HRGUISetUp(stage, loggedUser, systemAdmin, compUserLoginScene);
-                                    //((Applicant) loggedUser).applicantGUISetUp(stage, loggedUser, jobManager, loginPage);
-                                } else if (loginRadio.getSelectedToggle() == intRadioButton) {
-                                    ((Interviewer) loggedUser).getInterviewPane(stage, loggedUser, systemAdmin, compUserLoginScene);
-                                    //((Interviewer) loggedUser).getInterviewPane(stage, loggedUser, jobManager, loginPage, userManager);
+                            User loggedUser = systemAdmin.getUserManager().login(UName, Pass);// the user that is actually logged in
+                            if (loggedUser != null) { //TODO: create alert if user is logging in with the wrong company
+                                if (loginRadio.getSelectedToggle() == hrRadioButton &&
+                                        ((HR_Coordinator)loggedUser).getCompany().equals(loggedCompany)) {
+                                    ((HR_Coordinator) loggedUser).HRGUISetUp(stage, loggedUser, loggedCompany, systemAdmin, compUserLoginScene);
+                                } else if (loginRadio.getSelectedToggle() == intRadioButton &&
+                                        ((Interviewer)loggedUser).getCompany().equals(loggedCompany)) {
+                                    ((Interviewer)loggedUser).interviewerGUISetUp(stage, loggedUser, loggedCompany, systemAdmin, compUserLoginScene);
                                 } else {
                                     stage.setScene(compUserLoginScene);
                                 }
