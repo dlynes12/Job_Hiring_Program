@@ -128,14 +128,17 @@ public class JobAccess implements Observer {
             ArrayList<JobPosting> newList = new ArrayList<>();
             newList.add(job);
             this.closedJobs.put(company, newList);
+            jobPostings.get(company).remove(job);
         }
     }
 
     private boolean removeJobPosting(String position, Company company) {
         boolean remove = false;
         if (this.getJobPosting(position, company) != null) {
-              this.closedJobs.get(company).add(this.getJobPosting(position, company));
-              this.jobPostings.get(company).remove(this.getJobPosting(position, company));
+              //this.closedJobs.get(company).add(this.getJobPosting(position, company));
+              JobPosting jp = this.getJobPosting(position, company);
+              this.closeJob(jp, company);
+              //this.jobPostings.get(company).remove(this.getJobPosting(position, company));
               this.getClosedJob(position, company).startInterviewProcess();
 //            this.closedJobs.add(this.getJobPosting(position));
 //            this.jobPostings.remove(this.getJobPosting(position));

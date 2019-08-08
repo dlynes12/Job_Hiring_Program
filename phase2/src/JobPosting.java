@@ -15,8 +15,6 @@ public class JobPosting implements java.io.Serializable {
     private ArrayList<Applicant> applicants = new ArrayList<>();
     private ArrayList<String> listOfStages = new ArrayList<>();
 
-    //TODO make sure the interview process accommodates Company class
-
     public JobPosting(Job job, Date datePosted, Date dateClosed, ArrayList<Interviewer> chosenInterviewers, int numPositions) {
         this.job = job;
         this.datePosted = datePosted;

@@ -345,7 +345,7 @@ public class JobPortal extends Application {
                         String Pass = compPasswordTextField.getText();
                         try {
                             User loggedUser = systemAdmin.getUserManager().login(UName, Pass);// the user that is actually logged in
-                            if (loggedUser != null) { //TODO: create alert if user is logging in with the wrong company
+                            if (loggedUser != null) {
                                 if (loginRadio.getSelectedToggle() == hrRadioButton &&
                                         ((HR_Coordinator)loggedUser).getCompany().equals(loggedCompany)) {
                                     ((HR_Coordinator) loggedUser).HRGUISetUp(stage, loggedUser, loggedCompany, systemAdmin, compUserLoginScene);
@@ -380,8 +380,6 @@ public class JobPortal extends Application {
     }
 
     // View + Controller
-
-    //todo: serialize list of interviewers in UserAccess
     public static void main(String[] args) {
         launch(args);
     }
