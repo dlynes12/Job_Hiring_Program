@@ -71,7 +71,7 @@ public class HR_Coordinator extends User {
                 Label intStageLabel = new Label("Please add a stage to the interview process:");
                 Label viewInterviewerLabel = new Label("Select Interviewers to interview people for this job:"); // view all the stages that have been added
                 TextField positionField = new TextField();
-                TextField companyField = new TextField();
+                //TextField companyField = new TextField();
                 TextField availJobField = new TextField();
                 TextField intStageField = new TextField();
                 intStageField.setPromptText("i.e. Phone Interview");
@@ -111,7 +111,7 @@ public class HR_Coordinator extends User {
                 positionGrid.add(positionLabel, 1, 0);
                 positionGrid.add(positionField, 2, 0);
                 //positionGrid.add(companyLabel, 1, 2);
-                positionGrid.add(companyField, 2, 2);
+                //positionGrid.add(companyField, 2, 2);
                 positionGrid.add(availJobsLabel, 1, 4);
                 positionGrid.add(availJobField, 2, 4);
                 positionGrid.add(intStageLabel, 1, 6);

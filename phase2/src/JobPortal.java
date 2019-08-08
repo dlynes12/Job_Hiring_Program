@@ -208,7 +208,7 @@ public class JobPortal extends Application {
                 registerCompanyGroup.getChildren().addAll(companyRegisterPane);
 
                 registerButton.setOnAction((ActionEvent registerCompEvent) -> {
-                    Company company = new Company(compNameTextField.getText());
+                    Company company = new Company(compNameTextField.getText(),systemAdmin);
                     systemAdmin.addCompany(company);
                     stage.setScene(accessMenuPage);
 

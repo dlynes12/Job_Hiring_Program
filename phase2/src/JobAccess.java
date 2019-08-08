@@ -52,11 +52,18 @@ public class JobAccess implements Observer {
         today = date;
     }
 
+    public void initializeCompany(Company company){
+        ArrayList<JobPosting> empty1 = new ArrayList<>();
+        ArrayList<JobPosting> empty2 = new ArrayList<>();
+        this.jobPostings.put(company,empty1);
+        this.closedJobs.put(company,empty2);
+    }
+
     void addJobPosting(Job job, Date dateClosed, ArrayList<Interviewer> chosenInterviewers, int numHires) {
         JobPosting jobPosting = new JobPosting(job, today, dateClosed, chosenInterviewers, numHires);
         jobPosting.setCompany(jobPosting.getJob().getCompany());
         boolean added = false;
-        if (!this.companyCheck(jobPosting.getCompany().getCompanyName(), this.jobPostings)) { //if the company does not exist in map
+        if (!this.companyCheck(jobPosting.getCompany().getCompanyName())) { //if the company does not exist in map
             if (this.getJobPosting(job.getPosition(), job.getCompany()) == null && validInput(job.getPosition())) {
                 ArrayList<JobPosting> newList = new ArrayList<>();
                 newList.add(jobPosting);
@@ -66,6 +73,7 @@ public class JobAccess implements Observer {
         } else {
             if (this.getJobPosting(job.getPosition(), job.getCompany()) == null && validInput(job.getPosition())) {
                 this.jobPostings.get(jobPosting.getCompany()).add(jobPosting);
+                added = true;
             }
         }
 
@@ -158,10 +166,10 @@ public class JobAccess implements Observer {
         return input.matches(".*[\\S]+.*");
     }
 
-    private boolean companyCheck(String companyName, HashMap map){
+    private boolean companyCheck(String companyName){
         boolean exists = false;
-        for (Object object: map.keySet()){
-            if (((Company) object).getCompanyName().equals(companyName)){
+        for (Company company: jobPostings.keySet()){
+            if (company.getCompanyName().equals(companyName)){
                 exists = true;
             }
         }
