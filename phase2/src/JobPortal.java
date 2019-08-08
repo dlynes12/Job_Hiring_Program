@@ -368,7 +368,7 @@ public class JobPortal extends Application {
                                     ((HR_Coordinator) loggedUser).HRGUISetUp(stage, loggedUser, systemAdmin, compUserLoginScene);
                                     //((Applicant) loggedUser).applicantGUISetUp(stage, loggedUser, jobManager, loginPage);
                                 } else if (loginRadio.getSelectedToggle() == intRadioButton) {
-                                    ((Interviewer) loggedUser).getInterviewPane(stage, loggedUser, systemAdmin, compUserLoginScene);
+                                    ((Interviewer) loggedUser).interviewerGUISetUp(stage, loggedUser, systemAdmin, compUserLoginScene);
                                     //((Interviewer) loggedUser).getInterviewPane(stage, loggedUser, jobManager, loginPage, userManager);
                                 } else {
                                     stage.setScene(compUserLoginScene);

@@ -7,11 +7,11 @@ public class Company {
     private ArrayList<Interviewer> interviewers;
     private String companyName;
 
-    public Company(String companyName){
+    Company(String companyName){
         this.companyName = companyName;
     }
 
-    public String getCompanyName(){
+    String getCompanyName(){
         return this.companyName;
     }
 

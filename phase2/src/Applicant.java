@@ -7,7 +7,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.*;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -63,7 +62,7 @@ public class Applicant extends User {
         return history.toString();
     }
 
-    public File getDocs() {
+    File getDocs() {
         System.out.println("Got DOCS");
         return docs;
     }
@@ -112,24 +111,20 @@ public class Applicant extends User {
 
     void applicantGUISetUp(Stage stage, User loggedUser, SystemAdmin systemAdmin, Scene loginPage) {
         if (loggedUser.getClass() == Applicant.class) {
-
             Group applicantPortalScene = new Group();
             Scene applicantPage = new Scene(applicantPortalScene, 600, 600);
             stage.setScene(applicantPage);
-
             GridPane applicantSelectionPane = new GridPane();
             StackPane resumeUpload = new StackPane();
             TextField resume = new TextField();
             Label labelFileUpload = new Label("Submit your resume");
             Label labelEnterResume = new Label("Enter your resume");
-
             Button getResume = new Button("Submit your resume");
             Button applyJob = new Button("Apply to jobs");
             Button getFile = new Button("Open your resume from file");
             Button viewHistory = new Button("Account History");
             Button viewJobStatuses = new Button("Job Statuses");
             Button logout = new Button("Logout");
-
             applicantSelectionPane.add(logout, 4, 9);
             applicantSelectionPane.add(getFile, 4, 2);
             applicantSelectionPane.add(getResume, 4, 4);
@@ -147,22 +142,23 @@ public class Applicant extends User {
                 fileChooser.setTitle("Open Resume File");
                 fileChooser.setInitialFileName(loggedUser.getUsername());
                 File file = fileChooser.showOpenDialog(stage);
-                ((Applicant)loggedUser).setDocs(file);
+                ((Applicant) loggedUser).setDocs(file);
+
                 getResume.setOnAction((ActionEvent eve) -> {
                     try {
                         System.out.println(loggedUser);
                         store.saveDocs(loggedUser);
-                    } catch (IOException|NullPointerException e) {
+                    } catch (IOException | NullPointerException e) {
                         e.printStackTrace();
                     }
                 });
-
             });
+
             getResume.setOnAction((ActionEvent eve) -> {
-                try{
-                    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(((Applicant)loggedUser).getDocs())));
+                try {
+                    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(((Applicant) loggedUser).getDocs())));
                     out.println(resume.getText());
-                } catch (IOException|NullPointerException ioe) {
+                } catch (IOException | NullPointerException ioe) {
                     ioe.printStackTrace();
                 }
                 try {
@@ -171,6 +167,7 @@ public class Applicant extends User {
                     e.printStackTrace();
                 }
             });
+
             applyJob.setOnAction((ActionEvent apply) -> {
                 Group jobPortalScene = new Group();
                 stage.setScene(new Scene(jobPortalScene, 600, 600));
@@ -179,10 +176,8 @@ public class Applicant extends User {
                 Button select = new Button("Select");
                 GridPane jobViewer = new GridPane();
                 ListView jobList = new ListView();
-
-                ComboBox filter = new ComboBox(FXCollections.observableArrayList("fullTime","partTime", "allJobs"));
-
-                jobViewer.add(select,12, 1);
+                ComboBox filter = new ComboBox(FXCollections.observableArrayList("fullTime", "partTime", "allJobs"));
+                jobViewer.add(select, 12, 1);
                 jobViewer.add(filter, 10, 0);
                 jobViewer.add(applyButton, 4, 5);
                 jobViewer.add(returnApp, 4, 6);
@@ -197,44 +192,42 @@ public class Applicant extends User {
 
                 select.setOnAction((ActionEvent ex) -> {
                     ListView<String> lst = new ListView<>();
-                    ArrayList<String> tempArray = systemAdmin.getJobManager().sort((String)filter.getValue());
-
+                    ArrayList<String> tempArray = systemAdmin.getJobManager().sort((String) filter.getValue());
                     jobList.setItems(FXCollections.observableArrayList(tempArray));
                     lst.setItems(FXCollections.observableArrayList(tempArray));
-                    jobViewer.add(lst,0,0);
+                    jobViewer.add(lst, 0, 0);
 
                     applyButton.setOnAction((ActionEvent event) -> {
                         try {
                             Applicant a = (Applicant) loggedUser;
                             Button back = new Button("Back");
-                            a.applyToJob(systemAdmin.getJobManager().getJobPosting((String) lst.getSelectionModel().getSelectedItem()));
+                            a.applyToJob(systemAdmin.getJobManager().getJobPosting(lst.getSelectionModel().getSelectedItem()));
 
                             back.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));
-                        }catch(NullPointerException e2){
+                        } catch (NullPointerException e2) {
                             systemAdmin.getAlert("apply").showAndWait();
                         }
                     });
                 });
             });
+
             logout.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
 
             viewHistory.setOnAction((ActionEvent history) -> {
                 Group historyViewerScene = new Group();
                 Scene historyPage = new Scene(historyViewerScene, 600, 600);
                 stage.setScene(historyPage);
-
                 Label accountInfo = new Label(((Applicant) loggedUser).getInfo());
                 Button returnButton = new Button("Back");
                 GridPane historyPane = new GridPane();
-
                 historyPane.add(accountInfo, 10, 0);
                 historyPane.add(returnButton, 10, 14);
                 historyPane.setHgap(20);
                 historyPane.setVgap(5);
 
-                historyViewerScene.getChildren().addAll(historyPane);
-
                 returnButton.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));
+
+                historyViewerScene.getChildren().addAll(historyPane);
             });
 
             viewJobStatuses.setOnAction((ActionEvent jobStatuses) -> {

@@ -3,7 +3,18 @@ Class to run: JobPortal
 **** Assumptions: *****
 1cant have more interviewers than applicants
 2jobposting hire for multiple locations by increasing number of hiring
+text from intmanager:
+    /* Initially, InterviewManager class gets all those who have applied to a job after the job has closed (in its constructor)
+    Once the first round is complete, the class gets the approved list of applicants and shoots it to the HR coordinator, who then
+    shoots the list back to InterviewManager
+    and so on, until the a single applicant gets hired
+    How to check the status of an applicant: check if the applicant is in the candidates list,
+        if they are not in the list, they have been rejected,
+        if they are in the list their status is the integer value of the roundNum
+                0: resume submitted; (Job is open)
+                1: phone interview; (Job is closed)
 
+    */
 
 Create a new User:
 ----------------------------------------------------------------------
