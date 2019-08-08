@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #3D4956;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HRController">
+   <children>
+      <VBox layoutX="430.0" prefHeight="400.0" prefWidth="170.0">
+         <children>
+            <Button fx:id="btnAddJob" mnemonicParsing="false" onAction="#loadCreateJob" prefHeight="100.0" prefWidth="170.0" style="-fx-background-color: #EDA678;" text="Add a job" />
+            <Button fx:id="btnManageJobs" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#manageJobs" prefHeight="101.0" prefWidth="170.0" style="-fx-background-color: #EDA678;" text="Manage closed jobs" />
+            <Button fx:id="btnViewApps" layoutX="10.0" layoutY="73.0" mnemonicParsing="false" onAction="#viewApps" prefHeight="107.0" prefWidth="170.0" style="-fx-background-color: #EDA678;" text="View applicant data" />
+            <Button fx:id="btnLogout" layoutX="10.0" layoutY="136.0" mnemonicParsing="false" onAction="#logout" prefHeight="100.0" prefWidth="170.0" style="-fx-background-color: #EDA678;" text="Logout" />
+         </children>
+      </VBox>
+      <StackPane fx:id="stkpn" prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <AnchorPane fx:id="pnViewApps" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="426.0" visible="false">
+               <children>
+                  <ListView fx:id="lstAppData" layoutX="113.0" layoutY="20.0" prefHeight="105.0" prefWidth="206.0" style="-fx-background-color: #343d47; -fx-control-inner-background-alt: #343d47; -fx-control-inner-background: #3D4956; -fx-text-inner-color: #EDA678;" />
+                  <Button fx:id="btnAppData" layoutX="184.0" layoutY="136.0" mnemonicParsing="false" style="-fx-background-color: #EDA678;" text="Get info" />
+                  <Label fx:id="lblAppData" layoutX="72.0" layoutY="170.0" prefHeight="222.0" prefWidth="291.0" />
+               </children></AnchorPane>
+            <AnchorPane fx:id="pnManageJobs" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="426.0" visible="false">
+               <children>
+                  <Button fx:id="btnViewApplied" layoutX="160.0" layoutY="173.0" mnemonicParsing="false" style="-fx-background-color: #EDA678;" text="See applicants" />
+                  <Button fx:id="btnDistribute" layoutX="141.0" layoutY="336.0" mnemonicParsing="false" style="-fx-background-color: #EDA678;" text="Distribute applicants" />
+                  <ListView fx:id="lstJobs" layoutX="110.0" layoutY="51.0" prefHeight="105.0" prefWidth="206.0" style="-fx-background-color: #343d47; -fx-control-inner-background: #3D4956; -fx-control-inner-background-alt: #343d47;" />
+                  <Label fx:id="lblChooseJob" layoutX="171.0" layoutY="25.0" text="Choose a job:" textFill="WHITE" />
+                  <ListView fx:id="lstApplied" layoutX="110.0" layoutY="224.0" prefHeight="98.0" prefWidth="206.0" style="-fx-background-color: #343d47; -fx-control-inner-background: #3D4956; -fx-control-inner-background-alt: #343D47; -fx-text-inner-color: #EDA678;" />
+               </children></AnchorPane>
+            <AnchorPane fx:id="pnAddJob" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="426.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="23.0" text="Job closing date:" textFill="WHITE" />
+                  <DatePicker fx:id="dpClose" layoutX="168.0" layoutY="18.0" style="-fx-control-inner-background: #343d47;" />
+                  <Label layoutX="14.0" layoutY="64.0" text="Position:" textFill="WHITE" />
+                  <Label fx:id="lblNumPos" layoutX="14.0" layoutY="99.0" text="Number of positions" textFill="WHITE" />
+                  <Label layoutX="14.0" layoutY="144.0" text="Interview process stage:" textFill="WHITE" />
+                  <Button fx:id="btnAddStage" layoutX="306.0" layoutY="139.0" mnemonicParsing="false" onAction="#addIntStage" style="-fx-background-color: #EDA678;" text="Add stage" />
+                  <TextField fx:id="txtPosition" layoutX="168.0" layoutY="59.0" prefHeight="27.0" prefWidth="131.0" style="-fx-background-color: #343d47; -fx-text-inner-color: #EDA678;" />
+                  <TextField fx:id="txtIntStage" layoutX="168.0" layoutY="139.0" prefHeight="27.0" prefWidth="131.0" style="-fx-background-color: #343d47; -fx-text-inner-color: #EDA678;" />
+                  <Label layoutX="10.0" layoutY="254.0" text="Select interviewer:" textFill="WHITE" />
+                  <Button fx:id="btnAddInt" layoutX="299.0" layoutY="249.0" mnemonicParsing="false" onAction="#addInterviewer" prefHeight="27.0" prefWidth="117.0" style="-fx-background-color: #EDA678;" text="Add interviewer" />
+                  <ComboBox fx:id="cmbInt" layoutX="168.0" layoutY="249.0" prefHeight="27.0" prefWidth="124.0" style="-fx-background-color: #343d47; -fx-text-inner-color: #EDA678;" />
+                  <ListView fx:id="lstIntStage" layoutX="168.0" layoutY="179.0" prefHeight="58.0" prefWidth="186.0" style="-fx-background-color: #343d47; -fx-control-inner-background: #3D4956; -fx-control-inner-background-alt: #343d47;" />
+                  <Button fx:id="btnCreateJob" layoutX="187.0" layoutY="359.0" mnemonicParsing="false" onAction="#createJob" prefHeight="27.0" prefWidth="95.0" style="-fx-background-color: #EDA678;" text="Create Job" />
+                  <ListView fx:id="lstInterviewers" layoutX="168.0" layoutY="285.0" prefHeight="58.0" prefWidth="186.0" style="-fx-background-color: #343d47; -fx-control-inner-background: #3D4956; -fx-control-inner-background-alt: #343d47; -fx-text-inner-color: #EDA678;" />
+                  <TextField fx:id="txtNumPositions" layoutX="168.0" layoutY="94.0" prefHeight="27.0" prefWidth="131.0" style="-fx-background-color: #343d47; -fx-text-inner-color: #EDA678;" />
+               </children>
+            </AnchorPane>
+         </children>
+      </StackPane>
+   </children>
+</AnchorPane>

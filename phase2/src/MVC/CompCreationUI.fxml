@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="500.0" style="-fx-background-color: #3D4956;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CompCreationController">
+   <children>
+      <Button fx:id="btnCreate" layoutX="357.0" layoutY="209.0" mnemonicParsing="false" onAction="#create" prefHeight="27.0" prefWidth="81.0" style="-fx-background-color: #EDA678; -fx-border-radius: 5em; -fx-background-radius: 5em;" text="Create" textFill="WHITE" />
+      <Button fx:id="btnExit" layoutX="267.0" layoutY="209.0" mnemonicParsing="false" onAction="#exit" prefHeight="27.0" prefWidth="81.0" style="-fx-background-color: transparent; -fx-border-radius: 5em; -fx-background-radius: 5em; -fx-border-color: #EDA678;" text="Exit" textFill="WHITE" />
+      <TextField fx:id="txtUsername" layoutX="258.0" layoutY="52.0" prefHeight="27.0" prefWidth="180.0" style="-fx-border-color: #EDA678; -fx-background-color: #343D47; -fx-border-width: 0 0 2 0; -fx-text-inner-color: #EDA678;" />
+      <Label layoutX="69.0" layoutY="57.0" text="Choose a username:" textFill="#eda678" />
+      <Label layoutX="70.0" layoutY="98.0" text="Choose a password:" textFill="#eda678" />
+      <RadioButton fx:id="radioInt" layoutX="131.0" layoutY="177.0" mnemonicParsing="false" text="Interviewer" textFill="#eda678">
+         <toggleGroup>
+            <ToggleGroup fx:id="userType" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="radioHR" layoutX="67.0" layoutY="177.0" mnemonicParsing="false" text="HR" textFill="#eda678" toggleGroup="$userType" />
+      <TextField fx:id="txtPass" layoutX="258.0" layoutY="93.0" prefHeight="27.0" prefWidth="180.0" style="-fx-border-color: #EDA678; -fx-background-color: #343D47; -fx-border-width: 0 0 2 0; -fx-text-inner-color: #EDA678;" />
+      <Label layoutX="67.0" layoutY="146.0" text="Please select the user type:" textFill="#eda678" />
+   </children>
+</Pane>
