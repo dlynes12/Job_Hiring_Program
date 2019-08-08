@@ -5,7 +5,7 @@ public class SystemAdmin implements java.io.Serializable {
 
     private JobAccess jobManager;
     private UserAccess userManager;
-    private ArrayList<Company> companies;
+    private ArrayList<Company> allCompanies = new ArrayList<>();
     private TimeKeeper timeKeeper;
 
     SystemAdmin() {
@@ -23,7 +23,7 @@ public class SystemAdmin implements java.io.Serializable {
 
     protected HR_Coordinator getCompanyHR(Company company) {
 
-        if (this.companies.contains(company)) {
+        if (this.allCompanies.contains(company)) {
             return company.getHrCoordinator();
         } else {
             return null;
@@ -31,7 +31,7 @@ public class SystemAdmin implements java.io.Serializable {
     }
 
     protected ArrayList<Company> getListOfCompanies(){
-        return this.companies;
+        return this.allCompanies;
     }
 
     void setTimeKeeper(TimeKeeper timeKeeper) {
@@ -40,6 +40,23 @@ public class SystemAdmin implements java.io.Serializable {
 
     protected TimeKeeper getTimeKeeper() {
         return this.timeKeeper;
+    }
+
+    protected void addCompany(Company company){
+        if (this.getCompany(company.getCompanyName()) == null && !company.getCompanyName().trim().isEmpty()){
+            this.allCompanies.add(company);
+            System.out.println("added the company to list");
+        }
+    }
+
+    protected Company getCompany(String companyName){
+        Company company = null;
+        for (Company c : this.allCompanies){
+            if(c.getCompanyName().equals(companyName)){
+                company = c;
+            }
+        }
+        return company;
     }
 
     Alert getAlert(String alertType) {
