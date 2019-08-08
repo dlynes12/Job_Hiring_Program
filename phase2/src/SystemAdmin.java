@@ -22,7 +22,6 @@ public class SystemAdmin implements java.io.Serializable {
     }
 
     protected HR_Coordinator getCompanyHR(Company company) {
-
         if (this.allCompanies.contains(company)) {
             return company.getHrCoordinator();
         } else {
@@ -30,7 +29,7 @@ public class SystemAdmin implements java.io.Serializable {
         }
     }
 
-    protected ArrayList<Company> getListOfCompanies(){
+    ArrayList<Company> getListOfCompanies() {
         return this.allCompanies;
     }
 
@@ -38,21 +37,17 @@ public class SystemAdmin implements java.io.Serializable {
         this.timeKeeper = timeKeeper;
     }
 
-    protected TimeKeeper getTimeKeeper() {
-        return this.timeKeeper;
-    }
-
-    protected void addCompany(Company company){
-        if (this.getCompany(company.getCompanyName()) == null && !company.getCompanyName().trim().isEmpty()){
+    void addCompany(Company company) {
+        if (this.getCompany(company.getCompanyName()) == null && !company.getCompanyName().trim().isEmpty()) {
             this.allCompanies.add(company);
             System.out.println("added the company to list");
         }
     }
 
-    protected Company getCompany(String companyName){
+    Company getCompany(String companyName) {
         Company company = null;
-        for (Company c : this.allCompanies){
-            if(c.getCompanyName().equals(companyName)){
+        for (Company c : this.allCompanies) {
+            if (c.getCompanyName().equals(companyName)) {
                 company = c;
             }
         }
@@ -89,7 +84,7 @@ public class SystemAdmin implements java.io.Serializable {
             alert.setTitle("Unexpected Input");
             alert.setHeaderText("Job not Selected");
             alert.setContentText("Please Try Again");
-        }else if (alertType.equals("integer")) {
+        } else if (alertType.equals("integer")) {
             alert.setTitle("Invalid Input");
             alert.setHeaderText("Enter number of applicants");
             alert.setContentText("Please Try Again");

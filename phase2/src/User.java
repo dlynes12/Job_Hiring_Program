@@ -18,7 +18,7 @@ public abstract class User implements Serializable {
         return this.username;
     }
 
-    public String getPassword() {
+    String getPassword() {
         return this.password;
     }
 
@@ -29,5 +29,4 @@ public abstract class User implements Serializable {
     static boolean isNullOrEmpty(String str) {
         return str == null || str.isEmpty();
     }
-
 }

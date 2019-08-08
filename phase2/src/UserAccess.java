@@ -6,9 +6,7 @@ public class UserAccess implements java.io.Serializable {
     private ArrayList<Interviewer> employedInterviewers = new ArrayList<>();
     private ArrayList<Interviewer> interviewers = new ArrayList<>();
     private HashMap<Company, ArrayList<HR_Coordinator>> hRcoordinatots = new HashMap<>();
-    Storage store = new Storage();
 
-    // LOGIN FUNCTIONS----------------------------------------------------------------------
     boolean addUser(User user) {
         boolean added = false;
         if (validInput(user.getUsername()) && validInput(user.getPassword())) {
@@ -50,10 +48,6 @@ public class UserAccess implements java.io.Serializable {
         return this.employedInterviewers;
     }
 
-    public void setEmployedInterviewers(ArrayList<Interviewer> employedInterviewers) {
-        this.employedInterviewers = employedInterviewers;
-    }
-
     //TODO: make this accommodate for Company
 
     boolean addInterviewer(Interviewer interviewer) {
@@ -69,23 +63,11 @@ public class UserAccess implements java.io.Serializable {
         return add;
     }
 
-//    private Boolean checkInput(String username, String password) {
-//        return username.matches(".*[\\S]+.*") && password.matches(".*[\\S]+.*");
-//    }
-
-    private boolean validInput(String input){
+    private boolean validInput(String input) {
         return input.matches(".*[\\S]+.*");
     }
-
-//    public String listUses(ArrayList<User> a){
-//        String list = "";
-//        for(User u: a){
-//            list = list + u.getUsername()
-//        }
-//    }
 
     ArrayList<User> viewUsers() {
         return users;
     }
-
 }

@@ -3,14 +3,13 @@ import java.util.List;
 
 public class Storage {
 
-    public Storage() {
+    Storage() {
     }
 
     public final void writeList(List a, String name) throws IOException, NullPointerException {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream((name + ".bin")));
         objectOutputStream.writeObject(a);
         System.out.println("Yo" + a);
-
     }
 
     public List readList(String name) throws IOException, ClassNotFoundException {
@@ -25,15 +24,9 @@ public class Storage {
         objectOutputStream.writeObject(u);
     }
 
-    public final void readFile(String uName) throws IOException, ClassNotFoundException {
-        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream((uName + ".bin")));
-        User u = (User) objectInputStream.readObject();
-        System.out.println(u);
-    }
-
     public final void writeDocFile(User u) throws java.io.IOException {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream((u.getUsername() + "docs.bin")));
-        objectOutputStream.writeObject(((Applicant)u).getDocs());
+        objectOutputStream.writeObject(((Applicant) u).getDocs());
     }
 
     public final File readDocFile(String uName) throws IOException, ClassNotFoundException {
@@ -41,10 +34,12 @@ public class Storage {
         File f = (File) objectInputStream.readObject();
         return f;
     }
+
     public File getDocs(String username) throws IOException, ClassNotFoundException {
         return readDocFile(username);
     }
-    public void saveDocs(User user) throws IOException, NullPointerException{
+
+    public void saveDocs(User user) throws IOException, NullPointerException {
         writeDocFile(user);
     }
 }
