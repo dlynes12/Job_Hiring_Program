@@ -32,10 +32,6 @@ public class Job {
         return this.tag;
     }
 
-    int getInterviewRounds() {
-        return this.interviewRounds;
-    }
-
     ArrayList<String> getListOfStages() {
         return this.stagesOfInterview;
     }

@@ -1,10 +1,8 @@
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class JobPosting implements java.io.Serializable {
 
-    //TODO we need to have an attribute of how many people we are hiring
     private int numHires;
     private Job job;
     private Date datePosted;
@@ -28,7 +26,9 @@ public class JobPosting implements java.io.Serializable {
         this.listOfStages = job.getListOfStages();
     }
 
-    public int getNumHires() {return numHires;}
+    int getNumHires() {
+        return numHires;
+    }
 
     public Job getJob() {
         return this.job;
@@ -38,38 +38,23 @@ public class JobPosting implements java.io.Serializable {
         return this.company;
     }
 
-    public Date getDatePosted() {
-        return this.datePosted;
-    }
-
-    public void setDatePosted(Date datePosted) {
-        this.datePosted = datePosted;
-    }
-
     Date getDateClosed() {
         return this.dateClosed;
     }
 
-    public void setDateClosed(Date dateClosed) {
-        this.dateClosed = dateClosed;
-    }
-
-    //HR needs to have access to this information as well.
-    public void addApplicant(Applicant applicant) {
+    void addApplicant(Applicant applicant) {
         if (!this.applicants.contains(applicant)) {
             this.applicants.add(applicant);
         }
     }
 
-    //TODO: make this consider the date - applicants can only withdraw before the closing date.
-    public void removeApplicant(Applicant applicant) {
+    void removeApplicant(Applicant applicant) {
         if (this.applicants.contains(applicant)) {
             this.applicants.remove(applicant);
         }
     }
 
-    // todo: fix the list of applicants the interviewer sees
-    public String viewApplicants(Interviewer interviewer, String position) { //view all Applicants still in the hiring process
+    String viewApplicants(Interviewer interviewer, String position) { //view all Applicants still in the hiring process
         StringBuilder listOfApplicants = new StringBuilder();
         String result;
         for (Applicant applicant : interviewer.getInterviewees(position)) {
@@ -79,26 +64,22 @@ public class JobPosting implements java.io.Serializable {
             result = listOfApplicants.toString();
         } else {
             result = listOfApplicants.substring(0, listOfApplicants.length() - 1);
-        } //takes off the last comma
+        }
         return result;
     }
 
     String viewAllApplicants() {
         StringBuilder listOfApplicants = new StringBuilder();
         String result;
-        for (Applicant applicant : this.applicants) {  //list before was this.applicants
+        for (Applicant applicant : this.applicants) {
             listOfApplicants.append(applicant.getUsername()).append(",");
         }
         if (listOfApplicants.length() == 0) {
             result = listOfApplicants.toString();
         } else {
             result = listOfApplicants.substring(0, listOfApplicants.length() - 1);
-        } //takes off the last comma
+        }
         return result;
-    }
-
-    public void setListOfStages(ArrayList<String> listOfStages) {
-        this.listOfStages = listOfStages;
     }
 
     boolean startInterviewProcess() {

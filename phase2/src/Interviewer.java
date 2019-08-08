@@ -77,11 +77,11 @@ public class Interviewer extends User {
             chooseJobPane.setHgap(20);
             chooseJobPane.setVgap(5);
 
-            for (String jobPosting : applicantsList.keySet()){ // systemAdmin.getJobManager().ViewJobs()
-                dropdown.getItems().add(jobPosting); //dropdown.getItems().add(jobPosting.getJob().getPosition()
+            for (String jobPosting : applicantsList.keySet()){
+                dropdown.getItems().add(jobPosting);
             }
 
-            getInterviewees.setOnAction((ActionEvent ev) -> { // get the Applicant list for each job
+            getInterviewees.setOnAction((ActionEvent ev) -> {
                 String choice = (String) dropdown.getValue();
                 String[] listOfApp = systemAdmin.getJobManager().getClosedJob(choice).viewApplicants(this, choice).split(",");
                 if (listOfApp.length != 0 && !isNullOrEmpty(listOfApp[0])) {

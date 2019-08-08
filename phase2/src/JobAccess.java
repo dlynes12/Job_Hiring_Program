@@ -27,7 +27,6 @@ public class JobAccess implements Observer {
         today = date;
     }
 
-    //Manage Open Jobs Function-------------------------------------------------------------------
     void addJobPosting(Job job, Date dateClosed, ArrayList<Interviewer> chosenInterviewers, int numHires) {
         JobPosting jobposting = new JobPosting(job, today, dateClosed, chosenInterviewers, numHires);
         boolean added = false;
@@ -59,9 +58,6 @@ public class JobAccess implements Observer {
     }
 
     private boolean removeJobPosting(String position) {
-        //check if the position is in our job postings
-        //todo: automate the start of the hiring process
-        //todo: find a way to display closed jobs
         boolean remove = false;
         if (this.getJobPosting(position) != null) {
             this.closedJobs.add(this.getJobPosting(position));
@@ -77,7 +73,6 @@ public class JobAccess implements Observer {
         for (JobPosting j : this.jobPostings) {
             if (s.equals("allJobs")) {
                 al.add(j.getJob().getPosition());
-
             } else if (j.getJob().getTag().equals(s)) {
                 al.add(j.getJob().getPosition());
             }
@@ -85,13 +80,9 @@ public class JobAccess implements Observer {
         return al;
     }
 
-    private boolean validInput(String input){
+    private boolean validInput(String input) {
         return input.matches(".*[\\S]+.*");
     }
-
-    ArrayList<JobPosting> ViewJobs() {
-        return jobPostings;
-    } // see all the job postings available
 
     ArrayList<JobPosting> viewClosedJobs() {
         return closedJobs;
