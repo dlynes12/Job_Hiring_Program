@@ -94,6 +94,11 @@ public class SystemAdmin implements java.io.Serializable {
             alert.setHeaderText("Enter number of applicants");
             alert.setContentText("Please Try Again");
         }
+        else if(alertType.equals("add interviewer")){
+            alert.setTitle("Unexpected Input");
+            alert.setHeaderText("Interviewer not selected");
+            alert.setContentText("Please Try Again");
+        }
         return alert;
     }
 }
