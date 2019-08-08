@@ -1,7 +1,7 @@
 Class to run: JobPortal
 
 **** Assumptions: *****
-1) You can'st have more interviewers than applicants
+1) You can't have more interviewers than applicants
 2) You cannot approve and decline the same applicant in the same round
 
 
@@ -10,7 +10,7 @@ Create a new Applicant:
 ----------------------------------------------------------------------
 From the main menu:
 
-1) Click the calender icon and enter the Date
+1) Click the calendar icon and enter the Date
 2) Press the "Applicant Access" button
 3) Press the "Create New User" button
 4) Fill in the desired username and password corresponding fields
@@ -21,7 +21,7 @@ From the main menu:
 
 Create a new HR Coordinator or Interviewer:
 ----------------------------------------------------------------------
-1) Click the calender icon and enter the Date
+1) Click the calendar icon and enter the Date
 2) Press the "Company Access" button
 3) Create a new Company by pressing "Create New Company" button if necessary
 4) In the Company Access page, select a company from the dropdown & press "Select Company"
@@ -32,7 +32,7 @@ Create a new HR Coordinator or Interviewer:
 
 Login to HR Coordinator or Interviewer:
 ----------------------------------------------------------------------
-1) Click the calender icon and enter the Date
+1) Click the calendar icon and enter the Date
 2) Press the "Company Access" button
 3) In the Company Access page, select a company from the dropdown & press "Select Company"
 4) Enter a username and password, select the appropriate account type
@@ -47,10 +47,10 @@ Assuming an HR Coordinator has been created:
 3) Specify the closing date by pressing on the calendar icon and selecting
     the desired date
 4) Specify the job position being created in the corresponding field
-5) Enter an integer representing to the number of jobs to be created. More than one
+5) Enter an integer representing the number of jobs to be created. More than one
    available position indicates hiring for multiple locations.
 6) Enter a stage in the interview process one at a time, press "Add Stage" button.
-    The order you enter the stages in is the same order applicants are interviewed in.
+    The order you enter the stages in, is the same order applicants are interviewed in.
 7) Choose an interviewers from the dropdown menu and press "Add Interviewer" button. This
     selects the interviewers who interview applicants in the hiring process.
 8) Add a tag: either full time or part time
@@ -98,7 +98,7 @@ posting is closed all interviews can see the list of applicants who have
 applied.
 
 1) Login to a valid Interviewer account
-2) Choose a job that you would like interview candidates for
+2) Choose a job that you would like to interview candidates for
 3) Press the "Get Interviewees" button
 
 
@@ -120,5 +120,3 @@ Hiring Process:
     You will only be able to hire the number of positions available for the job.
 12) In the final round only HR will be able to see who has been hired in the
     "Manage Closed Jobs" section, after choosing a job and clicking "View Hires"
-
-
