@@ -71,14 +71,6 @@ public class Applicant extends User {
         System.out.println("Docs Set");
         this.docs = docs;
     }
-//    public void setDocsHash(User u, Boolean a, Boolean b, String s) throws IOException {
-//        ArrayList<Boolean> docs = new ArrayList<>();
-//        docs.add(a);
-//        docs.add(b);
-//        userDocs.put(u.getUsername(),docs);
-//
-//        store.writeDocFile(u,s);
-//    }
 
     private void applyToJob(JobPosting jobPosting) {
         this.jobsApplied.put(jobPosting, "Submitted Resume/CV");
@@ -208,7 +200,6 @@ public class Applicant extends User {
                             String position = jpSplit[0];
                             Company comp = systemAdmin.getCompany(jpSplit[1]);
 
-                            //a.applyToJob(systemAdmin.getJobManager().getJobPosting(lst.getSelectionModel().getSelectedItem()));
                             a.applyToJob(systemAdmin.getJobManager().getJobPosting(position, comp));
 
                             back.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));
@@ -269,7 +260,6 @@ public class Applicant extends User {
                     RadioButton selectedToggle = (RadioButton) jobRadioSet.getSelectedToggle();
                     String selectedToggleText = selectedToggle.getText();
                     String[] textSplit = selectedToggleText.split(","); //splits the job name from it's status
-                    // [jobPosition, jobCompany, status]
                     String jobPosition = textSplit[0];
                     Company comp = systemAdmin.getCompany(textSplit[1]);
                     try{

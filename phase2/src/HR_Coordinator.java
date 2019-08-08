@@ -296,16 +296,6 @@ public class HR_Coordinator extends User {
                         }
                         ViewJobsGrid.add(viewAppsLabel,1,1);
                         ViewJobsGrid.add(scrollListApps, 2,1);
-
-                        /*Button viewButton = new Button("VIEW INFO");
-                        appViewer.add(viewButton, 3, i + 1);
-                        appViewer.setHgap(20);
-                        appViewer.setVgap(5);
-                        ViewJobsPlacement.setBottom(appViewer);
-
-                        viewButton.setOnAction((ActionEvent ViewAppDocs) -> {
-                            // see the specific applicant's documents
-                        });*/
                     }
                 });
                 distributeApps.setOnAction((ActionEvent disApps) -> {

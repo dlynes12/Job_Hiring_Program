@@ -57,7 +57,6 @@ public class JobPortal extends Application {
         accessMenuScene.getChildren().addAll(box1);
 
         applicantAccessButton.setOnAction((ActionEvent applicantLoginEvent) -> {
-
             Group applicantLoginGroup = new Group();
             Scene applicantLoginScene = new Scene(applicantLoginGroup, 400, 400);
             stage.setScene(applicantLoginScene);
@@ -77,7 +76,6 @@ public class JobPortal extends Application {
             applicantLoginPane.add(applicantLogInButton, 2, 5);
             applicantLoginPane.add(createApplicantButton, 2, 6);
             applicantLoginPane.add(exitAppLoginButton, 2, 7);
-
             applicantLoginPane.setHgap(20);
             applicantLoginPane.setVgap(10);
 
@@ -97,7 +95,6 @@ public class JobPortal extends Application {
                 TextField newAppUserField = new TextField();
                 TextField newAppPassField = new TextField();
                 GridPane createApplicantPane = new GridPane();
-
                 createApplicantPane.add(newAppUserLabel, 2, 1);
                 createApplicantPane.add(newAppUserField, 2, 2);
                 createApplicantPane.add(newAppPassLabel, 2, 3);
@@ -120,7 +117,6 @@ public class JobPortal extends Application {
                     }
 
                     try {
-                        //store.writeUserList(userManager.users);
                         store.writeList(systemAdmin.getUserManager().users, "Users");
                     } catch (IOException ex) {
                         System.out.println(ex.getMessage());
@@ -157,20 +153,16 @@ public class JobPortal extends Application {
             });
         });
 
-
         companyAccessButton.setOnAction((ActionEvent compAccessEvent) -> {
-
             Group companyLogInGroup = new Group();
             Scene companyLoginScene = new Scene(companyLogInGroup, 700, 700);
             stage.setScene(companyLoginScene);
             stage.setTitle("Job Portal - Company Access");
-
             Button companySelectionButton = new Button(" Select Company");
             Button createCompanyButton = new Button("Create new company");
             Button exitCompAccessButton = new Button("Exit");
             ComboBox<String> companyDropdown = new ComboBox<>();
             GridPane companyLoginPane = new GridPane();
-
             companyLoginPane.setVgap(10);
             companyLoginPane.setHgap(20);
             companyLoginPane.add(companySelectionButton, 3, 1);
@@ -189,12 +181,10 @@ public class JobPortal extends Application {
             });
 
             createCompanyButton.setOnAction((ActionEvent createCompanyEvent) -> {
-
                 Group registerCompanyGroup = new Group();
                 Scene registerCompanyScene = new Scene(registerCompanyGroup, 300, 400);
                 stage.setScene(registerCompanyScene);
                 stage.setTitle("Job Portal - Company Registration");
-
                 Label compNameLabel = new Label("Company name:");
                 TextField compNameTextField = new TextField();
                 Label companyLocLabel = new Label("Location:");
@@ -204,14 +194,12 @@ public class JobPortal extends Application {
                 Button registerButton = new Button("Register");
                 Button registrationExit = new Button("Exit");
                 GridPane companyRegisterPane = new GridPane();
-
                 ObservableList<String> listLocations = FXCollections.observableArrayList();
-
                 companyRegisterPane.add(compNameLabel, 2, 1);
                 companyRegisterPane.add(compNameTextField, 2, 2);
-                companyRegisterPane.add(companyLocLabel,2,4);
-                companyRegisterPane.add(companyLocField,2,5);
-                companyRegisterPane.add(addLocButton,2,6);
+                companyRegisterPane.add(companyLocLabel, 2, 4);
+                companyRegisterPane.add(companyLocField, 2, 5);
+                companyRegisterPane.add(addLocButton, 2, 6);
                 companyRegisterPane.add(registerButton, 2, 8);
                 companyRegisterPane.add(registrationExit, 2, 9);
                 companyRegisterPane.setHgap(20);
@@ -221,21 +209,23 @@ public class JobPortal extends Application {
 
                 addLocButton.setOnAction((ActionEvent addLoc) -> {
                     String str = companyLocField.getText();
-                    if ((str != null) && !str.trim().isEmpty()){
-                        if (!listLocations.contains(str)){
+                    if ((str != null) && !str.trim().isEmpty()) {
+                        if (!listLocations.contains(str)) {
                             listLocations.add(str);
                         }
                         ListView<String> showLocList = new ListView<>();
                         showLocList.setItems(listLocations);
                         showLocList.setPrefSize(100.00, 70.00);
-                        companyRegisterPane.add(showLocList,2,7);
+                        companyRegisterPane.add(showLocList, 2, 7);
                     }
                 });
 
                 registerButton.setOnAction((ActionEvent registerCompEvent) -> {
-                    if (!listLocations.isEmpty()){
+                    if (!listLocations.isEmpty()) {
                         ArrayList<String> locationsList = new ArrayList<>();
-                        for(String str: listLocations){locationsList.add(str);}
+                        for (String str : listLocations) {
+                            locationsList.add(str);
+                        }
                         Company company = new Company(compNameTextField.getText(), locationsList, systemAdmin);
                         systemAdmin.addCompany(company);
                         stage.setScene(accessMenuPage);
@@ -245,21 +235,17 @@ public class JobPortal extends Application {
                 registrationExit.setOnAction((ActionEvent registerExitEvent) -> {
                     stage.setScene(companyLoginScene);
                 });
-
             });
 
             companySelectionButton.setOnAction((ActionEvent companySelectionEvent) -> {
-
                 String selectedCompany = companyDropdown.getValue();
                 Company loggedCompany = systemAdmin.getCompany(selectedCompany);
                 System.out.println(selectedCompany + " - selected "); //test
                 System.out.println(loggedCompany.getCompanyName() + " - logged");
-
                 Group compUserLoginGroup = new Group();
                 Scene compUserLoginScene = new Scene(compUserLoginGroup, 600, 600);
                 stage.setScene(compUserLoginScene);
                 stage.setTitle("Job Portal - " + loggedCompany.getCompanyName());
-
                 Label compUsernameLabel = new Label("Username:");
                 Label compPasswordLabel = new Label("Password:");
                 TextField compUsernameTextField = new TextField();
@@ -269,13 +255,10 @@ public class JobPortal extends Application {
                 Button exitCompLoginButton = new Button("EXIT");
                 RadioButton hrRadioButton = new RadioButton("HR Coordinator");
                 RadioButton intRadioButton = new RadioButton("Interviewer");
-
                 ToggleGroup loginRadio = new ToggleGroup();
                 hrRadioButton.setToggleGroup(loginRadio);
                 intRadioButton.setToggleGroup(loginRadio);
-
                 GridPane compUserLoginGrid = new GridPane();
-
                 compUserLoginGrid.add(compUsernameLabel, 2, 1);
                 compUserLoginGrid.add(compUsernameTextField, 2, 2);
                 compUserLoginGrid.add(compPasswordLabel, 2, 3);
@@ -309,7 +292,6 @@ public class JobPortal extends Application {
                     GridPane userInfo = new GridPane();
                     GridPane choicePane = new GridPane();
                     GridPane grid = new GridPane();
-
                     userInfo.add(exit, 8, 4);
                     userInfo.add(createUserLab, 2, 0);
                     userInfo.add(createPassLab, 2, 2);
@@ -319,7 +301,6 @@ public class JobPortal extends Application {
                     grid.add(radioHR, 4, 0);
                     grid.add(radioInt, 6, 0);
                     grid.add(create, 7, 2);
-
                     BorderPane placement = new BorderPane();
                     userInfo.setHgap(20);
                     userInfo.setVgap(5);
@@ -375,11 +356,11 @@ public class JobPortal extends Application {
                             User loggedUser = systemAdmin.getUserManager().login(UName, Pass);// the user that is actually logged in
                             if (loggedUser != null) {
                                 if (loginRadio.getSelectedToggle() == hrRadioButton &&
-                                        ((HR_Coordinator)loggedUser).getCompany().equals(loggedCompany)) {
+                                        ((HR_Coordinator) loggedUser).getCompany().equals(loggedCompany)) {
                                     ((HR_Coordinator) loggedUser).HRGUISetUp(stage, loggedUser, loggedCompany, systemAdmin, compUserLoginScene);
                                 } else if (loginRadio.getSelectedToggle() == intRadioButton &&
-                                        ((Interviewer)loggedUser).getCompany().equals(loggedCompany)) {
-                                    ((Interviewer)loggedUser).interviewerGUISetUp(stage, loggedUser, loggedCompany, systemAdmin, compUserLoginScene);
+                                        ((Interviewer) loggedUser).getCompany().equals(loggedCompany)) {
+                                    ((Interviewer) loggedUser).interviewerGUISetUp(stage, loggedUser, loggedCompany, systemAdmin, compUserLoginScene);
                                 } else {
                                     stage.setScene(compUserLoginScene);
                                 }
@@ -407,7 +388,6 @@ public class JobPortal extends Application {
         });
     }
 
-    // View + Controller
     public static void main(String[] args) {
         launch(args);
     }

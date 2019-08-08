@@ -3,9 +3,6 @@ import java.util.ArrayList;
 
 public class Company implements Serializable {
 
-    private HR_Coordinator hrCoordinator;
-    private ArrayList<JobPosting> jobPostings;
-    private ArrayList<Interviewer> interviewers = new ArrayList<>();
     private ArrayList<String> listCompLocations = new ArrayList<>();
     private String companyName;
 
@@ -22,5 +19,4 @@ public class Company implements Serializable {
 
     public ArrayList<String> getLocations(){return this.listCompLocations;}
 
-    HR_Coordinator getHrCoordinator(){ return this.hrCoordinator; }
 }

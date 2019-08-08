@@ -29,16 +29,6 @@ public class Storage {
         objectOutputStream.writeObject(((Applicant) u).getDocs());
     }
 
-    public final File readDocFile(String uName) throws IOException, ClassNotFoundException {
-        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream((uName + "docs.bin")));
-        File f = (File) objectInputStream.readObject();
-        return f;
-    }
-
-    public File getDocs(String username) throws IOException, ClassNotFoundException {
-        return readDocFile(username);
-    }
-
     public void saveDocs(User user) throws IOException, NullPointerException {
         writeDocFile(user);
     }

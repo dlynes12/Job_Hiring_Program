@@ -2,11 +2,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserAccess implements java.io.Serializable {
-    protected ArrayList<User> users = new ArrayList<>();
-    private ArrayList<Interviewer> employedInterviewers = new ArrayList<>();
+    ArrayList<User> users = new ArrayList<>();
     private HashMap<Company, ArrayList<Interviewer>> interviewers = new HashMap<>();
     private HashMap<Company, ArrayList<HR_Coordinator>> hrCoordinators = new HashMap<>();
-
 
 
     boolean addUser(User user) {
@@ -46,81 +44,64 @@ public class UserAccess implements java.io.Serializable {
         return null;
     }
 
-//    ArrayList<Interviewer> getListInterviewers() {
-//        return this.employedInterviewers;
-//    }
-    public void initiateCompany(Company company){
+    void initiateCompany(Company company) {
         ArrayList<Interviewer> emptyList = new ArrayList<>();
-        this.interviewers.put(company,emptyList);
+        this.interviewers.put(company, emptyList);
     }
 
-    ArrayList<Interviewer> getListInterviewers(Company company){
+    ArrayList<Interviewer> getListInterviewers(Company company) {
         return this.interviewers.get(company);
     }
 
     //TODO: make this accommodate for Company
 
-    boolean addInterviewer(Interviewer interviewer){
+    boolean addInterviewer(Interviewer interviewer) {
         boolean add = true;
         String companyName = interviewer.getCompany().getCompanyName();
         Company interviewerCompany = interviewer.getCompany();
 
-        if(this.companyCheck(companyName, this.interviewers)){ //if company exists in hashmap
-            for (Interviewer account : this.interviewers.get(interviewerCompany)){
-                if(account.getUsername().equals(interviewer.getUsername())){
+        if (this.companyCheck(companyName, this.interviewers)) { //if company exists in hashmap
+            for (Interviewer account : this.interviewers.get(interviewerCompany)) {
+                if (account.getUsername().equals(interviewer.getUsername())) {
                     add = false;
                 }
             }
-            if (add){
+            if (add) {
                 this.interviewers.get(interviewerCompany).add(interviewer);
             }
-        }
-        else{
+        } else {
             ArrayList<Interviewer> newList = new ArrayList<>();
             newList.add(interviewer);
             this.interviewers.put(interviewerCompany, newList);
         }
-            //TODO: delete all these printlns lol
-            String str = "";
-            for (Company company : this.interviewers.keySet()){
-                str = str + company.getCompanyName() + ", ";
-            }
-            System.out.println(str);
-            String test = "";
-            for (Interviewer i : this.interviewers.get(interviewerCompany)){
-                test = test + i.getUsername() + ", ";
-            }
-            System.out.println(test);
         return add;
     }
 
-    boolean addHRCoordinator(HR_Coordinator hrCoordinator){
+    boolean addHRCoordinator(HR_Coordinator hrCoordinator) {
         boolean add = true;
         String companyName = hrCoordinator.getCompany().getCompanyName();
-        if (this.companyCheck(companyName, this.hrCoordinators)){ //if company exists in the hashmap
-            for (HR_Coordinator account : this.hrCoordinators.get(hrCoordinator.getCompany())){
-                if(account.getUsername().equals(hrCoordinator.getUsername())){
+        if (this.companyCheck(companyName, this.hrCoordinators)) { //if company exists in the hashmap
+            for (HR_Coordinator account : this.hrCoordinators.get(hrCoordinator.getCompany())) {
+                if (account.getUsername().equals(hrCoordinator.getUsername())) {
                     add = false;
                 }
             }
             if (add) {
                 this.hrCoordinators.get(hrCoordinator.getCompany()).add(hrCoordinator);
             }
-        }
-        else{
+        } else {
             ArrayList<HR_Coordinator> newList = new ArrayList<>();
             newList.add(hrCoordinator);
             this.hrCoordinators.put(hrCoordinator.getCompany(), newList);
         }
 
-        //TODO: delete these:
         String str = "";
-        for (Company company : this.hrCoordinators.keySet()){
+        for (Company company : this.hrCoordinators.keySet()) {
             str = str + company.getCompanyName() + ", ";
         }
         System.out.println(str);
         String test = "";
-        for (HR_Coordinator i : this.hrCoordinators.get(hrCoordinator.getCompany())){
+        for (HR_Coordinator i : this.hrCoordinators.get(hrCoordinator.getCompany())) {
             test = test + i.getUsername() + ", ";
         }
         System.out.println(test);
@@ -128,29 +109,21 @@ public class UserAccess implements java.io.Serializable {
         return add;
     }
 
-    private boolean validInput(String input){
+    private boolean validInput(String input) {
         return input.matches(".*[\\S]+.*");
     }
 
-    private boolean companyCheck(String companyName, HashMap map){
+    private boolean companyCheck(String companyName, HashMap map) {
         boolean exists = false;
-        for (Object object: map.keySet()){
-            if (((Company) object).getCompanyName().equals(companyName)){
+        for (Object object : map.keySet()) {
+            if (((Company) object).getCompanyName().equals(companyName)) {
                 exists = true;
             }
         }
         return exists;
     }
 
-//    public String listUses(ArrayList<User> a){
-//        String list = "";
-//        for(User u: a){
-//            list = list + u.getUsername()
-//        }
-//    }
-
     ArrayList<User> viewUsers() {
         return users;
     }
-
 }

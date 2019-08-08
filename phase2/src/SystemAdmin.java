@@ -21,14 +21,6 @@ public class SystemAdmin implements java.io.Serializable {
         return this.userManager;
     }
 
-    protected HR_Coordinator getCompanyHR(Company company) {
-        if (this.allCompanies.contains(company)) {
-            return company.getHrCoordinator();
-        } else {
-            return null;
-        }
-    }
-
     ArrayList<Company> getListOfCompanies() {
         return this.allCompanies;
     }
