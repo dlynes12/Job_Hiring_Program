@@ -241,12 +241,12 @@ public class HR_Coordinator extends User {
                 for (JobPosting jobPosting : systemAdmin.getJobManager().viewClosedJobs()) {  //was ViewJobs before
                     listJobs.add(jobPosting.getJob().getPosition());
                 }
-                ViewJobsGrid.add(scrollListJobs, 2, j + 1);
+                ViewJobsGrid.add(scrollListJobs, 2, 0); //j+1
                 ViewJobsGrid.add(ChooseJob, 1, 0);
-                ViewJobsGrid.add(viewApps, 1, 1);  // 3,1
-                ViewJobsGrid.add(distributeApps, 1, 2); // 3,2
-                ViewJobsGrid.add(advanceRoundButton, 3, 1); // 3,3
-                ViewJobsGrid.add(returnViewJ, 3, 2);
+                ViewJobsGrid.add(viewApps, 1, 2);  // 3,1
+                ViewJobsGrid.add(distributeApps, 2, 2); // 3,2
+                ViewJobsGrid.add(advanceRoundButton, 3, 2); // 3,3
+                ViewJobsGrid.add(returnViewJ, 3, 3);
 
                 ViewJobsGrid.setHgap(20);
                 ViewJobsGrid.setVgap(5);
@@ -261,6 +261,7 @@ public class HR_Coordinator extends User {
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();
                     String[] listOfApp = systemAdmin.getJobManager().getClosedJob(choice).viewAllApplicants().split(",");  //was .viewApplicants() before
                     if (listOfApp.length != 0 && !isNullOrEmpty(listOfApp[0])) {
+                        Label viewAppsLabel = new Label("Applicants:");
                         ListView<String> scrollListApps = new ListView<>();
                         ObservableList<String> listApps = FXCollections.observableArrayList();
                         scrollListApps.setItems(listApps);
@@ -268,7 +269,8 @@ public class HR_Coordinator extends User {
                         for (String app : listOfApp) {
                             listApps.add(app);
                         }
-                        ViewJobsGrid.add(scrollListApps, 2, i + 1);
+                        ViewJobsGrid.add(viewAppsLabel,1,1);
+                        ViewJobsGrid.add(scrollListApps, 2,1);
 
                         /*Button viewButton = new Button("VIEW INFO");
                         appViewer.add(viewButton, 3, i + 1);
@@ -303,7 +305,7 @@ public class HR_Coordinator extends User {
                     int totRounds = job.getHiringProcessor().numStages();
                     roundLabel.setText("Round: " + Integer.toString(round)+ " / " + Integer.toString(totRounds));
                     ViewJobsGrid.add(roundLabel, 3, 0);
-                    if (job.getHiringProcessor().isFinalRound()){ViewJobsGrid.add(viewHiresButton, 1, 2);}
+                    if (job.getHiringProcessor().isFinalRound()){ViewJobsGrid.add(viewHiresButton, 1, 3);}
                 });
                 viewHiresButton.setOnAction((ActionEvent checkRound) -> {
                     String choice = scrollListJobs.getSelectionModel().getSelectedItem();
@@ -315,7 +317,7 @@ public class HR_Coordinator extends User {
                     for (Applicant app : job.getHiringProcessor().getRecommendList()) {
                         listObsHires.add(app.getUsername());
                     }
-                    ViewJobsGrid.add(listHires, 2, 3);
+                    ViewJobsGrid.add(listHires, 2, 4);
                 });
             });
             viewAllApps.setOnAction((ActionEvent viewAllApplicants) -> {

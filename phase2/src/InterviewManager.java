@@ -116,7 +116,7 @@ public class InterviewManager {
             boolean isFilled = (jobPosting.getNumHires() == this.candidates.size());
             if (!inList && !isFilled){
                 this.candidates.add(applicant);
-                System.out.println("applicant has been approved");
+                System.out.println("applicant has been hired");
             }
         }
 
