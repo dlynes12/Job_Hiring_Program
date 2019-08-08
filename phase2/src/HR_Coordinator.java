@@ -72,7 +72,7 @@ public class HR_Coordinator extends User {
                 Label viewInterviewerLabel = new Label("Select Interviewers to interview people for this job:"); // view all the stages that have been added
                 TextField positionField = new TextField();
                 //TextField companyField = new TextField();
-                //TextField availJobField = new TextField();
+                TextField availJobField = new TextField();
                 TextField intStageField = new TextField();
                 intStageField.setPromptText("i.e. Phone Interview");
                 Button addLocation = new Button("Add Location");
@@ -122,7 +122,7 @@ public class HR_Coordinator extends User {
                 //positionGrid.add(companyLabel, 1, 2);
                 //positionGrid.add(companyField, 2, 2);
                 positionGrid.add(availJobsLabel, 1, 4);
-                positionGrid.add(locationDropdown, 2, 4);//availJobField
+                positionGrid.add(locationDropdown, 2, 4);
                 positionGrid.add(addLocation,3,4);
                 positionGrid.add(intStageLabel, 1, 6);
                 positionGrid.add(intStageField, 2, 6);
@@ -161,6 +161,8 @@ public class HR_Coordinator extends User {
                             choiceLocations.setItems(listLocations);
                             choiceLocations.setPrefSize(100.00, 70.00);
                             positionGrid.add(choiceLocations, 1, 5);
+                            availJobField.setPromptText("How many jobs per location?");
+                            positionGrid.add(availJobField,2,5);
                         }
                     }
                 });
@@ -201,12 +203,13 @@ public class HR_Coordinator extends User {
                     if (interviewerDropdown.getValue() == null) {
                         systemAdmin.getAlert("job").showAndWait();
 
-                    } else if (!listStages.isEmpty()) {
+                    } else if (!listStages.isEmpty() && !availJobField.getText().isEmpty()) {
                         Date closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                         String position = positionField.getText();
                         //String company = companyField.getText();
                         try {
-                            int numPositions = listLocations.size();//Integer.parseInt(availJobField.getText());
+                            int numJobsPerLoc = Integer.parseInt(availJobField.getText());
+                            int numPositions = listLocations.size()*numJobsPerLoc;//Integer.parseInt(availJobField.getText());
 
                             ArrayList<String> stagesOfInterview = new ArrayList<>();
                             for (String str : listStages) {

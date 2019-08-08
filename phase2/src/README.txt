@@ -3,6 +3,8 @@ Class to run: JobPortal
 **** Assumptions: *****
 1) You can't have more interviewers than applicants
 2) You cannot approve and decline the same applicant in the same round
+3) Each location hires one person at a time but, you can hire for multiple
+    locations in one posting
 
 
 

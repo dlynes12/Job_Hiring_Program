@@ -124,12 +124,12 @@ public class JobAccess implements Observer {
             closedJobs.get(company).add(job);
             jobPostings.get(company).remove(job);
         }
-        else{
-            ArrayList<JobPosting> newList = new ArrayList<>();
-            newList.add(job);
-            this.closedJobs.put(company, newList);
-            jobPostings.get(company).remove(job);
-        }
+//        else{
+//            ArrayList<JobPosting> newList = new ArrayList<>();
+//            newList.add(job);
+//            this.closedJobs.put(company, newList);
+//            jobPostings.get(company).remove(job);
+//        }
     }
 
     private boolean removeJobPosting(String position, Company company) {
