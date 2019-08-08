@@ -28,9 +28,16 @@ public class Interviewer extends User {
     //TODO when someone gets hired, please change the 'filled' boolean for the jobPosting to TRUE
 
     void addToList(Applicant applicant, String position) {
-        ArrayList<Applicant> updateList = applicantsList.get(position);
-        updateList.add(applicant);
-        applicantsList.put(position,updateList);
+        if (applicantsList.get(position) == null){
+            ArrayList<Applicant> updateList = new ArrayList<>();
+            updateList.add(applicant);
+            applicantsList.put(position,updateList);
+        }else{
+            ArrayList<Applicant> updateList = applicantsList.get(position);
+            updateList.add(applicant);
+            applicantsList.put(position,updateList);
+        }
+
     }
 
     ArrayList<Applicant> getInterviewees(String position) {
