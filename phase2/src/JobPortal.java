@@ -130,7 +130,7 @@ public class JobPortal extends Application {
                 if (datePicker.getValue() != null) {
                     Date today = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                     systemAdmin.getJobManager().retrieveTime(today);
-                    timeKeeper.updateTime(datePicker);
+                    timeKeeper.updateTime(datePicker, systemAdmin.getJobManager().jobPostings.values());
                     String UName = appUsernameTextField.getText();
                     String Pass = appPasswordTextField.getText();
                     try {
@@ -340,7 +340,7 @@ public class JobPortal extends Application {
                     if (datePicker.getValue() != null) {
                         Date today = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                         systemAdmin.getJobManager().retrieveTime(today);
-                        timeKeeper.updateTime(datePicker);
+                        timeKeeper.updateTime(datePicker, systemAdmin.getJobManager().jobPostings.values());
                         String UName = compUsernameTextField.getText();
                         String Pass = compPasswordTextField.getText();
                         try {
