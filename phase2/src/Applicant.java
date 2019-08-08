@@ -267,8 +267,15 @@ public class Applicant extends User {
                     String selectedToggleText = selectedToggle.getText();
                     String[] textSplit = selectedToggleText.split(" - "); //splits the job name from it's status
                     String jobPosition = textSplit[0];
-                    JobPosting jobPosting = systemAdmin.getJobManager().getJobPosting(jobPosition);
-                    this.withdrawApplication(jobPosting);
+                    try{
+                        JobPosting jobPosting = systemAdmin.getJobManager().getJobPosting(jobPosition);
+                        this.withdrawApplication(jobPosting);
+                    }
+                    catch (Exception closedJobException){
+                        JobPosting jobPosting = systemAdmin.getJobManager().getClosedJob(jobPosition);
+                        jobPosting.getHiringProcessor().withdrawApp(this);
+                    }
+
                 });
                 returnJS.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));
             });

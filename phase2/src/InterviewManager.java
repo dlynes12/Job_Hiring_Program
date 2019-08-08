@@ -51,7 +51,8 @@ public class InterviewManager {
     public int numStages(){return hiringStage.size();}
 
     public void withdrawApp(Applicant applicant) {
-        this.approvedApplicants.remove(applicant);
+        boolean isFilled = (jobPosting.getNumHires() == this.candidates.size());
+        if (!isFilled){this.approvedApplicants.remove(applicant);}
     }
 
     /// methods to use once job is closed-------------------------------------------------------------------
