@@ -103,7 +103,6 @@ public class Applicant extends User {
     }
 
     void applicantGUISetUp(Stage stage, User loggedUser, SystemAdmin systemAdmin, Scene loginPage) {
-        //void applicantGUISetUp(Stage stage, User loggedUser, JobAccess jobManager, Scene loginPage) {
         if (loggedUser.getClass() == Applicant.class) {
 
             Group applicantPortalScene = new Group();
@@ -137,7 +136,6 @@ public class Applicant extends User {
 
             getFile.setOnAction((ActionEvent openFile) -> {
                 FileChooser fileChooser = new FileChooser();
-                //fileChooser.setInitialDirectory();
                 fileChooser.setTitle("Open Resume File");
                 fileChooser.setInitialFileName(loggedUser.getUsername());
                 File file = fileChooser.showOpenDialog(stage);
@@ -197,15 +195,11 @@ public class Applicant extends User {
                 });
             });
             logout.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
-            //Account History page
+
             viewHistory.setOnAction((ActionEvent history) -> {
                 Group historyViewerScene = new Group();
                 Scene historyPage = new Scene(historyViewerScene, 600, 600);
                 stage.setScene(historyPage);
-
-//todo: add a way for applicants to withdraw their applications after job has closed but before someone has been hired
-// use withdrawApp() method from InterviewManager class to withdraw a candidates application from a job
-// maybe use a dropdown menu to select the job, then that populates the job status and the ability to withdraw the application
 
                 Label accountInfo = new Label(((Applicant) loggedUser).getInfo());
                 Button returnButton = new Button("Back");
@@ -220,7 +214,6 @@ public class Applicant extends User {
 
                 returnButton.setOnAction((ActionEvent goBack) -> stage.setScene(applicantPage));
             });
-
 
             viewJobStatuses.setOnAction((ActionEvent jobStatuses) -> {
                 Group jobStatusViewerScene = new Group();

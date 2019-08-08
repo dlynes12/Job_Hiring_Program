@@ -11,7 +11,6 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 
-// One HR Person hires for their own section of the company
 public class HR_Coordinator extends User {
 
     private Company company;
@@ -63,13 +62,10 @@ public class HR_Coordinator extends User {
 
             logout.setOnAction((ActionEvent ex) -> stage.setScene(loginPage));
 
-            //Job Creation page -- where we create job postings
             addJobs.setOnAction((ActionEvent addJob) -> {
                 Group createJobs = new Group();
                 Scene createJobsPage = new Scene(createJobs, 725, 600);
                 stage.setScene(createJobsPage);
-                //-------------
-                //Date closingDate = new Date(int year,int month,int day);
                 DatePicker datePicker = new DatePicker();
                 Label closingMessage = new Label("Closing Date:");
                 Label positionLabel = new Label("What position are we creating?");
@@ -95,15 +91,13 @@ public class HR_Coordinator extends User {
                 fullTime.setToggleGroup(radioSet);
                 partTime.setToggleGroup(radioSet);
 
-
                 ObservableList<String> listStages = FXCollections.observableArrayList();
-                ObservableList<String> decidedInterviewers = FXCollections.observableArrayList(); // for ViewList
-                ComboBox<String> interviewerDropdown = new ComboBox<>(); // not populating bc getListInterviewers() method in UserAccess not working
+                ObservableList<String> decidedInterviewers = FXCollections.observableArrayList();
+                ComboBox<String> interviewerDropdown = new ComboBox<>();
 
                 //TODO make this accommodate for Company
                 //HR.getCompany returns the company they belong to
                 for (Interviewer interviewer : systemAdmin.getUserManager().getListInterviewers()) {
-                    //listInterviewers.add(interviewer.getUsername());
                     interviewerDropdown.getItems().add(interviewer.getUsername());
                 }
 
@@ -144,7 +138,6 @@ public class HR_Coordinator extends User {
 
                 createJobs.getChildren().addAll(CreateJobPlacement);
 
-                //should we number the stages to show the order they are in?
                 addStageToProcess.setOnAction((ActionEvent addStage) -> {
                     String strISF = intStageField.getText();
                     if (!isNullOrEmpty(strISF)) {
@@ -181,36 +174,37 @@ public class HR_Coordinator extends User {
                         Date closeDate = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                         String position = positionField.getText();
                         String company = companyField.getText();
-                        //if (availJobField.getText().trim().matches("^/d*$")){
-                        try{int numPositions = Integer.parseInt(availJobField.getText());}
+                        try{int numPositions = Integer.parseInt(availJobField.getText());
+                            ArrayList<String> stagesOfInterview = new ArrayList<>();
+                            for (String str : listStages) {
+                                stagesOfInterview.add(str);
+                            }
+
+                            ArrayList<Interviewer> chosenInterviewers = new ArrayList<>();
+                            for (String str : decidedInterviewers) {
+                                chosenInterviewers.add((Interviewer) systemAdmin.getUserManager().getUser(str));
+                            }
+
+                            Job job = new Job(position, company, "tag", 0, stagesOfInterview);
+
+                            if (radioSet.getSelectedToggle() == fullTime) {
+                                job.setTag("fullTime");
+                                systemAdmin.getJobManager().addJobPosting(job, closeDate, chosenInterviewers, numPositions);
+                                stage.setScene(HRBasePage);
+
+                            } else if (radioSet.getSelectedToggle() == partTime) {
+                                job.setTag("partTime");
+                                systemAdmin.getJobManager().addJobPosting(job, closeDate, chosenInterviewers, numPositions);
+                                stage.setScene(HRBasePage);
+                                //((JobPosting)(systemAdmin.getJobManager().getJobPosting(position))).getJob().setTag("partTime");
+                            } else {
+                                systemAdmin.getAlert("tag").showAndWait();
+
+                            }
+                        }
                         catch (NumberFormatException x){systemAdmin.getAlert("integer").showAndWait();}
-                        int numPositions = Integer.parseInt(availJobField.getText());
+                        //int numPositions = Integer.parseInt(availJobField.getText());
 
-                        ArrayList<String> stagesOfInterview = new ArrayList<>();
-                        for (String str : listStages) {
-                            stagesOfInterview.add(str);
-                        }
-
-                        ArrayList<Interviewer> chosenInterviewers = new ArrayList<>();
-                        for (String str : decidedInterviewers) {
-                            chosenInterviewers.add((Interviewer) systemAdmin.getUserManager().getUser(str));
-                        }
-
-                        Job job = new Job(position, company, "tag", 0, stagesOfInterview);
-
-                        if (radioSet.getSelectedToggle() == fullTime) {
-                            job.setTag("fullTime");
-                            systemAdmin.getJobManager().addJobPosting(job, closeDate, chosenInterviewers, numPositions);
-                            stage.setScene(HRBasePage);
-
-                        } else if (radioSet.getSelectedToggle() == partTime) {
-                            job.setTag("partTime");
-                            systemAdmin.getJobManager().addJobPosting(job, closeDate, chosenInterviewers, numPositions);
-                            stage.setScene(HRBasePage);
-                            //((JobPosting)(systemAdmin.getJobManager().getJobPosting(position))).getJob().setTag("partTime");
-                        } else {
-                            systemAdmin.getAlert("tag").showAndWait();
-                        }
                     }else{
                         systemAdmin.getAlert("job").showAndWait();
                     }

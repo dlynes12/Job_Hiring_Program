@@ -1,5 +1,10 @@
 Class to run: JobPortal
 
+**** Assumptions: *****
+1cant have more interviewers than applicants
+2jobposting hire for multiple locations by increasing number of hiring
+
+
 Create a new User:
 ----------------------------------------------------------------------
 1) Press the "New User" button
@@ -65,3 +70,5 @@ applied.
 1) Login to a valid Interviewer account
 2) Choose a job that you would like interview candidates for
 3) Press the "Get Interviewees" button
+
+
