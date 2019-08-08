@@ -98,6 +98,12 @@ public class HR_Coordinator extends User {
                     interviewerDropdown.getItems().add(interviewer.getUsername());
                 }
 
+//                //HR.getCompany returns the company they belong to
+//                for (Interviewer interviewer : systemAdmin.getUserManager().getListInterviewers(this.getCompany())) {
+//                    //listInterviewers.add(interviewer.getUsername());
+//                    interviewerDropdown.getItems().add(interviewer.getUsername());
+//                }
+
                 interviewerDropdown.setMaxWidth(200.00);
                 interviewerDropdown.setMinWidth(200.00);
                 cMessageGrid.add(closingMessage, 1, 0);
@@ -341,6 +347,6 @@ public class HR_Coordinator extends User {
     }
 
     public String toString() {
-        return "{H," + this.getUsername() + "," + this.getPassword() + "}";
+        return "{H," + this.getUsername() + "," + this.getPassword() + "," + this.company.getCompanyName() + "}";
     }
 }

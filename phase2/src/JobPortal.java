@@ -74,6 +74,7 @@ public class JobPortal extends Application {
             applicantLoginPane.add(applicantLogInButton, 2, 5);
             applicantLoginPane.add(createApplicantButton, 2, 6);
             applicantLoginPane.add(exitAppLoginButton, 2, 7);
+
             applicantLoginPane.setHgap(20);
             applicantLoginPane.setVgap(10);
 
@@ -93,6 +94,7 @@ public class JobPortal extends Application {
                 TextField newAppUserField = new TextField();
                 TextField newAppPassField = new TextField();
                 GridPane createApplicantPane = new GridPane();
+
                 createApplicantPane.add(newAppUserLabel, 2, 1);
                 createApplicantPane.add(newAppUserField, 2, 2);
                 createApplicantPane.add(newAppPassLabel, 2, 3);
@@ -115,11 +117,13 @@ public class JobPortal extends Application {
                     }
 
                     try {
+                        //store.writeUserList(userManager.users);
                         store.writeList(systemAdmin.getUserManager().users, "Users");
                     } catch (IOException ex) {
                         System.out.println(ex.getMessage());
                     }
                 });
+
             });
 
             applicantLogInButton.setOnAction((ActionEvent logInAppEvent) -> {
@@ -150,17 +154,20 @@ public class JobPortal extends Application {
             });
         });
 
+
         companyAccessButton.setOnAction((ActionEvent compAccessEvent) -> {
 
             Group companyLogInGroup = new Group();
             Scene companyLoginScene = new Scene(companyLogInGroup, 700, 700);
             stage.setScene(companyLoginScene);
             stage.setTitle("Job Portal - Company Access");
+
             Button companySelectionButton = new Button(" Select Company");
             Button createCompanyButton = new Button("Create new company");
             Button exitCompAccessButton = new Button("Exit");
             ComboBox<String> companyDropdown = new ComboBox<>();
             GridPane companyLoginPane = new GridPane();
+
             companyLoginPane.setVgap(10);
             companyLoginPane.setHgap(20);
             companyLoginPane.add(companySelectionButton, 3, 1);
@@ -184,11 +191,13 @@ public class JobPortal extends Application {
                 Scene registerCompanyScene = new Scene(registerCompanyGroup, 300, 300);
                 stage.setScene(registerCompanyScene);
                 stage.setTitle("Job Portal - Company Registration");
+
                 Label compNameLabel = new Label("Company name:");
                 TextField compNameTextField = new TextField();
                 Button registerButton = new Button("Register");
                 Button registrationExit = new Button("Exit");
                 GridPane companyRegisterPane = new GridPane();
+
                 companyRegisterPane.add(compNameLabel, 2, 1);
                 companyRegisterPane.add(compNameTextField, 2, 2);
                 companyRegisterPane.add(registerButton, 2, 3);
@@ -202,22 +211,27 @@ public class JobPortal extends Application {
                     Company company = new Company(compNameTextField.getText());
                     systemAdmin.addCompany(company);
                     stage.setScene(accessMenuPage);
+
                 });
 
                 registrationExit.setOnAction((ActionEvent registerExitEvent) -> {
                     stage.setScene(companyLoginScene);
                 });
+
             });
 
             companySelectionButton.setOnAction((ActionEvent companySelectionEvent) -> {
+
                 String selectedCompany = companyDropdown.getValue();
                 Company loggedCompany = systemAdmin.getCompany(selectedCompany);
                 System.out.println(selectedCompany + " - selected "); //test
                 System.out.println(loggedCompany.getCompanyName() + " - logged");
+
                 Group compUserLoginGroup = new Group();
                 Scene compUserLoginScene = new Scene(compUserLoginGroup, 600, 600);
                 stage.setScene(compUserLoginScene);
                 stage.setTitle("Job Portal - Company Log In");
+
                 Label compUsernameLabel = new Label("Username:");
                 Label compPasswordLabel = new Label("Password:");
                 TextField compUsernameTextField = new TextField();
@@ -227,10 +241,13 @@ public class JobPortal extends Application {
                 Button exitCompLoginButton = new Button("EXIT");
                 RadioButton hrRadioButton = new RadioButton("HR Coordinator");
                 RadioButton intRadioButton = new RadioButton("Interviewer");
+
                 ToggleGroup loginRadio = new ToggleGroup();
                 hrRadioButton.setToggleGroup(loginRadio);
                 intRadioButton.setToggleGroup(loginRadio);
+
                 GridPane compUserLoginGrid = new GridPane();
+
                 compUserLoginGrid.add(compUsernameLabel, 2, 1);
                 compUserLoginGrid.add(compUsernameTextField, 2, 2);
                 compUserLoginGrid.add(compPasswordLabel, 2, 3);
@@ -245,6 +262,7 @@ public class JobPortal extends Application {
 
                 compUserLoginGroup.getChildren().addAll(compUserLoginGrid);
 
+                //ADDING A NEW COMPANY USER
                 createCompUserButton.setOnAction((ActionEvent newCompUserEvent) -> {
                     Group createNewUser = new Group();
                     stage.setScene(new Scene(createNewUser, 600, 200));
@@ -263,6 +281,7 @@ public class JobPortal extends Application {
                     GridPane userInfo = new GridPane();
                     GridPane choicePane = new GridPane();
                     GridPane grid = new GridPane();
+
                     userInfo.add(exit, 8, 4);
                     userInfo.add(createUserLab, 2, 0);
                     userInfo.add(createPassLab, 2, 2);
@@ -272,6 +291,7 @@ public class JobPortal extends Application {
                     grid.add(radioHR, 4, 0);
                     grid.add(radioInt, 6, 0);
                     grid.add(create, 7, 2);
+
                     BorderPane placement = new BorderPane();
                     userInfo.setHgap(20);
                     userInfo.setVgap(5);
@@ -287,13 +307,16 @@ public class JobPortal extends Application {
                     create.setOnAction((ActionEvent ProcessUser) -> {
                         if (radioSet.getSelectedToggle() == radioHR) {
                             HR_Coordinator newHR = new HR_Coordinator(newUserField.getText(), newPassField.getText());
+                            newHR.setCompany(loggedCompany);
                             if (systemAdmin.getUserManager().addUser(newHR)) {
+                                systemAdmin.getUserManager().addHRCoordinator(newHR);
                                 stage.setScene(companyLoginScene);
                             } else {
                                 systemAdmin.getAlert("create").showAndWait();
                             }
                         } else if (radioSet.getSelectedToggle() == radioInt) {
                             Interviewer newInt = new Interviewer(newUserField.getText(), newPassField.getText());
+                            newInt.setCompany(loggedCompany);
                             if (systemAdmin.getUserManager().addUser(newInt)) {
                                 systemAdmin.getUserManager().addInterviewer(newInt);
                                 stage.setScene(companyLoginScene);
@@ -304,6 +327,7 @@ public class JobPortal extends Application {
                             systemAdmin.getAlert("create").showAndWait();
                         }
                         try {
+                            //store.writeUserList(userManager.users);
                             store.writeList(systemAdmin.getUserManager().users, "Users");
                         } catch (IOException ex) {
                             System.out.println(ex.getMessage());
@@ -324,11 +348,13 @@ public class JobPortal extends Application {
                             if (loggedUser != null) {
                                 if (loginRadio.getSelectedToggle() == hrRadioButton) {
                                     ((HR_Coordinator) loggedUser).HRGUISetUp(stage, loggedUser, systemAdmin, compUserLoginScene);
+                                    //((Applicant) loggedUser).applicantGUISetUp(stage, loggedUser, jobManager, loginPage);
                                 } else if (loginRadio.getSelectedToggle() == intRadioButton) {
                                     ((Interviewer) loggedUser).interviewerGUISetUp(stage, loggedUser, systemAdmin, compUserLoginScene);
                                 } else {
                                     stage.setScene(compUserLoginScene);
                                 }
+
                                 try {
                                     store.writeToFile(loggedUser);
                                 } catch (IOException ex) {
@@ -352,6 +378,9 @@ public class JobPortal extends Application {
         });
     }
 
+    // View + Controller
+
+    //todo: serialize list of interviewers in UserAccess
     public static void main(String[] args) {
         launch(args);
     }

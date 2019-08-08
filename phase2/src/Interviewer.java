@@ -120,6 +120,6 @@ public class Interviewer extends User {
     }
 
     public String toString() {
-        return "{I," + this.getUsername() + "," + this.getPassword() + "}";
+        return "{I," + this.getUsername() + "," + this.getPassword() + "," + this.company.getCompanyName() + "}";
     }
 }
