@@ -18,7 +18,8 @@ import java.util.List;
 public class JobPortal extends Application {
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
+        byte byteArray[];
         SystemAdmin systemAdmin = new SystemAdmin();
         Group accessMenuScene = new Group();
         Storage store = new Storage();
@@ -347,6 +348,7 @@ public class JobPortal extends Application {
                 //USER LOG-IN
                 compLogInButton.setOnAction((ActionEvent compLoginEvent) -> {
                     if (datePicker.getValue() != null) {
+
                         Date today = Date.from(datePicker.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                         systemAdmin.getJobManager().retrieveTime(today);
                         timeKeeper.updateTime(datePicker, systemAdmin.getJobManager().jobPostings.values());
